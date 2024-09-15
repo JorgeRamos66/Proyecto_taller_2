@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{18E57F13-5B4B-4319-B520-9ECA084980BE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>proyecto2_prueba</RootNamespace>
+    <AssemblyName>proyecto2_prueba</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Presentaciones\admin\alta_producto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\admin\alta_producto.Designer.cs">
+      <DependentUpon>alta_producto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentaciones\admin\categorias_productos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\admin\categorias_productos.Designer.cs">
+      <DependentUpon>categorias_productos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentaciones\admin\listado_productos_admin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\admin\listado_productos_admin.Designer.cs">
+      <DependentUpon>listado_productos_admin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentaciones\admin\modificar_producto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\admin\modificar_producto.Designer.cs">
+      <DependentUpon>modificar_producto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentaciones\admin\nueva_categoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\admin\nueva_categoria.Designer.cs">
+      <DependentUpon>nueva_categoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentaciones\inicio_sesion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\inicio_sesion.Designer.cs">
+      <DependentUpon>inicio_sesion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentaciones\admin\menu_admin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\admin\menu_admin.Designer.cs">
+      <DependentUpon>menu_admin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentaciones\gerente\menu_gerente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\gerente\menu_gerente.Designer.cs">
+      <DependentUpon>menu_gerente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Presentaciones\admin\registrar_personal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\admin\registrar_personal.Designer.cs">
+      <DependentUpon>registrar_personal.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Presentaciones\admin\alta_producto.resx">
+      <DependentUpon>alta_producto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\admin\categorias_productos.resx">
+      <DependentUpon>categorias_productos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\admin\listado_productos_admin.resx">
+      <DependentUpon>listado_productos_admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\admin\modificar_producto.resx">
+      <DependentUpon>modificar_producto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\admin\nueva_categoria.resx">
+      <DependentUpon>nueva_categoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\inicio_sesion.resx">
+      <DependentUpon>inicio_sesion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\admin\menu_admin.resx">
+      <DependentUpon>menu_admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\gerente\menu_gerente.resx">
+      <DependentUpon>menu_gerente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Presentaciones\admin\registrar_personal.resx">
+      <DependentUpon>registrar_personal.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Presentaciones\vendedor\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NivelCore_transparent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\boxes_16px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\boxes_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\categories_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\niveles_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\main_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\log-out_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\insert_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\box_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\photo_24px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\floppy-disk_24px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\floppy-disk_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editar_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\producto_256px.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

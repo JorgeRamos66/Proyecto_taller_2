@@ -79,12 +79,6 @@
             // comboBoxCategoria
             // 
             this.comboBoxCategoria.FormattingEnabled = true;
-            this.comboBoxCategoria.Items.AddRange(new object[] {
-            "Estaciones Totales",
-            "Niveles",
-            "GPS",
-            "Drones",
-            "Otros"});
             this.comboBoxCategoria.Location = new System.Drawing.Point(123, 213);
             this.comboBoxCategoria.Name = "comboBoxCategoria";
             this.comboBoxCategoria.Size = new System.Drawing.Size(245, 21);

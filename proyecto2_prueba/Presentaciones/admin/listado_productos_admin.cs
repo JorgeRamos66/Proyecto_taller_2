@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,8 @@ namespace proyecto2_prueba.Presentaciones.admin
         public listado_productos_admin()
         {
             InitializeComponent();
+            ConfigurarDataGridView();
+            CargarProductos();
         }
 
         
@@ -43,6 +47,24 @@ namespace proyecto2_prueba.Presentaciones.admin
 
                 //Mostramos el formulario de alta de producto de forma modal (por encima del principal)
                 nuevo_producto.ShowDialog();
+            }
+        }
+
+        private bool TestConnection()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    return true; // Conexión exitosa
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al conectar con la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false; // Conexión fallida
+                }
             }
         }
 
@@ -103,59 +125,194 @@ namespace proyecto2_prueba.Presentaciones.admin
             }
         }
 
+        public void CargarProductos()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM PRODUCTO";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                        DataTable dataTable = new DataTable();
+                        dataAdapter.Fill(dataTable);
+                        datagrid_productos.DataSource = dataTable;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cargar los productos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            // Limpiar columnas existentes
+            datagrid_productos.Columns.Clear();
+
+            // Configurar propiedades del DataGridView
+            datagrid_productos.AllowUserToAddRows = false;
+            datagrid_productos.AllowUserToDeleteRows = false;
+            datagrid_productos.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            datagrid_productos.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            datagrid_productos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            datagrid_productos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            datagrid_productos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            datagrid_productos.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            datagrid_productos.Location = new System.Drawing.Point(31, 126);
+            datagrid_productos.Name = "datagrid_productos";
+            datagrid_productos.ReadOnly = true;
+            datagrid_productos.RowTemplate.Height = 50;
+            datagrid_productos.Size = new System.Drawing.Size(1244, 393);
+            datagrid_productos.TabIndex = 0;
+            datagrid_productos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_productos_CellContentClick);
+
+            // Definir columnas
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CIdProducto",
+                HeaderText = "ID Producto",
+                DataPropertyName = "id_producto" // Nombre de la columna en la base de datos
+            });
+
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CNombreProducto",
+                HeaderText = "Nombre",
+                DataPropertyName = "nombre_producto"
+            });
+
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CStockProducto",
+                HeaderText = "Stock",
+                DataPropertyName = "stock_producto"
+            });
+
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CPrecio",
+                HeaderText = "Precio",
+                DataPropertyName = "precio_producto"
+            });
+
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CCategoriaProducto",
+                HeaderText = "Categoría",
+                DataPropertyName = "id_categoria"
+            });
+
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CDescripcion",
+                HeaderText = "Descripción",
+                DataPropertyName = "descripcion_producto"
+            });
+
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CRutaImagen",
+                HeaderText = "Ruta Imagen",
+                DataPropertyName = "ruta_imagen"
+            });
+
+            // Agregar otras columnas si es necesario (por ejemplo, para la imagen del producto)
+            datagrid_productos.Columns.Add(new DataGridViewImageColumn
+            {
+                Name = "CImagenProducto",
+                HeaderText = "Imagen",
+                ImageLayout = DataGridViewImageCellLayout.Zoom // Ajustar la imagen en la celda
+            });
+
+            // Agregar columnas para botones de modificar y eliminar
+            datagrid_productos.Columns.Add(new DataGridViewButtonColumn
+            {
+                Name = "CModificar",
+                HeaderText = "Modificar",
+                Text = "Modificar",
+                UseColumnTextForButtonValue = true
+            });
+
+            datagrid_productos.Columns.Add(new DataGridViewButtonColumn
+            {
+                Name = "CBaja",
+                HeaderText = "Eliminar",
+                Text = "Eliminar",
+                UseColumnTextForButtonValue = true
+            });
+        }
+
+        private void EliminarProducto(int id)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM PRODUCTO WHERE id_producto = @Id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+
+            // Actualiza el DataGridView
+            CargarProductos();
+        }
+
         private void datagrid_productos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Verificar si el clic fue en una celda de los botones (para no manejar clics en otras celdas)
+            // Verifica si la celda clicada es válida
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                DataGridViewButtonColumn column = datagrid_productos.Columns[e.ColumnIndex] as DataGridViewButtonColumn;
-
-                if (column != null)
+                // Verifica si la columna es un botón
+                DataGridViewButtonColumn buttonColumn = datagrid_productos.Columns[e.ColumnIndex] as DataGridViewButtonColumn;
+                if (buttonColumn != null)
                 {
-                    // Verifica si el botón "Modificar" fue presionado
-                    if (e.ColumnIndex == datagrid_productos.Columns["CModificar"].Index && e.RowIndex >= 0)
+                    // Verifica si se ha hecho clic en la columna de eliminación
+                    if (e.ColumnIndex == datagrid_productos.Columns["CBaja"].Index)
                     {
-                        // Accedemos al formulario MDI principal (menu_admin)
-                        Form formularioMDI = this.MdiParent;
+                        // Obtiene el ID del producto de la celda correspondiente
+                        object cellValue = datagrid_productos.Rows[e.RowIndex].Cells["CIdProducto"].Value;
 
-                        //Extrae los datos de la fila seleccionada
-                        string nombre = datagrid_productos.Rows[e.RowIndex].Cells["CNombre_producto"].Value.ToString();
-                        int stock = Convert.ToInt32(datagrid_productos.Rows[e.RowIndex].Cells["CStock_producto"].Value);
-                        decimal precio = Convert.ToDecimal(datagrid_productos.Rows[e.RowIndex].Cells["CPrecio"].Value);
-                        string categoria = datagrid_productos.Rows[e.RowIndex].Cells["CCategoria_producto"].Value.ToString();
-                        string descripcion = datagrid_productos.Rows[e.RowIndex].Cells["CDescripcion"].Value.ToString();
-                        string rutaImagen = datagrid_productos.Rows[e.RowIndex].Cells["CRutaImagen"].Value.ToString();
+                        if (cellValue != null && int.TryParse(cellValue.ToString(), out int idProducto))
+                        {
+                            // Confirmar la eliminación del producto
+                            DialogResult result = MessageBox.Show("¿Estás seguro de que deseas eliminar este producto?",
+                                                                  "Confirmar eliminación",
+                                                                  MessageBoxButtons.YesNo,
+                                                                  MessageBoxIcon.Warning);
+                            if (result == DialogResult.Yes)
+                            {
+                                try
+                                {
+                                    // Eliminar el producto de la base de datos
+                                    EliminarProducto(idProducto);
 
-                        
-
-                        //Crea una instancia del formulario modificar_producto
-                        //Pasa el formulario principal como referencia
-                        modificar_producto formModificar = new modificar_producto(this);
-
-                        //Establecemos el formulario MDI principal (menu_admin) como el padre
-                        //formModificar.MdiParent = formularioMDI;
-
-                        //Pasa los datos a los controles del formulario
-                        formModificar.textBoxNombre.Text = nombre;
-                        formModificar.textBoxStock.Text = stock.ToString();
-                        formModificar.textBoxPrecio.Text = precio.ToString();
-                        formModificar.comboBoxCategoria.Text = categoria;
-                        formModificar.textBoxDescripcion.Text = descripcion;
-                        formModificar.textBoxRutaFoto.Text = rutaImagen;
-
-                        // Muestra la imagen en el PictureBox
-                        formModificar.pictureBoxProducto.ImageLocation = rutaImagen;
-
-                        //Pasar el índice de la fila para saber en cual realizar los cambios
-                        formModificar.FilaIndex = e.RowIndex;
-
-                        //Abre el formulario de modificación
-                        formModificar.ShowDialog();
-                    }
-                    else if (e.ColumnIndex == datagrid_productos.Columns["CBaja"].Index && e.RowIndex >= 0)
-                    {
-                            // Eliminar la fila correspondiente
-                            datagrid_productos.Rows.RemoveAt(e.RowIndex);
+                                    // Eliminar la fila del DataGridView
+                                    datagrid_productos.Rows.RemoveAt(e.RowIndex);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Error al eliminar el producto: {ex.Message}",
+                                                    "Error",
+                                                    MessageBoxButtons.OK,
+                                                    MessageBoxIcon.Error);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo determinar el ID del producto.",
+                                            "Error",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Error);
+                        }
                     }
                 }
             }

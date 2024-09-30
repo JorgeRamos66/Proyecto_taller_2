@@ -1,4 +1,5 @@
-﻿using System;
+﻿using proyecto2_prueba.Presentaciones.admin;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,30 @@ namespace proyecto2_prueba
 {
     public partial class registrar_personal : Form
     {
-        public registrar_personal()
+        private personal formularioListado; // Campo para almacenar la referencia del formulario listado
+        private int IdUsuario; // Campo para almacenar el ID del usuario
+
+        public registrar_personal(personal listado)
         {
             InitializeComponent();
+            formularioListado = listado; // Guardar la referencia del formulario listado_personal
+            IdUsuario = 0; // Establecer por defecto a 0 para inserción
+        }
+
+        public registrar_personal(int idUsuario, string nombre, string apellido, string dni, string email, string direccion, string ciudad, string provincia, personal listado)
+        {
+            InitializeComponent();
+            formularioListado = listado; // Guardar la referencia del formulario listado_personal
+            IdUsuario = idUsuario; // Guardar el ID del usuario
+
+            // Cargar los datos en los controles del formulario
+            textBoxNombre.Text = nombre;
+            textBoxApellido.Text = apellido;
+            textBoxEmail.Text = email;
+            textBoxDNI.Text = dni;
+            textCiudad.Text = ciudad;
+            textProvincia.Text = provincia;
+            textBoxDireccion.Text = direccion;
         }
 
         private void LNombre_Click(object sender, EventArgs e)
@@ -53,6 +75,16 @@ namespace proyecto2_prueba
         }
 
         private void LLocalidad_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

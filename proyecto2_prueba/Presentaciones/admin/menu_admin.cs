@@ -40,7 +40,7 @@ namespace proyecto2_prueba
         private void registrarPersonalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Crea una instancia del formulario que deseas abrir
-            registrar_personal nuevo_personal = new registrar_personal();
+            personal nuevo_personal = new personal();
 
             // Establece el formulario de administración como el formulario padre MDI
             nuevo_personal.MdiParent = this;
@@ -66,8 +66,36 @@ namespace proyecto2_prueba
 
         private void aBMEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            // Verificar si el formulario ya está abierto
+            Form formularioAbierto = Application.OpenForms.OfType<personal>().FirstOrDefault();
 
+            if (formularioAbierto != null)
+            {
+                // El formulario ya está abierto, preguntar al usuario
+                DialogResult resultado = MessageBox.Show("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?",
+                                                         "Formulario en Uso",
+                                                         MessageBoxButtons.YesNo,
+                                                         MessageBoxIcon.Question);
+
+                if (resultado == DialogResult.Yes)
+                {
+                    // Cerrar el formulario anterior
+                    formularioAbierto.Close();
+
+                    // Crear una nueva instancia y abrirla
+                    personal lista_personal = new personal();
+                    lista_personal.MdiParent = this;
+                    lista_personal.Show();
+                }
+                // Si elige "No", no se hace nada
+            }
+            else
+            {
+                // Si no hay ningún formulario abierto, se crea uno nuevo
+                personal lista_personal = new personal();
+                lista_personal.MdiParent = this;
+                lista_personal.Show();
+            }
         }
 
         private void aBMProductosToolStripMenuItem_Click(object sender, EventArgs e)

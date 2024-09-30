@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textProvincia = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButtonCUIL = new System.Windows.Forms.RadioButton();
+            this.radioButtonCUIT = new System.Windows.Forms.RadioButton();
+            this.radioButtonDNI = new System.Windows.Forms.RadioButton();
             this.LDni = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -40,23 +42,23 @@
             this.BSalir = new System.Windows.Forms.Button();
             this.BGuardar = new System.Windows.Forms.Button();
             this.Linfo = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBoxContraseña = new System.Windows.Forms.TextBox();
+            this.textBoxUsuario = new System.Windows.Forms.TextBox();
+            this.textBoxDireccion = new System.Windows.Forms.TextBox();
+            this.textCiudad = new System.Windows.Forms.TextBox();
+            this.textBoxDNI = new System.Windows.Forms.TextBox();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.textBoxApellido = new System.Windows.Forms.TextBox();
             this.textBoxNombre = new System.Windows.Forms.TextBox();
             this.Lpassword = new System.Windows.Forms.Label();
             this.LUsuario = new System.Windows.Forms.Label();
-            this.LCalle = new System.Windows.Forms.Label();
+            this.LDireccion = new System.Windows.Forms.Label();
             this.LLocalidad = new System.Windows.Forms.Label();
             this.LEmail = new System.Windows.Forms.Label();
             this.LApellido = new System.Windows.Forms.Label();
             this.LNombre = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelRol = new System.Windows.Forms.Label();
+            this.comboBoxRol = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +67,9 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Tan;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.comboBoxRol);
+            this.panel1.Controls.Add(this.labelRol);
+            this.panel1.Controls.Add(this.textProvincia);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.label2);
@@ -74,71 +78,88 @@
             this.panel1.Controls.Add(this.BSalir);
             this.panel1.Controls.Add(this.BGuardar);
             this.panel1.Controls.Add(this.Linfo);
-            this.panel1.Controls.Add(this.textBox8);
-            this.panel1.Controls.Add(this.textBox7);
-            this.panel1.Controls.Add(this.textBox6);
-            this.panel1.Controls.Add(this.textBox5);
-            this.panel1.Controls.Add(this.textBox4);
+            this.panel1.Controls.Add(this.textBoxContraseña);
+            this.panel1.Controls.Add(this.textBoxUsuario);
+            this.panel1.Controls.Add(this.textBoxDireccion);
+            this.panel1.Controls.Add(this.textCiudad);
+            this.panel1.Controls.Add(this.textBoxDNI);
             this.panel1.Controls.Add(this.textBoxEmail);
             this.panel1.Controls.Add(this.textBoxApellido);
             this.panel1.Controls.Add(this.textBoxNombre);
             this.panel1.Controls.Add(this.Lpassword);
             this.panel1.Controls.Add(this.LUsuario);
-            this.panel1.Controls.Add(this.LCalle);
+            this.panel1.Controls.Add(this.LDireccion);
             this.panel1.Controls.Add(this.LLocalidad);
             this.panel1.Controls.Add(this.LEmail);
             this.panel1.Controls.Add(this.LApellido);
             this.panel1.Controls.Add(this.LNombre);
             this.panel1.Location = new System.Drawing.Point(51, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(558, 357);
+            this.panel1.Size = new System.Drawing.Size(558, 449);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // textProvincia
+            // 
+            this.textProvincia.Location = new System.Drawing.Point(88, 209);
+            this.textProvincia.Name = "textProvincia";
+            this.textProvincia.Size = new System.Drawing.Size(173, 20);
+            this.textProvincia.TabIndex = 27;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(23, 213);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 16);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Provincia";
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FloralWhite;
-            this.panel2.Controls.Add(this.radioButton3);
-            this.panel2.Controls.Add(this.radioButton2);
-            this.panel2.Controls.Add(this.radioButton1);
+            this.panel2.Controls.Add(this.radioButtonCUIL);
+            this.panel2.Controls.Add(this.radioButtonCUIT);
+            this.panel2.Controls.Add(this.radioButtonDNI);
             this.panel2.Controls.Add(this.LDni);
             this.panel2.Location = new System.Drawing.Point(315, 57);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(215, 54);
             this.panel2.TabIndex = 25;
             // 
-            // radioButton3
+            // radioButtonCUIL
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(20, 24);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(49, 17);
-            this.radioButton3.TabIndex = 21;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "CUIL";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButtonCUIL.AutoSize = true;
+            this.radioButtonCUIL.Location = new System.Drawing.Point(20, 24);
+            this.radioButtonCUIL.Name = "radioButtonCUIL";
+            this.radioButtonCUIL.Size = new System.Drawing.Size(49, 17);
+            this.radioButtonCUIL.TabIndex = 21;
+            this.radioButtonCUIL.TabStop = true;
+            this.radioButtonCUIL.Text = "CUIL";
+            this.radioButtonCUIL.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // radioButtonCUIT
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(75, 24);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(50, 17);
-            this.radioButton2.TabIndex = 20;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "CUIT";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButtonCUIT.AutoSize = true;
+            this.radioButtonCUIT.Location = new System.Drawing.Point(75, 24);
+            this.radioButtonCUIT.Name = "radioButtonCUIT";
+            this.radioButtonCUIT.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonCUIT.TabIndex = 20;
+            this.radioButtonCUIT.TabStop = true;
+            this.radioButtonCUIT.Text = "CUIT";
+            this.radioButtonCUIT.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // radioButtonDNI
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(131, 24);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(44, 17);
-            this.radioButton1.TabIndex = 19;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "DNI";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButtonDNI.AutoSize = true;
+            this.radioButtonDNI.Location = new System.Drawing.Point(131, 24);
+            this.radioButtonDNI.Name = "radioButtonDNI";
+            this.radioButtonDNI.Size = new System.Drawing.Size(44, 17);
+            this.radioButtonDNI.TabIndex = 19;
+            this.radioButtonDNI.TabStop = true;
+            this.radioButtonDNI.Text = "DNI";
+            this.radioButtonDNI.UseVisualStyleBackColor = true;
             // 
             // LDni
             // 
@@ -188,9 +209,9 @@
             this.BSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BSalir.Image = global::proyecto2_prueba.Properties.Resources.log_out_32px;
             this.BSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BSalir.Location = new System.Drawing.Point(350, 293);
+            this.BSalir.Location = new System.Drawing.Point(350, 285);
             this.BSalir.Name = "BSalir";
-            this.BSalir.Size = new System.Drawing.Size(140, 52);
+            this.BSalir.Size = new System.Drawing.Size(140, 44);
             this.BSalir.TabIndex = 18;
             this.BSalir.Text = "SALIR";
             this.BSalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -203,9 +224,9 @@
             this.BGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BGuardar.Image = global::proyecto2_prueba.Properties.Resources.user_32px;
-            this.BGuardar.Location = new System.Drawing.Point(350, 225);
+            this.BGuardar.Location = new System.Drawing.Point(350, 228);
             this.BGuardar.Name = "BGuardar";
-            this.BGuardar.Size = new System.Drawing.Size(140, 52);
+            this.BGuardar.Size = new System.Drawing.Size(140, 48);
             this.BGuardar.TabIndex = 17;
             this.BGuardar.Text = "REGISTRAR";
             this.BGuardar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -221,41 +242,41 @@
             this.Linfo.TabIndex = 16;
             this.Linfo.Text = "REGISTRAR NUEVO PERSONAL";
             // 
-            // textBox8
+            // textBoxContraseña
             // 
-            this.textBox8.Location = new System.Drawing.Point(88, 317);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(173, 20);
-            this.textBox8.TabIndex = 15;
+            this.textBoxContraseña.Location = new System.Drawing.Point(88, 317);
+            this.textBoxContraseña.Name = "textBoxContraseña";
+            this.textBoxContraseña.Size = new System.Drawing.Size(173, 20);
+            this.textBoxContraseña.TabIndex = 15;
             // 
-            // textBox7
+            // textBoxUsuario
             // 
-            this.textBox7.Location = new System.Drawing.Point(88, 281);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(173, 20);
-            this.textBox7.TabIndex = 14;
+            this.textBoxUsuario.Location = new System.Drawing.Point(88, 281);
+            this.textBoxUsuario.Name = "textBoxUsuario";
+            this.textBoxUsuario.Size = new System.Drawing.Size(173, 20);
+            this.textBoxUsuario.TabIndex = 14;
             // 
-            // textBox6
+            // textBoxDireccion
             // 
-            this.textBox6.Location = new System.Drawing.Point(88, 245);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(173, 20);
-            this.textBox6.TabIndex = 13;
+            this.textBoxDireccion.Location = new System.Drawing.Point(88, 245);
+            this.textBoxDireccion.Name = "textBoxDireccion";
+            this.textBoxDireccion.Size = new System.Drawing.Size(173, 20);
+            this.textBoxDireccion.TabIndex = 13;
             // 
-            // textBox5
+            // textCiudad
             // 
-            this.textBox5.Location = new System.Drawing.Point(88, 173);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(173, 20);
-            this.textBox5.TabIndex = 12;
+            this.textCiudad.Location = new System.Drawing.Point(88, 173);
+            this.textCiudad.Name = "textCiudad";
+            this.textCiudad.Size = new System.Drawing.Size(173, 20);
+            this.textCiudad.TabIndex = 12;
             // 
-            // textBox4
+            // textBoxDNI
             // 
-            this.textBox4.Location = new System.Drawing.Point(315, 139);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(173, 20);
-            this.textBox4.TabIndex = 11;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBoxDNI.Location = new System.Drawing.Point(315, 139);
+            this.textBoxDNI.Name = "textBoxDNI";
+            this.textBoxDNI.Size = new System.Drawing.Size(173, 20);
+            this.textBoxDNI.TabIndex = 11;
+            this.textBoxDNI.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // textBoxEmail
             // 
@@ -298,16 +319,16 @@
             this.LUsuario.TabIndex = 6;
             this.LUsuario.Text = "Usuario";
             // 
-            // LCalle
+            // LDireccion
             // 
-            this.LCalle.AutoSize = true;
-            this.LCalle.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LCalle.Location = new System.Drawing.Point(47, 249);
-            this.LCalle.Name = "LCalle";
-            this.LCalle.Size = new System.Drawing.Size(37, 16);
-            this.LCalle.TabIndex = 5;
-            this.LCalle.Text = "Calle";
-            this.LCalle.Click += new System.EventHandler(this.LCalle_Click);
+            this.LDireccion.AutoSize = true;
+            this.LDireccion.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LDireccion.Location = new System.Drawing.Point(23, 249);
+            this.LDireccion.Name = "LDireccion";
+            this.LDireccion.Size = new System.Drawing.Size(65, 16);
+            this.LDireccion.TabIndex = 5;
+            this.LDireccion.Text = "Direccion";
+            this.LDireccion.Click += new System.EventHandler(this.LCalle_Click);
             // 
             // LLocalidad
             // 
@@ -351,22 +372,24 @@
             this.LNombre.Text = "Nombre";
             this.LNombre.Click += new System.EventHandler(this.LNombre_Click);
             // 
-            // textBox1
+            // labelRol
             // 
-            this.textBox1.Location = new System.Drawing.Point(88, 209);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(173, 20);
-            this.textBox1.TabIndex = 27;
+            this.labelRol.AutoSize = true;
+            this.labelRol.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRol.Location = new System.Drawing.Point(158, 357);
+            this.labelRol.Name = "labelRol";
+            this.labelRol.Size = new System.Drawing.Size(27, 16);
+            this.labelRol.TabIndex = 28;
+            this.labelRol.Text = "Rol";
+            this.labelRol.Click += new System.EventHandler(this.label4_Click);
             // 
-            // label3
+            // comboBoxRol
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(23, 213);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 16);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "Provincia";
+            this.comboBoxRol.FormattingEnabled = true;
+            this.comboBoxRol.Location = new System.Drawing.Point(191, 355);
+            this.comboBoxRol.Name = "comboBoxRol";
+            this.comboBoxRol.Size = new System.Drawing.Size(204, 21);
+            this.comboBoxRol.TabIndex = 30;
             // 
             // registrar_personal
             // 
@@ -374,7 +397,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGoldenrod;
             this.CancelButton = this.BSalir;
-            this.ClientSize = new System.Drawing.Size(663, 382);
+            this.ClientSize = new System.Drawing.Size(658, 473);
             this.Controls.Add(this.panel1);
             this.Name = "registrar_personal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -390,17 +413,17 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBoxContraseña;
+        private System.Windows.Forms.TextBox textBoxUsuario;
+        private System.Windows.Forms.TextBox textBoxDireccion;
+        private System.Windows.Forms.TextBox textCiudad;
+        private System.Windows.Forms.TextBox textBoxDNI;
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.TextBox textBoxApellido;
         private System.Windows.Forms.TextBox textBoxNombre;
         private System.Windows.Forms.Label Lpassword;
         private System.Windows.Forms.Label LUsuario;
-        private System.Windows.Forms.Label LCalle;
+        private System.Windows.Forms.Label LDireccion;
         private System.Windows.Forms.Label LLocalidad;
         private System.Windows.Forms.Label LDni;
         private System.Windows.Forms.Label LEmail;
@@ -409,14 +432,16 @@
         private System.Windows.Forms.Button BSalir;
         private System.Windows.Forms.Button BGuardar;
         private System.Windows.Forms.Label Linfo;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButtonCUIT;
+        private System.Windows.Forms.RadioButton radioButtonDNI;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButtonCUIL;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textProvincia;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelRol;
+        private System.Windows.Forms.ComboBox comboBoxRol;
     }
 }

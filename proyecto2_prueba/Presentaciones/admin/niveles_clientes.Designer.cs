@@ -38,15 +38,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.BNuevoNivel = new System.Windows.Forms.Button();
             this.datagrid_niveles = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.BSalir = new System.Windows.Forms.Button();
             this.Cid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CNombreCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CBaja = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.BSalir = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDescuento)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_niveles)).BeginInit();
@@ -128,13 +128,13 @@
             this.BNuevoNivel.BackColor = System.Drawing.Color.SteelBlue;
             this.BNuevoNivel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BNuevoNivel.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BNuevoNivel.Image = global::proyecto2_prueba.Properties.Resources.suma_24px;
-            this.BNuevoNivel.Location = new System.Drawing.Point(389, 106);
+            this.BNuevoNivel.Image = global::proyecto2_prueba.Properties.Resources.niveles_32px;
+            this.BNuevoNivel.Location = new System.Drawing.Point(375, 106);
             this.BNuevoNivel.Name = "BNuevoNivel";
-            this.BNuevoNivel.Size = new System.Drawing.Size(107, 45);
+            this.BNuevoNivel.Size = new System.Drawing.Size(121, 45);
             this.BNuevoNivel.TabIndex = 5;
             this.BNuevoNivel.Text = "AGREGAR";
-            this.BNuevoNivel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BNuevoNivel.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.BNuevoNivel.UseVisualStyleBackColor = false;
             this.BNuevoNivel.Click += new System.EventHandler(this.BNuevoNivel_Click);
             // 
@@ -154,6 +154,41 @@
             this.datagrid_niveles.Name = "datagrid_niveles";
             this.datagrid_niveles.Size = new System.Drawing.Size(802, 291);
             this.datagrid_niveles.TabIndex = 9;
+            // 
+            // Cid
+            // 
+            this.Cid.HeaderText = "id";
+            this.Cid.Name = "Cid";
+            this.Cid.Width = 50;
+            // 
+            // CNombreCategoria
+            // 
+            this.CNombreCategoria.HeaderText = "Nombre";
+            this.CNombreCategoria.Name = "CNombreCategoria";
+            this.CNombreCategoria.Width = 200;
+            // 
+            // CDescuento
+            // 
+            this.CDescuento.HeaderText = "Descuento (%)";
+            this.CDescuento.Name = "CDescuento";
+            // 
+            // CDescripcion
+            // 
+            this.CDescripcion.HeaderText = "Descripcion";
+            this.CDescripcion.Name = "CDescripcion";
+            this.CDescripcion.Width = 300;
+            // 
+            // CBaja
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Red;
+            this.CBaja.DefaultCellStyle = dataGridViewCellStyle1;
+            this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CBaja.HeaderText = "Baja";
+            this.CBaja.Name = "CBaja";
+            this.CBaja.Text = "BAJA";
+            this.CBaja.ToolTipText = "BAJA";
+            this.CBaja.UseColumnTextForButtonValue = true;
             // 
             // panel1
             // 
@@ -200,41 +235,6 @@
             this.BSalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BSalir.UseVisualStyleBackColor = false;
             this.BSalir.Click += new System.EventHandler(this.BSalir_Click);
-            // 
-            // Cid
-            // 
-            this.Cid.HeaderText = "id";
-            this.Cid.Name = "Cid";
-            this.Cid.Width = 50;
-            // 
-            // CNombreCategoria
-            // 
-            this.CNombreCategoria.HeaderText = "Nombre";
-            this.CNombreCategoria.Name = "CNombreCategoria";
-            this.CNombreCategoria.Width = 200;
-            // 
-            // CDescuento
-            // 
-            this.CDescuento.HeaderText = "Descuento (%)";
-            this.CDescuento.Name = "CDescuento";
-            // 
-            // CDescripcion
-            // 
-            this.CDescripcion.HeaderText = "Descripcion";
-            this.CDescripcion.Name = "CDescripcion";
-            this.CDescripcion.Width = 300;
-            // 
-            // CBaja
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Red;
-            this.CBaja.DefaultCellStyle = dataGridViewCellStyle1;
-            this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CBaja.HeaderText = "Baja";
-            this.CBaja.Name = "CBaja";
-            this.CBaja.Text = "BAJA";
-            this.CBaja.ToolTipText = "BAJA";
-            this.CBaja.UseColumnTextForButtonValue = true;
             // 
             // niveles_clientes
             // 

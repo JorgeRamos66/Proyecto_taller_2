@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.datagrid_categorias = new System.Windows.Forms.DataGridView();
@@ -38,11 +38,12 @@
             this.textBoxNombreCategoria = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.Cid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CNombreCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CBaja = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.button1 = new System.Windows.Forms.Button();
+            this.textBoxIDcategoria = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_categorias)).BeginInit();
             this.panel2.SuspendLayout();
@@ -71,17 +72,23 @@
             // datagrid_categorias
             // 
             this.datagrid_categorias.AllowUserToAddRows = false;
+            this.datagrid_categorias.AllowUserToDeleteRows = false;
             this.datagrid_categorias.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.datagrid_categorias.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.datagrid_categorias.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.datagrid_categorias.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.datagrid_categorias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datagrid_categorias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Cid,
             this.CNombreCategoria,
             this.CDescripcion,
             this.CBaja});
-            this.datagrid_categorias.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.datagrid_categorias.Location = new System.Drawing.Point(12, 95);
+            this.datagrid_categorias.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.datagrid_categorias.Location = new System.Drawing.Point(59, 99);
+            this.datagrid_categorias.MaximumSize = new System.Drawing.Size(604, 298);
             this.datagrid_categorias.Name = "datagrid_categorias";
-            this.datagrid_categorias.Size = new System.Drawing.Size(696, 326);
+            this.datagrid_categorias.ReadOnly = true;
+            this.datagrid_categorias.Size = new System.Drawing.Size(604, 298);
             this.datagrid_categorias.TabIndex = 4;
             this.datagrid_categorias.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_categorias_CellContentClick);
             // 
@@ -89,13 +96,15 @@
             // 
             this.BNuevaCategoria.BackColor = System.Drawing.Color.LimeGreen;
             this.BNuevaCategoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BNuevaCategoria.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BNuevaCategoria.Font = new System.Drawing.Font("Microsoft Tai Le", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BNuevaCategoria.Image = global::proyecto2_prueba.Properties.Resources.categories_32px;
+            this.BNuevaCategoria.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.BNuevaCategoria.Location = new System.Drawing.Point(520, 18);
             this.BNuevaCategoria.Name = "BNuevaCategoria";
-            this.BNuevaCategoria.Size = new System.Drawing.Size(148, 68);
+            this.BNuevaCategoria.Size = new System.Drawing.Size(148, 79);
             this.BNuevaCategoria.TabIndex = 5;
-            this.BNuevaCategoria.Text = "Agregar Categoria";
+            this.BNuevaCategoria.Text = "Agregar/Modificar Categoria";
+            this.BNuevaCategoria.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.BNuevaCategoria.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.BNuevaCategoria.UseVisualStyleBackColor = false;
             this.BNuevaCategoria.Click += new System.EventHandler(this.BNuevaCategoria_Click);
@@ -152,34 +161,6 @@
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // Cid
-            // 
-            this.Cid.HeaderText = "id";
-            this.Cid.Name = "Cid";
-            this.Cid.Width = 50;
-            // 
-            // CNombreCategoria
-            // 
-            this.CNombreCategoria.HeaderText = "Nombre";
-            this.CNombreCategoria.Name = "CNombreCategoria";
-            this.CNombreCategoria.Width = 200;
-            // 
-            // CDescripcion
-            // 
-            this.CDescripcion.HeaderText = "Descripcion";
-            this.CDescripcion.Name = "CDescripcion";
-            this.CDescripcion.Width = 300;
-            // 
-            // CBaja
-            // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Red;
-            this.CBaja.DefaultCellStyle = dataGridViewCellStyle8;
-            this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CBaja.HeaderText = "Baja";
-            this.CBaja.Name = "CBaja";
-            this.CBaja.Text = "BAJA";
-            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.Tomato;
@@ -195,6 +176,47 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // Cid
+            // 
+            this.Cid.HeaderText = "id";
+            this.Cid.Name = "Cid";
+            this.Cid.ReadOnly = true;
+            this.Cid.Width = 50;
+            // 
+            // CNombreCategoria
+            // 
+            this.CNombreCategoria.HeaderText = "Nombre";
+            this.CNombreCategoria.Name = "CNombreCategoria";
+            this.CNombreCategoria.ReadOnly = true;
+            this.CNombreCategoria.Width = 200;
+            // 
+            // CDescripcion
+            // 
+            this.CDescripcion.HeaderText = "Descripcion";
+            this.CDescripcion.Name = "CDescripcion";
+            this.CDescripcion.ReadOnly = true;
+            this.CDescripcion.Width = 300;
+            // 
+            // CBaja
+            // 
+            this.CBaja.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Red;
+            this.CBaja.DefaultCellStyle = dataGridViewCellStyle1;
+            this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CBaja.HeaderText = "Baja";
+            this.CBaja.Name = "CBaja";
+            this.CBaja.ReadOnly = true;
+            this.CBaja.Text = "BAJA";
+            // 
+            // textBoxIDcategoria
+            // 
+            this.textBoxIDcategoria.Location = new System.Drawing.Point(187, 403);
+            this.textBoxIDcategoria.Name = "textBoxIDcategoria";
+            this.textBoxIDcategoria.Size = new System.Drawing.Size(314, 20);
+            this.textBoxIDcategoria.TabIndex = 10;
+            this.textBoxIDcategoria.Visible = false;
+            // 
             // categorias_productos
             // 
             this.AcceptButton = this.BNuevaCategoria;
@@ -202,11 +224,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGoldenrod;
             this.ClientSize = new System.Drawing.Size(719, 597);
+            this.Controls.Add(this.textBoxIDcategoria);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.datagrid_categorias);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "categorias_productos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Categorias Productos";
@@ -216,6 +239,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -223,17 +247,18 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView datagrid_categorias;
         private System.Windows.Forms.Button BNuevaCategoria;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox textBoxNombreCategoria;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxDescripcionCategoria;
+        private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.DataGridView datagrid_categorias;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cid;
         private System.Windows.Forms.DataGridViewTextBoxColumn CNombreCategoria;
         private System.Windows.Forms.DataGridViewTextBoxColumn CDescripcion;
         private System.Windows.Forms.DataGridViewButtonColumn CBaja;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBoxIDcategoria;
     }
 }

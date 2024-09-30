@@ -34,3 +34,4 @@ C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyect
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.csproj.CoreCompileInputs.cache
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.exe
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.pdb
+C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.admin.ProductoDetalleForm.resources

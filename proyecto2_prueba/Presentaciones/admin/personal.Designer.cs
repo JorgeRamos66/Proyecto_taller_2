@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LAdministracionPersonal = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.datagrid_personal = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxBusqueda = new System.Windows.Forms.TextBox();
             this.BBuscarPersonal = new System.Windows.Forms.Button();
             this.BAgregarPersonal = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -48,6 +48,7 @@
             this.CModificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.CBaja_Alta = new System.Windows.Forms.DataGridViewButtonColumn();
             this.CBaja = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonBorrar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_personal)).BeginInit();
             this.SuspendLayout();
@@ -95,24 +96,25 @@
             this.datagrid_personal.Size = new System.Drawing.Size(1143, 414);
             this.datagrid_personal.TabIndex = 2;
             // 
-            // textBox1
+            // textBoxBusqueda
             // 
-            this.textBox1.Location = new System.Drawing.Point(459, 123);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(162, 20);
-            this.textBox1.TabIndex = 4;
+            this.textBoxBusqueda.Location = new System.Drawing.Point(459, 123);
+            this.textBoxBusqueda.Name = "textBoxBusqueda";
+            this.textBoxBusqueda.Size = new System.Drawing.Size(162, 20);
+            this.textBoxBusqueda.TabIndex = 4;
             // 
             // BBuscarPersonal
             // 
             this.BBuscarPersonal.BackColor = System.Drawing.Color.WhiteSmoke;
             this.BBuscarPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BBuscarPersonal.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BBuscarPersonal.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BBuscarPersonal.Location = new System.Drawing.Point(627, 123);
             this.BBuscarPersonal.Name = "BBuscarPersonal";
             this.BBuscarPersonal.Size = new System.Drawing.Size(75, 21);
             this.BBuscarPersonal.TabIndex = 5;
-            this.BBuscarPersonal.Text = "BUSCAR";
+            this.BBuscarPersonal.Text = "Buscar";
             this.BBuscarPersonal.UseVisualStyleBackColor = false;
+            this.BBuscarPersonal.Click += new System.EventHandler(this.BBuscarPersonal_Click);
             // 
             // BAgregarPersonal
             // 
@@ -196,9 +198,9 @@
             // 
             // CModificar
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.CModificar.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.CModificar.DefaultCellStyle = dataGridViewCellStyle9;
             this.CModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CModificar.HeaderText = "Modificar";
             this.CModificar.Name = "CModificar";
@@ -211,9 +213,9 @@
             // 
             // CBaja_Alta
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Red;
-            this.CBaja_Alta.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Red;
+            this.CBaja_Alta.DefaultCellStyle = dataGridViewCellStyle10;
             this.CBaja_Alta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CBaja_Alta.HeaderText = "Baja/Alta";
             this.CBaja_Alta.Name = "CBaja_Alta";
@@ -229,15 +231,29 @@
             this.CBaja.Name = "CBaja";
             this.CBaja.ReadOnly = true;
             // 
+            // buttonBorrar
+            // 
+            this.buttonBorrar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonBorrar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonBorrar.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBorrar.Location = new System.Drawing.Point(708, 123);
+            this.buttonBorrar.Name = "buttonBorrar";
+            this.buttonBorrar.Size = new System.Drawing.Size(75, 21);
+            this.buttonBorrar.TabIndex = 7;
+            this.buttonBorrar.Text = "Borrar";
+            this.buttonBorrar.UseVisualStyleBackColor = false;
+            this.buttonBorrar.Click += new System.EventHandler(this.buttonBorrar_Click);
+            // 
             // personal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGoldenrod;
             this.ClientSize = new System.Drawing.Size(1194, 624);
+            this.Controls.Add(this.buttonBorrar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.BBuscarPersonal);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxBusqueda);
             this.Controls.Add(this.BAgregarPersonal);
             this.Controls.Add(this.datagrid_personal);
             this.Controls.Add(this.panel1);
@@ -259,7 +275,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView datagrid_personal;
         private System.Windows.Forms.Button BAgregarPersonal;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxBusqueda;
         private System.Windows.Forms.Button BBuscarPersonal;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cid;
@@ -273,5 +289,6 @@
         private System.Windows.Forms.DataGridViewButtonColumn CModificar;
         private System.Windows.Forms.DataGridViewButtonColumn CBaja_Alta;
         private System.Windows.Forms.DataGridViewTextBoxColumn CBaja;
+        private System.Windows.Forms.Button buttonBorrar;
     }
 }

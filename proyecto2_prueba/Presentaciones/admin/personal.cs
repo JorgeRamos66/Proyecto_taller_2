@@ -48,7 +48,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                         datagrid_personal.DataSource = dataTable;
 
                         // Ocultar la columna "Eliminado?" si es necesario
-                        //datagrid_personal.Columns["CId"].Visible = false; 
+                        datagrid_personal.Columns["CId"].Visible = false; 
 
                         // Otras configuraciones adicionales (si las necesitas)
                     }
@@ -494,6 +494,80 @@ namespace proyecto2_prueba.Presentaciones.admin
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void BBuscarPersonal_Click(object sender, EventArgs e)
+        {
+            // Obtener el texto que se está buscando
+            string textoBusqueda = textBoxBusqueda.Text.ToLower();
+
+            // Verificar si el texto de búsqueda no está vacío
+            if (!string.IsNullOrEmpty(textoBusqueda))
+            {
+                // Variable para controlar si se encontraron coincidencias
+                bool algunaFilaVisible = false;
+
+                // Desactivar temporalmente el CurrencyManager
+                CurrencyManager currencyManager = (CurrencyManager)BindingContext[datagrid_personal.DataSource];
+                currencyManager.SuspendBinding();
+
+                // Iterar sobre las filas del DataGridView
+                foreach (DataGridViewRow fila in datagrid_personal.Rows)
+                {
+                    // Obtener los valores de las columnas relevantes y convertir a minúsculas
+                    string nombrePersonal = fila.Cells["CNombre"].Value?.ToString().ToLower();
+                    string apellidoPersonal = fila.Cells["CApellido"].Value?.ToString().ToLower();
+                    string dniPersonal = fila.Cells["CDNI"].Value?.ToString().ToLower();
+                    string rolPersonal = fila.Cells["CRol"].Value?.ToString().ToLower();
+                    string usuarioPersonal = fila.Cells["CUsuario"].Value?.ToString().ToLower();
+                    string emailPersonal = fila.Cells["CEmail"].Value?.ToString().ToLower();
+
+                    // Verificar si alguna de las columnas coincide con el texto de búsqueda
+                    if ((nombrePersonal != null && nombrePersonal.Contains(textoBusqueda))
+                        || (apellidoPersonal != null && apellidoPersonal.Contains(textoBusqueda))
+                        || (dniPersonal != null && dniPersonal.Contains(textoBusqueda))
+                        || (rolPersonal != null && rolPersonal.Contains(textoBusqueda))
+                        || (usuarioPersonal != null && usuarioPersonal.Contains(textoBusqueda))
+                        || (emailPersonal != null && emailPersonal.Contains(textoBusqueda)))
+                    {
+                        fila.Visible = true; // Mostrar fila si coincide
+                        algunaFilaVisible = true; // Se encontró al menos una coincidencia
+                    }
+                    else
+                    {
+                        fila.Visible = false; // Ocultar fila si no coincide
+                    }
+                }
+
+                // Reactivar el CurrencyManager
+                currencyManager.ResumeBinding();
+
+                // Si no se encontró ninguna fila visible, mostrar un mensaje
+                if (!algunaFilaVisible)
+                {
+                    MessageBox.Show("No se encontraron coincidencias.");
+                }
+            }
+            else
+            {
+                // Si el cuadro de búsqueda está vacío, mostrar todas las filas
+                foreach (DataGridViewRow fila in datagrid_personal.Rows)
+                {
+                    fila.Visible = true;
+                }
+            }
+        }
+
+        private void buttonBorrar_Click(object sender, EventArgs e)
+        {
+            // Limpiar el contenido del textBox de búsqueda
+            textBoxBusqueda.Clear();
+
+            // Opcional: mostrar todas las filas nuevamente
+            foreach (DataGridViewRow fila in datagrid_personal.Rows)
+            {
+                fila.Visible = true;
+            }
         }
     }
 }

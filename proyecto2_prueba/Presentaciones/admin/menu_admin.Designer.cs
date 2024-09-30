@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.menuStripAdmin = new System.Windows.Forms.MenuStrip();
-            this.menuPrincipal = new System.Windows.Forms.MenuStrip();
-            this.label1 = new System.Windows.Forms.Label();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarSesionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarProgramaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +39,9 @@
             this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.realizarBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restaurarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPrincipal = new System.Windows.Forms.MenuStrip();
             this.sALIRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStripAdmin.SuspendLayout();
             this.menuPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -64,33 +64,6 @@
             this.menuStripAdmin.TabIndex = 0;
             this.menuStripAdmin.Text = "menuStripAdmin";
             this.menuStripAdmin.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStripAdmin_ItemClicked);
-            // 
-            // menuPrincipal
-            // 
-            this.menuPrincipal.AutoSize = false;
-            this.menuPrincipal.BackColor = System.Drawing.Color.SteelBlue;
-            this.menuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sALIRToolStripMenuItem});
-            this.menuPrincipal.Location = new System.Drawing.Point(0, 0);
-            this.menuPrincipal.Name = "menuPrincipal";
-            this.menuPrincipal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.menuPrincipal.Size = new System.Drawing.Size(800, 47);
-            this.menuPrincipal.TabIndex = 1;
-            this.menuPrincipal.Text = "MenuPrincipal";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.SteelBlue;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(333, 34);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "MENU ADMINISTRADOR";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // archivoToolStripMenuItem
             // 
@@ -162,6 +135,7 @@
             this.aBMNivelesToolStripMenuItem.Size = new System.Drawing.Size(113, 50);
             this.aBMNivelesToolStripMenuItem.Text = "Niveles";
             this.aBMNivelesToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.aBMNivelesToolStripMenuItem.Click += new System.EventHandler(this.aBMNivelesToolStripMenuItem_Click);
             // 
             // backupToolStripMenuItem
             // 
@@ -188,6 +162,19 @@
             this.restaurarToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.restaurarToolStripMenuItem.Text = "Restaurar";
             // 
+            // menuPrincipal
+            // 
+            this.menuPrincipal.AutoSize = false;
+            this.menuPrincipal.BackColor = System.Drawing.Color.SteelBlue;
+            this.menuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sALIRToolStripMenuItem});
+            this.menuPrincipal.Location = new System.Drawing.Point(0, 0);
+            this.menuPrincipal.Name = "menuPrincipal";
+            this.menuPrincipal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.menuPrincipal.Size = new System.Drawing.Size(800, 47);
+            this.menuPrincipal.TabIndex = 1;
+            this.menuPrincipal.Text = "MenuPrincipal";
+            // 
             // sALIRToolStripMenuItem
             // 
             this.sALIRToolStripMenuItem.BackColor = System.Drawing.Color.Tomato;
@@ -200,6 +187,20 @@
             this.sALIRToolStripMenuItem.Text = "SALIR";
             this.sALIRToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.sALIRToolStripMenuItem.Click += new System.EventHandler(this.sALIRToolStripMenuItem_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.SteelBlue;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(333, 34);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "MENU ADMINISTRADOR";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // menu_admin
             // 

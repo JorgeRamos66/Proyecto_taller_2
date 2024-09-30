@@ -30,6 +30,41 @@ namespace proyecto2_prueba
             Application.Exit();
         }
 
+        private void AbrirFormulario<T>(string mensaje) where T : Form, new()
+        {
+            // Verificar si ya hay un formulario MDI abierto
+            Form formularioAbierto = this.MdiChildren.FirstOrDefault();
+
+            if (formularioAbierto != null)
+            {
+                // Si hay un formulario abierto, preguntar si desea cerrarlo
+                DialogResult resultado = MessageBox.Show(mensaje,
+                                                         "Formulario en Uso",
+                                                         MessageBoxButtons.YesNo,
+                                                         MessageBoxIcon.Question);
+
+                if (resultado == DialogResult.Yes)
+                {
+                    // Cerrar el formulario anterior
+                    formularioAbierto.Close();
+
+                    // Crear una nueva instancia y abrirla
+                    T nuevoFormulario = new T();
+                    nuevoFormulario.MdiParent = this;
+                    nuevoFormulario.Show();
+                }
+                // Si elige "No", no se hace nada
+            }
+            else
+            {
+                // Si no hay ningún formulario abierto, se crea uno nuevo
+                T nuevoFormulario = new T();
+                nuevoFormulario.MdiParent = this;
+                nuevoFormulario.Show();
+            }
+        }
+
+
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Cerrar el formulario de admin y se redirige al inicio de sesion por el evento form closed
@@ -66,110 +101,25 @@ namespace proyecto2_prueba
 
         private void aBMEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Verificar si el formulario ya está abierto
-            Form formularioAbierto = Application.OpenForms.OfType<personal>().FirstOrDefault();
-
-            if (formularioAbierto != null)
-            {
-                // El formulario ya está abierto, preguntar al usuario
-                DialogResult resultado = MessageBox.Show("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?",
-                                                         "Formulario en Uso",
-                                                         MessageBoxButtons.YesNo,
-                                                         MessageBoxIcon.Question);
-
-                if (resultado == DialogResult.Yes)
-                {
-                    // Cerrar el formulario anterior
-                    formularioAbierto.Close();
-
-                    // Crear una nueva instancia y abrirla
-                    personal lista_personal = new personal();
-                    lista_personal.MdiParent = this;
-                    lista_personal.Show();
-                }
-                // Si elige "No", no se hace nada
-            }
-            else
-            {
-                // Si no hay ningún formulario abierto, se crea uno nuevo
-                personal lista_personal = new personal();
-                lista_personal.MdiParent = this;
-                lista_personal.Show();
-            }
+            AbrirFormulario<personal>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
         private void aBMProductosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            //Nuevo Metodo:
-
-            // Verificar si el formulario ya está abierto
-            Form formularioAbierto = Application.OpenForms.OfType<listado_productos_admin>().FirstOrDefault();
-
-            if (formularioAbierto != null)
-            {
-                // El formulario ya está abierto, preguntar al usuario
-                DialogResult resultado = MessageBox.Show("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?",
-                                                         "Formulario en Uso",
-                                                         MessageBoxButtons.YesNo,
-                                                         MessageBoxIcon.Question);
-
-                if (resultado == DialogResult.Yes)
-                {
-                    // Cerrar el formulario anterior
-                    formularioAbierto.Close();
-
-                    // Crear una nueva instancia y abrirla
-                    listado_productos_admin lista_productos = new listado_productos_admin();
-                    lista_productos.MdiParent = this;
-                    lista_productos.Show();
-                }
-                // Si elige "No", no se hace nada
-            }
-            else
-            {
-                // Si no hay ningún formulario abierto, se crea uno nuevo
-                listado_productos_admin lista_productos = new listado_productos_admin();
-                lista_productos.MdiParent = this;
-                lista_productos.Show();
-            }
-
+            AbrirFormulario<listado_productos_admin>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
+
 
         private void aBMCategoriasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Verificar si el formulario ya está abierto
-            Form formularioAbierto = Application.OpenForms.OfType<categorias_productos>().FirstOrDefault();
-
-            if (formularioAbierto != null)
-            {
-                // El formulario ya está abierto, preguntar al usuario
-                DialogResult resultado = MessageBox.Show("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?",
-                                                         "Formulario en Uso",
-                                                         MessageBoxButtons.YesNo,
-                                                         MessageBoxIcon.Question);
-
-                if (resultado == DialogResult.Yes)
-                {
-                    // Cerrar el formulario anterior
-                    formularioAbierto.Close();
-
-                    // Crear una nueva instancia y abrirla
-                    categorias_productos lista_categorias = new categorias_productos();
-                    lista_categorias.MdiParent = this;
-                    lista_categorias.Show();
-                }
-                // Si elige "No", no se hace nada
-            }
-            else
-            {
-                // Si no hay ningún formulario abierto, se crea uno nuevo
-                categorias_productos lista_categorias = new categorias_productos();
-                lista_categorias.MdiParent = this;
-                lista_categorias.Show();
-            }
+            AbrirFormulario<categorias_productos>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
-       
+
+        private void aBMNivelesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario<niveles_clientes>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
+        }
+
     }
 }

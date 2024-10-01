@@ -59,10 +59,26 @@ namespace proyecto2_prueba
                 
             }else if (usuario == "gerente" && pass == "gerente")
             {
-                MessageBox.Show("EN CONSTRUCCION: Menú de Gerente");
+                //Se instancia un objeto del tipo menu_admin
+                menu_gerente Principal = new menu_gerente();
+
+                //Suscribir al evento FormClosed del formulario de admin
+                //Explicacion: Cuando Principal se cierre, se vuelve a mostrar este form.
+                //Esto hace que el Inicio de Sesion vuelve a aparecer evitando que la aplicacion
+                // siga en estado de ejecucion aunque se hayan cerrado todas las ventanas.
+                Principal.FormClosed += (s, args) => this.Show();
+
+                //Mostrar menu del administrador
+                Principal.Show();
+
+                //Se limpian las textboxes por seguridad.
                 textBoxUsuario.Clear();
                 textBoxPass.Clear();
 
+                //Ocultar Formulario inicio de sesion
+                //Esta alternativa si no se utiliza con un evento que la vuelva a activar
+                // deja a la aplicación en estado de ejecución, lo que imposibilita volver a ejecutarla.
+                this.Hide();
             }
             else
             {

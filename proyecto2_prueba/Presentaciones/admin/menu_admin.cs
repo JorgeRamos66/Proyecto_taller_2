@@ -25,6 +25,16 @@ namespace proyecto2_prueba
 
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close(); // Cerrar el formulario cuando se presiona Esc
+                return true;  // Indicar que la tecla ha sido manejada
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void cerrarProgramaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();

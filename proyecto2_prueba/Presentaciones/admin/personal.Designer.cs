@@ -28,15 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LAdministracionPersonal = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.datagrid_personal = new System.Windows.Forms.DataGridView();
-            this.textBoxBusqueda = new System.Windows.Forms.TextBox();
-            this.BBuscarPersonal = new System.Windows.Forms.Button();
-            this.BAgregarPersonal = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.Cid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CNombreUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +44,10 @@
             this.CModificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.CBaja_Alta = new System.Windows.Forms.DataGridViewButtonColumn();
             this.CBaja = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBoxBusqueda = new System.Windows.Forms.TextBox();
+            this.BBuscarPersonal = new System.Windows.Forms.Button();
+            this.BAgregarPersonal = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.buttonBorrar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_personal)).BeginInit();
@@ -95,56 +95,6 @@
             this.datagrid_personal.ReadOnly = true;
             this.datagrid_personal.Size = new System.Drawing.Size(1143, 414);
             this.datagrid_personal.TabIndex = 2;
-            // 
-            // textBoxBusqueda
-            // 
-            this.textBoxBusqueda.Location = new System.Drawing.Point(459, 123);
-            this.textBoxBusqueda.Name = "textBoxBusqueda";
-            this.textBoxBusqueda.Size = new System.Drawing.Size(162, 20);
-            this.textBoxBusqueda.TabIndex = 4;
-            // 
-            // BBuscarPersonal
-            // 
-            this.BBuscarPersonal.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.BBuscarPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BBuscarPersonal.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BBuscarPersonal.Location = new System.Drawing.Point(627, 123);
-            this.BBuscarPersonal.Name = "BBuscarPersonal";
-            this.BBuscarPersonal.Size = new System.Drawing.Size(75, 21);
-            this.BBuscarPersonal.TabIndex = 5;
-            this.BBuscarPersonal.Text = "Buscar";
-            this.BBuscarPersonal.UseVisualStyleBackColor = false;
-            this.BBuscarPersonal.Click += new System.EventHandler(this.BBuscarPersonal_Click);
-            // 
-            // BAgregarPersonal
-            // 
-            this.BAgregarPersonal.BackColor = System.Drawing.Color.SteelBlue;
-            this.BAgregarPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BAgregarPersonal.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BAgregarPersonal.Image = global::proyecto2_prueba.Properties.Resources.user_32px;
-            this.BAgregarPersonal.Location = new System.Drawing.Point(1023, 97);
-            this.BAgregarPersonal.Name = "BAgregarPersonal";
-            this.BAgregarPersonal.Size = new System.Drawing.Size(131, 47);
-            this.BAgregarPersonal.TabIndex = 3;
-            this.BAgregarPersonal.Text = "AGREGAR PERSONAL";
-            this.BAgregarPersonal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BAgregarPersonal.UseVisualStyleBackColor = false;
-            this.BAgregarPersonal.Click += new System.EventHandler(this.BAgregarPersonal_Click);
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.Tomato;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Image = global::proyecto2_prueba.Properties.Resources.log_out_32px;
-            this.button1.Location = new System.Drawing.Point(1059, 569);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 43);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "SALIR";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Cid
             // 
@@ -198,9 +148,9 @@
             // 
             // CModificar
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.CModificar.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.CModificar.DefaultCellStyle = dataGridViewCellStyle5;
             this.CModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CModificar.HeaderText = "Modificar";
             this.CModificar.Name = "CModificar";
@@ -213,9 +163,9 @@
             // 
             // CBaja_Alta
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Red;
-            this.CBaja_Alta.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Red;
+            this.CBaja_Alta.DefaultCellStyle = dataGridViewCellStyle6;
             this.CBaja_Alta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CBaja_Alta.HeaderText = "Baja/Alta";
             this.CBaja_Alta.Name = "CBaja_Alta";
@@ -230,6 +180,56 @@
             this.CBaja.HeaderText = "Eliminado?";
             this.CBaja.Name = "CBaja";
             this.CBaja.ReadOnly = true;
+            // 
+            // textBoxBusqueda
+            // 
+            this.textBoxBusqueda.Location = new System.Drawing.Point(459, 123);
+            this.textBoxBusqueda.Name = "textBoxBusqueda";
+            this.textBoxBusqueda.Size = new System.Drawing.Size(162, 20);
+            this.textBoxBusqueda.TabIndex = 4;
+            // 
+            // BBuscarPersonal
+            // 
+            this.BBuscarPersonal.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BBuscarPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BBuscarPersonal.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BBuscarPersonal.Location = new System.Drawing.Point(627, 123);
+            this.BBuscarPersonal.Name = "BBuscarPersonal";
+            this.BBuscarPersonal.Size = new System.Drawing.Size(75, 21);
+            this.BBuscarPersonal.TabIndex = 5;
+            this.BBuscarPersonal.Text = "Buscar";
+            this.BBuscarPersonal.UseVisualStyleBackColor = false;
+            this.BBuscarPersonal.Click += new System.EventHandler(this.BBuscarPersonal_Click);
+            // 
+            // BAgregarPersonal
+            // 
+            this.BAgregarPersonal.BackColor = System.Drawing.Color.SteelBlue;
+            this.BAgregarPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BAgregarPersonal.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BAgregarPersonal.Image = global::proyecto2_prueba.Properties.Resources.user_32px;
+            this.BAgregarPersonal.Location = new System.Drawing.Point(1023, 97);
+            this.BAgregarPersonal.Name = "BAgregarPersonal";
+            this.BAgregarPersonal.Size = new System.Drawing.Size(131, 47);
+            this.BAgregarPersonal.TabIndex = 3;
+            this.BAgregarPersonal.Text = "AGREGAR PERSONAL";
+            this.BAgregarPersonal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BAgregarPersonal.UseVisualStyleBackColor = false;
+            this.BAgregarPersonal.Click += new System.EventHandler(this.BAgregarPersonal_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Tomato;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Image = global::proyecto2_prueba.Properties.Resources.log_out_32px;
+            this.button1.Location = new System.Drawing.Point(1059, 569);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(97, 43);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "SALIR";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonBorrar
             // 
@@ -257,7 +257,7 @@
             this.Controls.Add(this.BAgregarPersonal);
             this.Controls.Add(this.datagrid_personal);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "personal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Administrar Personal";

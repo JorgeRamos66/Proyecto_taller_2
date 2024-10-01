@@ -266,7 +266,7 @@
             this.CancelButton = this.BSALIR_nuevoProducto;
             this.ClientSize = new System.Drawing.Size(753, 450);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "alta_producto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Alta Producto";

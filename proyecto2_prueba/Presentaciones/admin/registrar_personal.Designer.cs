@@ -393,6 +393,7 @@
             this.CancelButton = this.BSalir;
             this.ClientSize = new System.Drawing.Size(658, 473);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "registrar_personal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar Nuevo Personal";

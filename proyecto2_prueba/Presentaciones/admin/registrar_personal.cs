@@ -42,6 +42,15 @@ namespace proyecto2_prueba
             textBoxDireccion.Text = direccion;
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close(); // Cerrar el formulario cuando se presiona Esc
+                return true;  // Indicar que la tecla ha sido manejada
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
         private void LNombre_Click(object sender, EventArgs e)
         {
 
@@ -105,6 +114,9 @@ namespace proyecto2_prueba
             string direccion = textBoxDireccion.Text;
             string ciudad = textCiudad.Text;
             string provincia = textProvincia.Text;
+            string nombreUsuario = textBoxUsuario.Text;
+            string password = textBoxContraseña.Text;
+            DateTime fechaNacimiento = dateTimePicker1.Value;
 
             // Obtener el ID del rol seleccionado
             ComboBoxItem selectedItem = comboBoxRol.SelectedItem as ComboBoxItem;
@@ -118,6 +130,8 @@ namespace proyecto2_prueba
                 string.IsNullOrWhiteSpace(direccion) ||
                 string.IsNullOrWhiteSpace(ciudad) ||
                 string.IsNullOrWhiteSpace(provincia) ||
+                string.IsNullOrWhiteSpace(nombreUsuario) ||
+                string.IsNullOrWhiteSpace(password) ||
                 string.IsNullOrWhiteSpace(rolId))
             {
                 MessageBox.Show("Debe rellenar todos los campos para registrar el personal.",
@@ -145,13 +159,63 @@ namespace proyecto2_prueba
                 {
                     connection.Open();
 
+                    // Verificar si la provincia ya existe
+                    string queryProvincia = "SELECT id_provincia FROM PROVINCIA WHERE nombre_provincia = @NombreProvincia";
+                    int idProvincia;
+
+                    using (SqlCommand commandProvincia = new SqlCommand(queryProvincia, connection))
+                    {
+                        commandProvincia.Parameters.AddWithValue("@NombreProvincia", provincia);
+                        object result = commandProvincia.ExecuteScalar();
+                        if (result != null)
+                        {
+                            idProvincia = Convert.ToInt32(result); // Provincia encontrada
+                        }
+                        else
+                        {
+                            // Insertar la nueva provincia si no existe
+                            string insertProvincia = "INSERT INTO PROVINCIA (nombre_provincia) VALUES (@NombreProvincia); SELECT SCOPE_IDENTITY();";
+                            using (SqlCommand insertCommandProvincia = new SqlCommand(insertProvincia, connection))
+                            {
+                                insertCommandProvincia.Parameters.AddWithValue("@NombreProvincia", provincia);
+                                idProvincia = Convert.ToInt32(insertCommandProvincia.ExecuteScalar());
+                            }
+                        }
+                    }
+
+                    // Verificar si la localidad ya existe
+                    string queryLocalidad = "SELECT id_localidad FROM LOCALIDAD WHERE nombre_localidad = @NombreLocalidad AND id_provincia = @IdProvincia";
+                    int idLocalidad;
+
+                    using (SqlCommand commandLocalidad = new SqlCommand(queryLocalidad, connection))
+                    {
+                        commandLocalidad.Parameters.AddWithValue("@NombreLocalidad", ciudad);
+                        commandLocalidad.Parameters.AddWithValue("@IdProvincia", idProvincia);
+                        object result = commandLocalidad.ExecuteScalar();
+                        if (result != null)
+                        {
+                            idLocalidad = Convert.ToInt32(result); // Localidad encontrada
+                        }
+                        else
+                        {
+                            // Insertar la nueva localidad si no existe
+                            string insertLocalidad = "INSERT INTO LOCALIDAD (nombre_localidad, id_provincia) VALUES (@NombreLocalidad, @IdProvincia); SELECT SCOPE_IDENTITY();";
+                            using (SqlCommand insertCommandLocalidad = new SqlCommand(insertLocalidad, connection))
+                            {
+                                insertCommandLocalidad.Parameters.AddWithValue("@NombreLocalidad", ciudad);
+                                insertCommandLocalidad.Parameters.AddWithValue("@IdProvincia", idProvincia);
+                                idLocalidad = Convert.ToInt32(insertCommandLocalidad.ExecuteScalar());
+                            }
+                        }
+                    }
+
                     if (IdUsuario == 0)
                     {
                         // Crear el comando SQL para insertar la persona
                         string queryPersona = @"
-    INSERT INTO PERSONA (nombre_persona, apellido_persona, dni, email_persona, direccion_persona, id_localidad, fecha_nacimiento) 
-    VALUES (@Nombre, @Apellido, @DNI, @Email, @Direccion, @IdLocalidad, @FechaNacimiento);
-    SELECT SCOPE_IDENTITY();"; // Recuperar el ID de la nueva persona
+                        INSERT INTO PERSONA (nombre_persona, apellido_persona, dni, email_persona, direccion_persona, id_localidad, fecha_nacimiento) 
+                        VALUES (@Nombre, @Apellido, @DNI, @Email, @Direccion, @IdLocalidad, @FechaNacimiento);
+                        SELECT SCOPE_IDENTITY();"; // Recuperar el ID de la nueva persona
 
                         using (SqlCommand commandPersona = new SqlCommand(queryPersona, connection))
                         {
@@ -161,21 +225,21 @@ namespace proyecto2_prueba
                             commandPersona.Parameters.AddWithValue("@Email", email);
                             commandPersona.Parameters.AddWithValue("@Direccion", direccion);
                             commandPersona.Parameters.AddWithValue("@IdLocalidad", idLocalidad); // Asegúrate de obtener este valor correctamente
-                            commandPersona.Parameters.AddWithValue("@FechaNacimiento", fechaNacimiento); // Obtén la fecha del campo correspondiente
+                            commandPersona.Parameters.AddWithValue("@FechaNacimiento", fechaNacimiento);
 
                             // Ejecutar el comando y obtener el ID de la nueva persona
                             int idPersona = Convert.ToInt32(commandPersona.ExecuteScalar());
 
                             // Ahora, crear el comando SQL para insertar el usuario relacionado
                             string queryUsuario = @"
-        INSERT INTO USUARIO (usuario, pass, baja_usuario, id_persona, id_rol) 
-        VALUES (@Usuario, @Pass, @BajaUsuario, @IdPersona, @Rol);
-        SELECT SCOPE_IDENTITY();"; // Recuperar el ID del nuevo usuario
+                            INSERT INTO USUARIO (usuario, pass, baja_usuario, id_persona, id_rol) 
+                            VALUES (@Usuario, @Pass, @BajaUsuario, @IdPersona, @Rol);
+                            SELECT SCOPE_IDENTITY();"; // Recuperar el ID del nuevo usuario
 
                             using (SqlCommand commandUsuario = new SqlCommand(queryUsuario, connection))
                             {
-                                commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario); // Asegúrate de obtener el nombre de usuario
-                                commandUsuario.Parameters.AddWithValue("@Pass", password); // Asegúrate de obtener y posiblemente cifrar la contraseña
+                                commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                                commandUsuario.Parameters.AddWithValue("@Pass", password); // Se puede agregar encriptación de contraseña aquí si es necesario
                                 commandUsuario.Parameters.AddWithValue("@BajaUsuario", 0); // Suponiendo que el usuario no está dado de baja inicialmente
                                 commandUsuario.Parameters.AddWithValue("@IdPersona", idPersona);
                                 commandUsuario.Parameters.AddWithValue("@Rol", rolIdInt);
@@ -225,7 +289,7 @@ namespace proyecto2_prueba
                             commandPersona.Parameters.AddWithValue("@Email", email);
                             commandPersona.Parameters.AddWithValue("@Direccion", direccion);
                             commandPersona.Parameters.AddWithValue("@IdLocalidad", idLocalidad); // Asegúrate de obtener este valor correctamente
-                            commandPersona.Parameters.AddWithValue("@FechaNacimiento", fechaNacimiento); // Obtén la fecha del campo correspondiente
+                            commandPersona.Parameters.AddWithValue("@FechaNacimiento", fechaNacimiento);
                             commandPersona.Parameters.AddWithValue("@IdUsuario", IdUsuario);
 
                             commandPersona.ExecuteNonQuery();
@@ -239,8 +303,8 @@ namespace proyecto2_prueba
 
                         using (SqlCommand commandUsuario = new SqlCommand(updateQueryUsuario, connection))
                         {
-                            commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario); // Asegúrate de obtener el nombre de usuario
-                            commandUsuario.Parameters.AddWithValue("@Pass", password); // Asegúrate de obtener y posiblemente cifrar la contraseña
+                            commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                            commandUsuario.Parameters.AddWithValue("@Pass", password); // Se puede agregar encriptación de contraseña aquí si es necesario
                             commandUsuario.Parameters.AddWithValue("@BajaUsuario", 0); // Suponiendo que el usuario no está dado de baja inicialmente
                             commandUsuario.Parameters.AddWithValue("@Rol", rolIdInt);
                             commandUsuario.Parameters.AddWithValue("@IdUsuario", IdUsuario);
@@ -255,7 +319,6 @@ namespace proyecto2_prueba
                         }
                     }
 
-
                     // Llamar al método para cargar el personal al DataGridView en listado_personal
                     formularioListado.CargarPersonal();
 
@@ -268,6 +331,7 @@ namespace proyecto2_prueba
                 }
             }
         }
+
 
     }
 }

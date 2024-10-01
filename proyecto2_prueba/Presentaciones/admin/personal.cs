@@ -20,6 +20,16 @@ namespace proyecto2_prueba.Presentaciones.admin
             ConfigurarDataGridView();
             CargarPersonal();
             datagrid_personal.CellFormatting += datagrid_personal_CellFormatting;
+
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close(); // Cerrar el formulario cuando se presiona Esc
+                return true;  // Indicar que la tecla ha sido manejada
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         public void CargarPersonal()
@@ -31,12 +41,12 @@ namespace proyecto2_prueba.Presentaciones.admin
                 {
                     connection.Open();
                     string query = @"
-                SELECT p.id_persona, p.nombre_persona, p.apellido_persona, p.dni, 
-                       p.email_persona, p.direccion_persona, u.usuario, r.nombre_rol, 
-                       u.baja_usuario 
-                FROM PERSONA p
-                INNER JOIN USUARIO u ON p.id_persona = u.id_persona
-                INNER JOIN ROL r ON u.id_rol = r.id_rol";
+                    SELECT p.id_persona, p.nombre_persona, p.apellido_persona, p.dni, 
+                            p.email_persona, p.direccion_persona, u.usuario, r.nombre_rol, 
+                            u.baja_usuario 
+                    FROM PERSONA p
+                    INNER JOIN USUARIO u ON p.id_persona = u.id_persona
+                    INNER JOIN ROL r ON u.id_rol = r.id_rol";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -48,7 +58,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                         datagrid_personal.DataSource = dataTable;
 
                         // Ocultar la columna "Eliminado?" si es necesario
-                        datagrid_personal.Columns["CId"].Visible = false; 
+                        //datagrid_personal.Columns["CId"].Visible = false; 
 
                         // Otras configuraciones adicionales (si las necesitas)
                     }
@@ -177,26 +187,8 @@ namespace proyecto2_prueba.Presentaciones.admin
 
         private void datagrid_personal_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Verifica si la columna es la de nombre
-            if (datagrid_personal.Columns[e.ColumnIndex].Name == "CNombre")
-            {
-                // Verifica que el valor de la celda no sea nulo o DBNull antes de intentar convertirlo
-                if (e.Value != null && e.Value != DBNull.Value)
-                {
-                    e.FormattingApplied = true; // Indica que se aplicó formateo
-                }
-            }
 
-            // Verifica si la columna es la de apellido
-            if (datagrid_personal.Columns[e.ColumnIndex].Name == "CApellido")
-            {
-                if (e.Value != null && e.Value != DBNull.Value)
-                {
-                    e.FormattingApplied = true; // Indica que se aplicó formateo
-                }
-            }
-
-            // Verifica si la columna es la de baja_usuario
+            // Verifica si la columna es la de CBaja
             if (datagrid_personal.Columns[e.ColumnIndex].Name == "CBaja")
             {
                 // Verifica que el valor de la celda no sea nulo o DBNull
@@ -205,7 +197,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                     // Verifica si el valor es del tipo correcto antes de convertir
                     if (e.Value is int bajaValue)
                     {
-                        // Cambia el valor a "Sí" o "No" según el estado
+                        // Cambia el valor a "No" o "Sí" según el estado
                         e.Value = bajaValue == 1 ? "No" : "Si";
                         e.FormattingApplied = true; // Evita que el valor predeterminado se siga mostrando
                     }
@@ -226,18 +218,18 @@ namespace proyecto2_prueba.Presentaciones.admin
                     try
                     {
                         // Obtiene el ID del usuario de la fila actual
-                        int idUsuario = Convert.ToInt32(datagrid_personal.Rows[e.RowIndex].Cells["CId"].Value);
+                        int idPersona = Convert.ToInt32(datagrid_personal.Rows[e.RowIndex].Cells["CId"].Value);
 
                         // Conectar a la base de datos para obtener el estado del usuario
                         string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         {
                             connection.Open();
-                            string selectQuery = "SELECT baja_usuario FROM USUARIO WHERE id_usuario = @IdUsuario";
+                            string selectQuery = "SELECT baja_usuario FROM USUARIO WHERE id_persona = @IdPersona";
 
                             using (SqlCommand command = new SqlCommand(selectQuery, connection))
                             {
-                                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                                command.Parameters.AddWithValue("@IdPersona", idPersona);
 
                                 // Ejecutar la consulta y obtener el estado del usuario
                                 object result = command.ExecuteScalar();
@@ -279,8 +271,8 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Cambiar el color del botón Modificar a amarillo
             if (datagrid_personal.Columns[e.ColumnIndex].Name == "CModificar")
             {
-                e.CellStyle.BackColor = Color.White; // Cambia el color de fondo
-                e.CellStyle.ForeColor = Color.Black; // Cambia el color del texto
+                e.CellStyle.BackColor = Color.ForestGreen; // Cambia el color de fondo
+                e.CellStyle.ForeColor = Color.White; // Cambia el color del texto
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
                 e.FormattingApplied = true;
             }
@@ -292,7 +284,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             }
         }
 
-        private void ModificarEstadoUsuario(int id)
+        private void ModificarEstadoUsuario(int idPersona)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
 
@@ -303,10 +295,10 @@ namespace proyecto2_prueba.Presentaciones.admin
                     connection.Open();
 
                     // Consulta para obtener el estado actual del usuario
-                    string selectQuery = "SELECT baja_usuario FROM USUARIO WHERE id_usuario = @Id";
+                    string selectQuery = "SELECT baja_usuario FROM USUARIO WHERE id_persona = @Id";
                     using (SqlCommand selectCommand = new SqlCommand(selectQuery, connection))
                     {
-                        selectCommand.Parameters.AddWithValue("@Id", id);
+                        selectCommand.Parameters.AddWithValue("@Id", idPersona);
 
                         // Ejecutar el comando y verificar si se obtuvo un resultado
                         object result = selectCommand.ExecuteScalar();
@@ -322,16 +314,16 @@ namespace proyecto2_prueba.Presentaciones.admin
                         string updateQuery;
                         if (estadoActual == 0)
                         {
-                            updateQuery = "UPDATE USUARIO SET baja_usuario = 1 WHERE id_usuario = @Id";
+                            updateQuery = "UPDATE USUARIO SET baja_usuario = 1 WHERE id_persona = @Id";
                         }
                         else
                         {
-                            updateQuery = "UPDATE USUARIO SET baja_usuario = 0 WHERE id_usuario = @Id";
+                            updateQuery = "UPDATE USUARIO SET baja_usuario = 0 WHERE id_persona = @Id";
                         }
 
                         using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
                         {
-                            updateCommand.Parameters.AddWithValue("@Id", id);
+                            updateCommand.Parameters.AddWithValue("@Id", idPersona);
 
                             // Ejecuta la actualización
                             int rowsAffected = updateCommand.ExecuteNonQuery();
@@ -379,15 +371,15 @@ namespace proyecto2_prueba.Presentaciones.admin
                     // Verifica si se ha hecho clic en la columna de estado
                     if (datagrid_personal.Columns[e.ColumnIndex].Name == "CEstado")
                     {
-                        // Obtiene el ID del usuario de la celda correspondiente
+                        // Obtiene el ID de la persona de la celda correspondiente
                         object cellValue = datagrid_personal.Rows[e.RowIndex].Cells["CId"].Value;
 
-                        if (cellValue != null && int.TryParse(cellValue.ToString(), out int idUsuario))
+                        if (cellValue != null && int.TryParse(cellValue.ToString(), out int idPersona))
                         {
                             try
                             {
                                 // Modifica el estado del usuario
-                                ModificarEstadoUsuario(idUsuario);
+                                ModificarEstadoUsuario(idPersona);
                             }
                             catch (Exception ex)
                             {

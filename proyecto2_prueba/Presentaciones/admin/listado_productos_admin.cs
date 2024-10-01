@@ -23,6 +23,16 @@ namespace proyecto2_prueba.Presentaciones.admin
             datagrid_productos.CellFormatting += datagrid_productos_CellFormatting;
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close(); // Cerrar el formulario cuando se presiona Esc
+                return true;  // Indicar que la tecla ha sido manejada
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
 
         private void BAltaProducto_Click(object sender, EventArgs e)
         {
@@ -481,8 +491,8 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Cambiar color del botón Modificar a amarillo
             if (datagrid_productos.Columns[e.ColumnIndex].Name == "CModificar")
             {
-                e.CellStyle.BackColor = Color.White; // Cambia el color de fondo
-                e.CellStyle.ForeColor = Color.Black; // Cambia el color del texto
+                e.CellStyle.BackColor = Color.Green; // Cambia el color de fondo
+                e.CellStyle.ForeColor = Color.White; // Cambia el color del texto
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
                 e.FormattingApplied = true;
             }

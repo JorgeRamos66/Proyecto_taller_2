@@ -27,7 +27,6 @@ C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyect
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.admin.nueva_categoria.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.inicio_sesion.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_admin.resources
-C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.gerente.menu_gerente.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Properties.Resources.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.registrar_personal.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.csproj.GenerateResource.cache
@@ -58,3 +57,4 @@ C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyect
 C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.csproj.CoreCompileInputs.cache
 C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.exe
 C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.pdb
+C:\Users\Jorge\source\repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_gerente.resources

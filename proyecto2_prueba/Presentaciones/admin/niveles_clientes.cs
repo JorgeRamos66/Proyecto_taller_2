@@ -17,6 +17,15 @@ namespace proyecto2_prueba.Presentaciones.admin
             InitializeComponent();
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close(); // Cerrar el formulario cuando se presiona Esc
+                return true;  // Indicar que la tecla ha sido manejada
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
         private void label3_Click(object sender, EventArgs e)
         {
 

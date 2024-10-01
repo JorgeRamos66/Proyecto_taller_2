@@ -29,9 +29,13 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.LModificarProducto = new System.Windows.Forms.Label();
+            this.comboBoxCategoria = new System.Windows.Forms.ComboBox();
             this.textBoxRutaFoto = new System.Windows.Forms.TextBox();
+            this.BAgregarImagen = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.pictureBoxProducto = new System.Windows.Forms.PictureBox();
+            this.BSalirModificacion = new System.Windows.Forms.Button();
+            this.BModificarProducto = new System.Windows.Forms.Button();
             this.textBoxDescripcion = new System.Windows.Forms.TextBox();
             this.textBoxPrecio = new System.Windows.Forms.TextBox();
             this.textBoxStock = new System.Windows.Forms.TextBox();
@@ -41,11 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.BAgregarImagen = new System.Windows.Forms.Button();
-            this.pictureBoxProducto = new System.Windows.Forms.PictureBox();
-            this.BSalirModificacion = new System.Windows.Forms.Button();
-            this.BModificarProducto = new System.Windows.Forms.Button();
-            this.comboBoxCategoria = new System.Windows.Forms.ComboBox();
+            this.LModificarProducto = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProducto)).BeginInit();
             this.SuspendLayout();
@@ -75,18 +75,19 @@
             this.panel1.Size = new System.Drawing.Size(658, 426);
             this.panel1.TabIndex = 0;
             // 
-            // LModificarProducto
+            // comboBoxCategoria
             // 
-            this.LModificarProducto.AutoSize = true;
-            this.LModificarProducto.BackColor = System.Drawing.Color.Tan;
-            this.LModificarProducto.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.LModificarProducto.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LModificarProducto.Location = new System.Drawing.Point(207, 13);
-            this.LModificarProducto.Name = "LModificarProducto";
-            this.LModificarProducto.Size = new System.Drawing.Size(237, 33);
-            this.LModificarProducto.TabIndex = 1;
-            this.LModificarProducto.Text = "Modificar Producto";
-            this.LModificarProducto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.comboBoxCategoria.FormattingEnabled = true;
+            this.comboBoxCategoria.Items.AddRange(new object[] {
+            "Estaciones Totales",
+            "Niveles",
+            "GPS",
+            "Drones",
+            "Otros"});
+            this.comboBoxCategoria.Location = new System.Drawing.Point(135, 206);
+            this.comboBoxCategoria.Name = "comboBoxCategoria";
+            this.comboBoxCategoria.Size = new System.Drawing.Size(245, 21);
+            this.comboBoxCategoria.TabIndex = 32;
             // 
             // textBoxRutaFoto
             // 
@@ -95,6 +96,21 @@
             this.textBoxRutaFoto.ReadOnly = true;
             this.textBoxRutaFoto.Size = new System.Drawing.Size(190, 20);
             this.textBoxRutaFoto.TabIndex = 31;
+            // 
+            // BAgregarImagen
+            // 
+            this.BAgregarImagen.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BAgregarImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BAgregarImagen.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BAgregarImagen.Image = global::proyecto2_prueba.Properties.Resources.photo_24px;
+            this.BAgregarImagen.Location = new System.Drawing.Point(447, 61);
+            this.BAgregarImagen.Name = "BAgregarImagen";
+            this.BAgregarImagen.Size = new System.Drawing.Size(118, 51);
+            this.BAgregarImagen.TabIndex = 30;
+            this.BAgregarImagen.Text = "Cambiar Imagen";
+            this.BAgregarImagen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.BAgregarImagen.UseVisualStyleBackColor = false;
+            this.BAgregarImagen.Click += new System.EventHandler(this.BAgregarImagen_Click);
             // 
             // label6
             // 
@@ -105,6 +121,49 @@
             this.label6.Size = new System.Drawing.Size(149, 18);
             this.label6.TabIndex = 29;
             this.label6.Text = "Imagen del Producto";
+            // 
+            // pictureBoxProducto
+            // 
+            this.pictureBoxProducto.BackColor = System.Drawing.Color.DarkKhaki;
+            this.pictureBoxProducto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBoxProducto.Location = new System.Drawing.Point(415, 165);
+            this.pictureBoxProducto.Name = "pictureBoxProducto";
+            this.pictureBoxProducto.Size = new System.Drawing.Size(190, 175);
+            this.pictureBoxProducto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxProducto.TabIndex = 28;
+            this.pictureBoxProducto.TabStop = false;
+            // 
+            // BSalirModificacion
+            // 
+            this.BSalirModificacion.BackColor = System.Drawing.Color.Tomato;
+            this.BSalirModificacion.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.BSalirModificacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BSalirModificacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BSalirModificacion.Image = global::proyecto2_prueba.Properties.Resources.log_out_32px;
+            this.BSalirModificacion.Location = new System.Drawing.Point(415, 361);
+            this.BSalirModificacion.Name = "BSalirModificacion";
+            this.BSalirModificacion.Size = new System.Drawing.Size(103, 46);
+            this.BSalirModificacion.TabIndex = 27;
+            this.BSalirModificacion.Text = "SALIR";
+            this.BSalirModificacion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BSalirModificacion.UseVisualStyleBackColor = false;
+            this.BSalirModificacion.Click += new System.EventHandler(this.BSalirModificacion_Click);
+            // 
+            // BModificarProducto
+            // 
+            this.BModificarProducto.BackColor = System.Drawing.Color.SteelBlue;
+            this.BModificarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BModificarProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BModificarProducto.Image = global::proyecto2_prueba.Properties.Resources.editar_32px;
+            this.BModificarProducto.Location = new System.Drawing.Point(196, 361);
+            this.BModificarProducto.Name = "BModificarProducto";
+            this.BModificarProducto.Size = new System.Drawing.Size(123, 46);
+            this.BModificarProducto.TabIndex = 26;
+            this.BModificarProducto.Text = "MODIFICAR";
+            this.BModificarProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BModificarProducto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BModificarProducto.UseVisualStyleBackColor = false;
+            this.BModificarProducto.Click += new System.EventHandler(this.BModificarProducto_Click);
             // 
             // textBoxDescripcion
             // 
@@ -188,77 +247,18 @@
             this.label1.TabIndex = 16;
             this.label1.Text = "Nombre";
             // 
-            // BAgregarImagen
+            // LModificarProducto
             // 
-            this.BAgregarImagen.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.BAgregarImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BAgregarImagen.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BAgregarImagen.Image = global::proyecto2_prueba.Properties.Resources.photo_24px;
-            this.BAgregarImagen.Location = new System.Drawing.Point(447, 61);
-            this.BAgregarImagen.Name = "BAgregarImagen";
-            this.BAgregarImagen.Size = new System.Drawing.Size(118, 51);
-            this.BAgregarImagen.TabIndex = 30;
-            this.BAgregarImagen.Text = "Cambiar Imagen";
-            this.BAgregarImagen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.BAgregarImagen.UseVisualStyleBackColor = false;
-            this.BAgregarImagen.Click += new System.EventHandler(this.BAgregarImagen_Click);
-            // 
-            // pictureBoxProducto
-            // 
-            this.pictureBoxProducto.BackColor = System.Drawing.Color.DarkKhaki;
-            this.pictureBoxProducto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBoxProducto.Location = new System.Drawing.Point(415, 165);
-            this.pictureBoxProducto.Name = "pictureBoxProducto";
-            this.pictureBoxProducto.Size = new System.Drawing.Size(190, 175);
-            this.pictureBoxProducto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxProducto.TabIndex = 28;
-            this.pictureBoxProducto.TabStop = false;
-            // 
-            // BSalirModificacion
-            // 
-            this.BSalirModificacion.BackColor = System.Drawing.Color.Tomato;
-            this.BSalirModificacion.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BSalirModificacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BSalirModificacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSalirModificacion.Image = global::proyecto2_prueba.Properties.Resources.log_out_32px;
-            this.BSalirModificacion.Location = new System.Drawing.Point(415, 361);
-            this.BSalirModificacion.Name = "BSalirModificacion";
-            this.BSalirModificacion.Size = new System.Drawing.Size(103, 46);
-            this.BSalirModificacion.TabIndex = 27;
-            this.BSalirModificacion.Text = "SALIR";
-            this.BSalirModificacion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BSalirModificacion.UseVisualStyleBackColor = false;
-            this.BSalirModificacion.Click += new System.EventHandler(this.BSalirModificacion_Click);
-            // 
-            // BModificarProducto
-            // 
-            this.BModificarProducto.BackColor = System.Drawing.Color.SteelBlue;
-            this.BModificarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BModificarProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BModificarProducto.Image = global::proyecto2_prueba.Properties.Resources.editar_32px;
-            this.BModificarProducto.Location = new System.Drawing.Point(196, 361);
-            this.BModificarProducto.Name = "BModificarProducto";
-            this.BModificarProducto.Size = new System.Drawing.Size(123, 46);
-            this.BModificarProducto.TabIndex = 26;
-            this.BModificarProducto.Text = "MODIFICAR";
-            this.BModificarProducto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BModificarProducto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BModificarProducto.UseVisualStyleBackColor = false;
-            this.BModificarProducto.Click += new System.EventHandler(this.BModificarProducto_Click);
-            // 
-            // comboBoxCategoria
-            // 
-            this.comboBoxCategoria.FormattingEnabled = true;
-            this.comboBoxCategoria.Items.AddRange(new object[] {
-            "Estaciones Totales",
-            "Niveles",
-            "GPS",
-            "Drones",
-            "Otros"});
-            this.comboBoxCategoria.Location = new System.Drawing.Point(135, 206);
-            this.comboBoxCategoria.Name = "comboBoxCategoria";
-            this.comboBoxCategoria.Size = new System.Drawing.Size(245, 21);
-            this.comboBoxCategoria.TabIndex = 32;
+            this.LModificarProducto.AutoSize = true;
+            this.LModificarProducto.BackColor = System.Drawing.Color.Tan;
+            this.LModificarProducto.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.LModificarProducto.Font = new System.Drawing.Font("Corbel", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LModificarProducto.Location = new System.Drawing.Point(207, 13);
+            this.LModificarProducto.Name = "LModificarProducto";
+            this.LModificarProducto.Size = new System.Drawing.Size(237, 33);
+            this.LModificarProducto.TabIndex = 1;
+            this.LModificarProducto.Text = "Modificar Producto";
+            this.LModificarProducto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // modificar_producto
             // 
@@ -270,7 +270,7 @@
             this.ClientSize = new System.Drawing.Size(753, 450);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "modificar_producto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

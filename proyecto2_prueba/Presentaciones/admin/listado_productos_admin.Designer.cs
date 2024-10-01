@@ -251,7 +251,7 @@
             this.Controls.Add(this.textBoxBusqueda);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.datagrid_productos);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "listado_productos_admin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lista de Productos";

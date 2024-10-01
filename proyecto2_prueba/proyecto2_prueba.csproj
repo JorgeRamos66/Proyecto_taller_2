@@ -232,6 +232,7 @@
     <None Include="Resources\producto_256px.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\468034.png" />
     <Content Include="Resources\restore_24px.png" />
     <Content Include="Resources\suma_24px.png" />
     <Content Include="Resources\user_24px.png" />

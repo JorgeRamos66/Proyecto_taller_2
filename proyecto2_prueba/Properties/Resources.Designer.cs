@@ -63,6 +63,16 @@ namespace proyecto2_prueba.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _468034 {
+            get {
+                object obj = ResourceManager.GetObject("468034", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap box_32px {
             get {
                 object obj = ResourceManager.GetObject("box_32px", resourceCulture);

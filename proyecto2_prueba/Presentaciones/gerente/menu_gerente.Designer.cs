@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.menuStripGerente = new System.Windows.Forms.MenuStrip();
+            this.menuPrincipal = new System.Windows.Forms.MenuStrip();
+            this.label1 = new System.Windows.Forms.Label();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarSesionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarProgramaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aBMProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripMenuItemEstadisticas = new System.Windows.Forms.ToolStripMenuItem();
             this.aBMCategoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPrincipal = new System.Windows.Forms.MenuStrip();
             this.sALIRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
             this.menuStripGerente.SuspendLayout();
             this.menuPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -47,14 +47,41 @@
             this.menuStripGerente.Dock = System.Windows.Forms.DockStyle.Left;
             this.menuStripGerente.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
-            this.aBMProductosToolStripMenuItem,
+            this.StripMenuItemEstadisticas,
             this.aBMCategoriasToolStripMenuItem});
             this.menuStripGerente.Location = new System.Drawing.Point(0, 47);
             this.menuStripGerente.Name = "menuStripGerente";
             this.menuStripGerente.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
-            this.menuStripGerente.Size = new System.Drawing.Size(88, 368);
+            this.menuStripGerente.Size = new System.Drawing.Size(126, 368);
             this.menuStripGerente.TabIndex = 0;
             this.menuStripGerente.Text = "menuStripGerente";
+            // 
+            // menuPrincipal
+            // 
+            this.menuPrincipal.AutoSize = false;
+            this.menuPrincipal.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.menuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sALIRToolStripMenuItem});
+            this.menuPrincipal.Location = new System.Drawing.Point(0, 0);
+            this.menuPrincipal.Name = "menuPrincipal";
+            this.menuPrincipal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.menuPrincipal.Size = new System.Drawing.Size(800, 47);
+            this.menuPrincipal.TabIndex = 1;
+            this.menuPrincipal.Text = "MenuPrincipal";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(219, 34);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "MENU GERENTE";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // archivoToolStripMenuItem
             // 
@@ -65,7 +92,7 @@
             this.archivoToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.main_32px;
             this.archivoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(75, 52);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
             this.archivoToolStripMenuItem.Text = "Menu";
             this.archivoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -81,38 +108,25 @@
             this.cerrarProgramaToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.cerrarProgramaToolStripMenuItem.Text = "Cerrar Programa";
             // 
-            // aBMProductosToolStripMenuItem
+            // StripMenuItemEstadisticas
             // 
-            this.aBMProductosToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aBMProductosToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.boxes_16px;
-            this.aBMProductosToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.aBMProductosToolStripMenuItem.Name = "aBMProductosToolStripMenuItem";
-            this.aBMProductosToolStripMenuItem.Size = new System.Drawing.Size(75, 44);
-            this.aBMProductosToolStripMenuItem.Text = "Productos";
-            this.aBMProductosToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.StripMenuItemEstadisticas.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StripMenuItemEstadisticas.Image = global::proyecto2_prueba.Properties.Resources.editar_32px;
+            this.StripMenuItemEstadisticas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.StripMenuItemEstadisticas.Name = "StripMenuItemEstadisticas";
+            this.StripMenuItemEstadisticas.Size = new System.Drawing.Size(113, 52);
+            this.StripMenuItemEstadisticas.Text = "Estadisticas";
+            this.StripMenuItemEstadisticas.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // aBMCategoriasToolStripMenuItem
             // 
             this.aBMCategoriasToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aBMCategoriasToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.categories_32px;
+            this.aBMCategoriasToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.box_32px;
             this.aBMCategoriasToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.aBMCategoriasToolStripMenuItem.Name = "aBMCategoriasToolStripMenuItem";
-            this.aBMCategoriasToolStripMenuItem.Size = new System.Drawing.Size(75, 52);
-            this.aBMCategoriasToolStripMenuItem.Text = "Categorias";
+            this.aBMCategoriasToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
+            this.aBMCategoriasToolStripMenuItem.Text = "Ventas";
             this.aBMCategoriasToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // menuPrincipal
-            // 
-            this.menuPrincipal.AutoSize = false;
-            this.menuPrincipal.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.menuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sALIRToolStripMenuItem});
-            this.menuPrincipal.Location = new System.Drawing.Point(0, 0);
-            this.menuPrincipal.Name = "menuPrincipal";
-            this.menuPrincipal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.menuPrincipal.Size = new System.Drawing.Size(800, 47);
-            this.menuPrincipal.TabIndex = 1;
-            this.menuPrincipal.Text = "MenuPrincipal";
             // 
             // sALIRToolStripMenuItem
             // 
@@ -125,20 +139,6 @@
             this.sALIRToolStripMenuItem.Size = new System.Drawing.Size(87, 43);
             this.sALIRToolStripMenuItem.Text = "SALIR";
             this.sALIRToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(219, 34);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "MENU GERENTE";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // menu_gerente
             // 
@@ -170,7 +170,7 @@
         private System.Windows.Forms.ToolStripMenuItem archivoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cerrarSesionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cerrarProgramaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aBMProductosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem StripMenuItemEstadisticas;
         private System.Windows.Forms.ToolStripMenuItem aBMCategoriasToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuPrincipal;
         private System.Windows.Forms.ToolStripMenuItem sALIRToolStripMenuItem;

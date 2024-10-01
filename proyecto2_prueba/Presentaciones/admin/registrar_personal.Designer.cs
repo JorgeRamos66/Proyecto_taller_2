@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBoxRol = new System.Windows.Forms.ComboBox();
+            this.labelRol = new System.Windows.Forms.Label();
             this.textProvincia = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -57,8 +59,6 @@
             this.LEmail = new System.Windows.Forms.Label();
             this.LApellido = new System.Windows.Forms.Label();
             this.LNombre = new System.Windows.Forms.Label();
-            this.labelRol = new System.Windows.Forms.Label();
-            this.comboBoxRol = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -97,7 +97,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(558, 449);
             this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // comboBoxRol
+            // 
+            this.comboBoxRol.FormattingEnabled = true;
+            this.comboBoxRol.Location = new System.Drawing.Point(191, 355);
+            this.comboBoxRol.Name = "comboBoxRol";
+            this.comboBoxRol.Size = new System.Drawing.Size(204, 21);
+            this.comboBoxRol.TabIndex = 30;
+            // 
+            // labelRol
+            // 
+            this.labelRol.AutoSize = true;
+            this.labelRol.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRol.Location = new System.Drawing.Point(158, 357);
+            this.labelRol.Name = "labelRol";
+            this.labelRol.Size = new System.Drawing.Size(27, 16);
+            this.labelRol.TabIndex = 28;
+            this.labelRol.Text = "Rol";
             // 
             // textProvincia
             // 
@@ -170,7 +187,6 @@
             this.LDni.Size = new System.Drawing.Size(111, 16);
             this.LDni.TabIndex = 3;
             this.LDni.Text = "Tipo Documento";
-            this.LDni.Click += new System.EventHandler(this.LDni_Click);
             // 
             // label2
             // 
@@ -199,7 +215,6 @@
             this.label1.Size = new System.Drawing.Size(133, 16);
             this.label1.TabIndex = 22;
             this.label1.Text = "Numero Documento";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // BSalir
             // 
@@ -231,6 +246,7 @@
             this.BGuardar.Text = "REGISTRAR";
             this.BGuardar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BGuardar.UseVisualStyleBackColor = false;
+            this.BGuardar.Click += new System.EventHandler(this.BGuardar_Click);
             // 
             // Linfo
             // 
@@ -276,7 +292,6 @@
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(173, 20);
             this.textBoxDNI.TabIndex = 11;
-            this.textBoxDNI.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // textBoxEmail
             // 
@@ -328,7 +343,6 @@
             this.LDireccion.Size = new System.Drawing.Size(65, 16);
             this.LDireccion.TabIndex = 5;
             this.LDireccion.Text = "Direccion";
-            this.LDireccion.Click += new System.EventHandler(this.LCalle_Click);
             // 
             // LLocalidad
             // 
@@ -339,7 +353,6 @@
             this.LLocalidad.Size = new System.Drawing.Size(50, 16);
             this.LLocalidad.TabIndex = 4;
             this.LLocalidad.Text = "Ciudad";
-            this.LLocalidad.Click += new System.EventHandler(this.LLocalidad_Click);
             // 
             // LEmail
             // 
@@ -371,25 +384,6 @@
             this.LNombre.TabIndex = 0;
             this.LNombre.Text = "Nombre";
             this.LNombre.Click += new System.EventHandler(this.LNombre_Click);
-            // 
-            // labelRol
-            // 
-            this.labelRol.AutoSize = true;
-            this.labelRol.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRol.Location = new System.Drawing.Point(158, 357);
-            this.labelRol.Name = "labelRol";
-            this.labelRol.Size = new System.Drawing.Size(27, 16);
-            this.labelRol.TabIndex = 28;
-            this.labelRol.Text = "Rol";
-            this.labelRol.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // comboBoxRol
-            // 
-            this.comboBoxRol.FormattingEnabled = true;
-            this.comboBoxRol.Location = new System.Drawing.Point(191, 355);
-            this.comboBoxRol.Name = "comboBoxRol";
-            this.comboBoxRol.Size = new System.Drawing.Size(204, 21);
-            this.comboBoxRol.TabIndex = 30;
             // 
             // registrar_personal
             // 

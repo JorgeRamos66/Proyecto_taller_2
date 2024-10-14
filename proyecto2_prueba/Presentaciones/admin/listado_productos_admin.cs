@@ -686,17 +686,6 @@ namespace proyecto2_prueba.Presentaciones.admin
             }
         }
 
-        private void fillByToolStripButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.pRODUCTOTableAdapter.FillBy(this.proyecto_Taller_2DataSet.PRODUCTO);
-            }
-            catch (System.Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
-
-        }
+        
     }
 }

@@ -63,7 +63,6 @@
             this.menuStripAdmin.Size = new System.Drawing.Size(88, 368);
             this.menuStripAdmin.TabIndex = 0;
             this.menuStripAdmin.Text = "menuStripAdmin";
-            //this.menuStripAdmin.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStripAdmin_ItemClicked);
             // 
             // archivoToolStripMenuItem
             // 

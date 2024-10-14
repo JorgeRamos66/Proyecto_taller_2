@@ -57,11 +57,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             this.Close();
         }
 
-        private void LAgregarProducto_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void CargarCategorias()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString; // Asegúrate de que 'MiCadenaDeConexion' está definido en tu archivo de configuración
@@ -252,7 +248,6 @@ namespace proyecto2_prueba.Presentaciones.admin
                 }
             }
         }
-
 
         private void BAgregarImagen_Click(object sender, EventArgs e)
         {

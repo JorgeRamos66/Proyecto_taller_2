@@ -48,8 +48,10 @@
             this.BSalir = new System.Windows.Forms.Button();
             this.BAltaProducto = new System.Windows.Forms.Button();
             this.BBorrar = new System.Windows.Forms.Button();
+            this.proyecto_Taller_2DataSet = new proyecto2_prueba.Proyecto_Taller_2DataSet();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_productos)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.proyecto_Taller_2DataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // datagrid_productos
@@ -236,6 +238,11 @@
             this.BBorrar.UseVisualStyleBackColor = false;
             this.BBorrar.Click += new System.EventHandler(this.ButtonLimpiar_Click);
             // 
+            // proyecto_Taller_2DataSet
+            // 
+            this.proyecto_Taller_2DataSet.DataSetName = "Proyecto_Taller_2DataSet";
+            this.proyecto_Taller_2DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // listado_productos_admin
             // 
             this.AcceptButton = this.BBuscarProducto;
@@ -258,6 +265,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_productos)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.proyecto_Taller_2DataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,5 +289,6 @@
         private System.Windows.Forms.DataGridViewButtonColumn CModificar;
         private System.Windows.Forms.DataGridViewButtonColumn CBaja;
         private System.Windows.Forms.Button BBorrar;
+        private Proyecto_Taller_2DataSet proyecto_Taller_2DataSet;
     }
 }

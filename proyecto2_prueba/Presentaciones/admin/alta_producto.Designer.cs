@@ -141,7 +141,6 @@
             this.LAgregarProducto.TabIndex = 0;
             this.LAgregarProducto.Text = "Agregar Nuevo Producto";
             this.LAgregarProducto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.LAgregarProducto.Click += new System.EventHandler(this.LAgregarProducto_Click);
             // 
             // BSALIR_nuevoProducto
             // 

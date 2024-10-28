@@ -33,14 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.datagrid_productos = new System.Windows.Forms.DataGridView();
-            this.CNombre_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CStock_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CCategoria_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Imagen = new System.Windows.Forms.DataGridViewImageColumn();
-            this.CModificar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.CBaja = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBoxBusqueda = new System.Windows.Forms.TextBox();
@@ -49,6 +41,14 @@
             this.BAltaProducto = new System.Windows.Forms.Button();
             this.BBorrar = new System.Windows.Forms.Button();
             this.proyecto_Taller_2DataSet = new proyecto2_prueba.Proyecto_Taller_2DataSet();
+            this.CNombre_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CStock_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CCategoria_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Imagen = new System.Windows.Forms.DataGridViewImageColumn();
+            this.CModificar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CBaja = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_productos)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.proyecto_Taller_2DataSet)).BeginInit();
@@ -80,77 +80,6 @@
             this.datagrid_productos.Size = new System.Drawing.Size(1094, 393);
             this.datagrid_productos.TabIndex = 0;
             this.datagrid_productos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_productos_CellClick);
-            // 
-            // CNombre_producto
-            // 
-            this.CNombre_producto.HeaderText = "Nombre";
-            this.CNombre_producto.Name = "CNombre_producto";
-            this.CNombre_producto.ReadOnly = true;
-            this.CNombre_producto.Width = 150;
-            // 
-            // CStock_producto
-            // 
-            this.CStock_producto.HeaderText = "Stock";
-            this.CStock_producto.Name = "CStock_producto";
-            this.CStock_producto.ReadOnly = true;
-            this.CStock_producto.Width = 50;
-            // 
-            // CPrecio
-            // 
-            this.CPrecio.HeaderText = "Precio";
-            this.CPrecio.Name = "CPrecio";
-            this.CPrecio.ReadOnly = true;
-            // 
-            // CCategoria_producto
-            // 
-            this.CCategoria_producto.HeaderText = "Categoria";
-            this.CCategoria_producto.Name = "CCategoria_producto";
-            this.CCategoria_producto.ReadOnly = true;
-            this.CCategoria_producto.Width = 150;
-            // 
-            // CDescripcion
-            // 
-            this.CDescripcion.HeaderText = "Descripcion";
-            this.CDescripcion.Name = "CDescripcion";
-            this.CDescripcion.ReadOnly = true;
-            this.CDescripcion.Width = 200;
-            // 
-            // Imagen
-            // 
-            this.Imagen.HeaderText = "Imagen";
-            this.Imagen.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Imagen.Name = "Imagen";
-            this.Imagen.ReadOnly = true;
-            this.Imagen.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Imagen.Width = 200;
-            // 
-            // CModificar
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CModificar.DefaultCellStyle = dataGridViewCellStyle1;
-            this.CModificar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.CModificar.HeaderText = "Modificar";
-            this.CModificar.Name = "CModificar";
-            this.CModificar.ReadOnly = true;
-            this.CModificar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.CModificar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.CModificar.Text = "Modificar";
-            this.CModificar.UseColumnTextForButtonValue = true;
-            // 
-            // CBaja
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Red;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CBaja.DefaultCellStyle = dataGridViewCellStyle2;
-            this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CBaja.HeaderText = "Baja";
-            this.CBaja.Name = "CBaja";
-            this.CBaja.ReadOnly = true;
-            this.CBaja.Text = "Baja";
-            this.CBaja.UseColumnTextForButtonValue = true;
             // 
             // label1
             // 
@@ -243,6 +172,70 @@
             this.proyecto_Taller_2DataSet.DataSetName = "Proyecto_Taller_2DataSet";
             this.proyecto_Taller_2DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // CNombre_producto
+            // 
+            this.CNombre_producto.HeaderText = "Nombre";
+            this.CNombre_producto.Name = "CNombre_producto";
+            this.CNombre_producto.ReadOnly = true;
+            this.CNombre_producto.Width = 150;
+            // 
+            // CStock_producto
+            // 
+            this.CStock_producto.HeaderText = "Stock";
+            this.CStock_producto.Name = "CStock_producto";
+            this.CStock_producto.ReadOnly = true;
+            this.CStock_producto.Width = 50;
+            // 
+            // CPrecio
+            // 
+            this.CPrecio.HeaderText = "Precio";
+            this.CPrecio.Name = "CPrecio";
+            this.CPrecio.ReadOnly = true;
+            // 
+            // CCategoria_producto
+            // 
+            this.CCategoria_producto.HeaderText = "Categoria";
+            this.CCategoria_producto.Name = "CCategoria_producto";
+            this.CCategoria_producto.ReadOnly = true;
+            this.CCategoria_producto.Width = 150;
+            // 
+            // CDescripcion
+            // 
+            this.CDescripcion.HeaderText = "Descripcion";
+            this.CDescripcion.Name = "CDescripcion";
+            this.CDescripcion.ReadOnly = true;
+            this.CDescripcion.Width = 200;
+            // 
+            // Imagen
+            // 
+            this.Imagen.HeaderText = "Imagen";
+            this.Imagen.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Imagen.Name = "Imagen";
+            this.Imagen.ReadOnly = true;
+            this.Imagen.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Imagen.Width = 200;
+            // 
+            // CModificar
+            // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CModificar.DefaultCellStyle = dataGridViewCellStyle1;
+            this.CModificar.HeaderText = "Modificar";
+            this.CModificar.Name = "CModificar";
+            this.CModificar.ReadOnly = true;
+            this.CModificar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // CBaja
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBaja.DefaultCellStyle = dataGridViewCellStyle2;
+            this.CBaja.HeaderText = "Baja";
+            this.CBaja.Name = "CBaja";
+            this.CBaja.ReadOnly = true;
+            this.CBaja.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.CBaja.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // listado_productos_admin
             // 
             this.AcceptButton = this.BBuscarProducto;
@@ -280,15 +273,15 @@
         private System.Windows.Forms.Button BBuscarProducto;
         private System.Windows.Forms.Button BAltaProducto;
         private System.Windows.Forms.Button BSalir;
+        private System.Windows.Forms.Button BBorrar;
+        private Proyecto_Taller_2DataSet proyecto_Taller_2DataSet;
         private System.Windows.Forms.DataGridViewTextBoxColumn CNombre_producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn CStock_producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn CPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn CCategoria_producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn CDescripcion;
         private System.Windows.Forms.DataGridViewImageColumn Imagen;
-        private System.Windows.Forms.DataGridViewButtonColumn CModificar;
-        private System.Windows.Forms.DataGridViewButtonColumn CBaja;
-        private System.Windows.Forms.Button BBorrar;
-        private Proyecto_Taller_2DataSet proyecto_Taller_2DataSet;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CModificar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CBaja;
     }
 }

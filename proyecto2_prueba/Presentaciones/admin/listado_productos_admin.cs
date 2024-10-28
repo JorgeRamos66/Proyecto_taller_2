@@ -21,6 +21,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             ConfigurarDataGridView();
             CargarProductos();
             datagrid_productos.CellFormatting += datagrid_productos_CellFormatting;
+
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -326,27 +327,22 @@ namespace proyecto2_prueba.Presentaciones.admin
             });
 
             // Botón Modificar (Color Amarillo)
-            var modificarButtonColumn = new DataGridViewButtonColumn
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CModificar",
                 HeaderText = "Modificar",
-                Text = "Modificar",
-                UseColumnTextForButtonValue = true,
-                FlatStyle = FlatStyle.Popup,
-            };
-            datagrid_productos.Columns.Add(modificarButtonColumn);
+                DataPropertyName = "modificar_producto"
+            });
+
+
 
             // Botón Estado (Color Rojo o Verde según el estado)
-            var estadoButtonColumn = new DataGridViewButtonColumn
+            datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CEstado",
                 HeaderText = "Estado",
-                Text = "Eliminar", // Se cambiará dinámicamente a "Activar" según el estado del producto
-                UseColumnTextForButtonValue = true,
-                FlatStyle = FlatStyle.Popup,
-            };
-            datagrid_productos.Columns.Add(estadoButtonColumn);
-
+                DataPropertyName = "eliminar_producto"
+            });
             datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CBaja",
@@ -364,44 +360,36 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Verifica si la columna es la de la categoría
             if (datagrid_productos.Columns[e.ColumnIndex].Name == "CCategoriaProducto")
             {
-                // Verifica que el valor de la celda no sea nulo o DBNull antes de intentar convertirlo
                 if (e.Value != null && e.Value != DBNull.Value)
                 {
                     try
                     {
-                        // Intenta convertir el valor de la celda a un entero
                         if (int.TryParse(e.Value.ToString(), out int idCategoria))
                         {
-                            // Conectar a la base de datos para obtener el nombre de la categoría
                             string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
                             using (SqlConnection connection = new SqlConnection(connectionString))
                             {
                                 connection.Open();
                                 string selectQuery = "SELECT nombre_categoria FROM CATEGORIA WHERE id_categoria = @IdCategoria";
-
                                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
                                 {
                                     command.Parameters.AddWithValue("@IdCategoria", idCategoria);
-
-                                    // Ejecutar la consulta y obtener el nombre de la categoría
                                     object result = command.ExecuteScalar();
                                     if (result != null)
                                     {
-                                        e.Value = result.ToString(); // Cambia el valor por el nombre de la categoría
-                                        e.FormattingApplied = true; // Evita que el valor predeterminado se siga mostrando
+                                        e.Value = result.ToString();
+                                        e.FormattingApplied = true;
                                     }
                                 }
                             }
                         }
                         else
                         {
-                            // Si la conversión falla, se puede manejar aquí (p.ej., establecer un valor predeterminado)
-                            e.FormattingApplied = false; // No aplicar formateo
+                            e.FormattingApplied = false;
                         }
                     }
                     catch (Exception ex)
                     {
-                        // Si ocurre un error, manejarlo y no aplicar el formateo
                         MessageBox.Show($"Error al obtener el nombre de la categoría: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         e.FormattingApplied = false;
                     }
@@ -411,36 +399,34 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Verifica si la columna es la de baja_producto
             if (datagrid_productos.Columns[e.ColumnIndex].Name == "CBaja")
             {
-                // Verifica que el valor de la celda no sea nulo o DBNull
-                if (e.Value != null && e.Value != DBNull.Value)
+                if (e.Value != null && e.Value != DBNull.Value && e.Value is int bajaValue)
                 {
-                    // Verifica si el valor es del tipo correcto antes de convertir
-                    if (e.Value is int bajaValue)
-                    {
-                        // Cambia el valor a "Sí" o "No" según el estado
-                        e.Value = bajaValue == 1 ? "No" : "Si";
-                        e.FormattingApplied = true; // Evita que el valor predeterminado se siga mostrando
-                    }
-                    else
-                    {
-                        // Si el valor no es un entero, podrías manejarlo como desees
-                        e.FormattingApplied = false; // No aplicar formateo
-                    }
+                    e.Value = bajaValue == 1 ? "No" : "Si";
+                    e.FormattingApplied = true;
+                }
+                else
+                {
+                    e.FormattingApplied = false;
                 }
             }
 
             // Verifica si la columna es la de "CEstado"
             if (datagrid_productos.Columns[e.ColumnIndex].Name == "CEstado")
             {
+
                 // Verifica que el valor de la celda no sea nulo o DBNull
+                if (e.Value == null)
+                {
+                    e.Value = "Estado";
+                }
                 if (e.Value != null && e.Value != DBNull.Value)
                 {
                     try
                     {
-                        // Obtén el ID del producto de la fila actual
+                        // Obtener el ID del producto de la fila actual
                         int idProducto = Convert.ToInt32(datagrid_productos.Rows[e.RowIndex].Cells["CIdProducto"].Value);
 
-                        // Conectar a la base de datos para obtener el estado del producto
+                        // Conectar a la base de datos
                         string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         {
@@ -457,24 +443,24 @@ namespace proyecto2_prueba.Presentaciones.admin
                                 {
                                     int estado = Convert.ToInt32(result);
 
-                                    // Si el estado es 0, significa que está inactivo (baja), entonces mostramos "Activar"
-                                    // Si el estado es 1, está activo, entonces mostramos "Eliminar"
-                                    if (estado == 0) // Producto eliminado
+                                    // Si el estado es 0 (inactivo), mostrar "Activar" y aplicar colores de activación
+                                    if (estado == 0) // Producto eliminado (inactivo)
                                     {
+                                       
                                         e.Value = "Activar";
-                                        e.CellStyle.BackColor = Color.LightBlue; // Cambia el color de fondo
-                                        e.CellStyle.ForeColor = Color.Black; // Cambia el color del texto
-                                        e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
+                                        e.CellStyle.BackColor = Color.LightBlue;
+                                        e.CellStyle.ForeColor = Color.Black;
+                                        e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                                     }
-                                    else
+                                    else // Producto activo, mostrar "Eliminar" y aplicar colores de eliminación
                                     {
                                         e.Value = "Eliminar";
-                                        e.CellStyle.BackColor = Color.Red; // Cambia el color de fondo
-                                        e.CellStyle.ForeColor = Color.White; // Cambia el color del texto
-                                        e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
+                                        e.CellStyle.BackColor = Color.Red;
+                                        e.CellStyle.ForeColor = Color.White;
+                                        e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                                     }
 
-                                    // Indica que el formateo ha sido aplicado
+                                    // Indicar que el formateo ha sido aplicado
                                     e.FormattingApplied = true;
                                 }
                             }
@@ -482,27 +468,39 @@ namespace proyecto2_prueba.Presentaciones.admin
                     }
                     catch (Exception ex)
                     {
-                        // Si ocurre un error, manejarlo y no aplicar el formateo
+                        // Manejar el error sin interrumpir la ejecución
                         MessageBox.Show($"Error al obtener el estado del producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         e.FormattingApplied = false;
                     }
                 }
+                else
+                {
+                    // Si el valor es nulo o no es válido, no aplicar el formato
+                    e.FormattingApplied = false;
+                }
             }
-            // Cambiar color del botón Modificar a amarillo
+
+            // Cambiar el color del texto de "Modificar"
             if (datagrid_productos.Columns[e.ColumnIndex].Name == "CModificar")
             {
-                e.CellStyle.BackColor = Color.Green; // Cambia el color de fondo
-                e.CellStyle.ForeColor = Color.White; // Cambia el color del texto
-                e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
-                e.FormattingApplied = true;
+                // Solo aplicar formateo si la celda tiene un valor no nulo
+                if (datagrid_productos.Columns[e.ColumnIndex].Name == "CModificar")
+                {
+                    e.Value = "Modificar";
+                    e.CellStyle.BackColor = Color.Green;
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    e.FormattingApplied = true;
+                }
             }
+
+
 
             // Cambiar el fondo de la fila si el producto está eliminado
             if (Convert.ToInt32(datagrid_productos.Rows[e.RowIndex].Cells["CBaja"].Value) == 0)
             {
                 datagrid_productos.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.DarkGray;
             }
-
         }
 
         private void ModificarEstadoProducto(int id)
@@ -605,8 +603,8 @@ namespace proyecto2_prueba.Presentaciones.admin
                     // Mostrar un MessageBox con la información
                     MessageBox.Show($"Producto: {nombreProducto}\nDescripción: {descripcion}", "Detalles del Producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                // Verifica si la columna es un botón
-                if (datagrid_productos.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
+                // Verifica si la columna es un textbox
+                if (datagrid_productos.Columns[e.ColumnIndex] is DataGridViewTextBoxColumn)
                 {
                     // Verifica si se ha hecho clic en la columna de estado
                     if (datagrid_productos.Columns[e.ColumnIndex].Name == "CEstado")

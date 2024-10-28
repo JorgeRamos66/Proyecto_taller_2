@@ -65,7 +65,7 @@
             this.archivoToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.main_32px;
             this.archivoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(79, 52);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
             this.archivoToolStripMenuItem.Text = "Menu";
             this.archivoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -87,7 +87,7 @@
             this.StripMenuItemEstadisticas.Image = global::proyecto2_prueba.Properties.Resources.editar_32px;
             this.StripMenuItemEstadisticas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.StripMenuItemEstadisticas.Name = "StripMenuItemEstadisticas";
-            this.StripMenuItemEstadisticas.Size = new System.Drawing.Size(79, 52);
+            this.StripMenuItemEstadisticas.Size = new System.Drawing.Size(113, 52);
             this.StripMenuItemEstadisticas.Text = "Estadisticas";
             this.StripMenuItemEstadisticas.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -97,7 +97,7 @@
             this.aBMCategoriasToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.box_32px;
             this.aBMCategoriasToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.aBMCategoriasToolStripMenuItem.Name = "aBMCategoriasToolStripMenuItem";
-            this.aBMCategoriasToolStripMenuItem.Size = new System.Drawing.Size(79, 52);
+            this.aBMCategoriasToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
             this.aBMCategoriasToolStripMenuItem.Text = "Ventas";
             this.aBMCategoriasToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 

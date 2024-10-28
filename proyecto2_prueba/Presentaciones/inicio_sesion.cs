@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -40,63 +42,76 @@ namespace proyecto2_prueba
 
         private void BInicioSesion_Click(object sender, EventArgs e)
         {
-            string usuario, pass;
-            usuario = textBoxUsuario.Text;
-            pass = textBoxPass.Text;
+            string usuario = textBoxUsuario.Text;
+            string pass = textBoxPass.Text;
+            string tipoUsuario = null;
 
-            if(usuario == "admin" && pass == "admin")
+            // Obtener cadena de conexión desde el archivo de configuración
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
+
+            // Conectar a la base de datos y verificar el usuario junto con su rol
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                //Se instancia un objeto del tipo menu_admin
-                menu_admin Principal = new menu_admin();
+                // Consulta con JOIN para obtener el nombre del rol desde la tabla ROL
+                string query = @"SELECT R.nombre_rol
+                         FROM USUARIO U
+                         INNER JOIN ROL R ON U.id_rol = R.id_rol
+                         WHERE U.usuario = @usuario AND U.pass = @pass";
 
-                //Suscribir al evento FormClosed del formulario de admin
-                //Explicacion: Cuando Principal se cierre, se vuelve a mostrar este form.
-                //Esto hace que el Inicio de Sesion vuelve a aparecer evitando que la aplicacion
-                // siga en estado de ejecucion aunque se hayan cerrado todas las ventanas.
-                Principal.FormClosed += (s, args) => this.Show();
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@usuario", usuario);
+                command.Parameters.AddWithValue("@pass", pass);
 
-                //Mostrar menu del administrador
-                Principal.Show();
+                try
+                {
+                    connection.Open();
+                    object result = command.ExecuteScalar();
 
-                //Se limpian las textboxes por seguridad.
-                textBoxUsuario.Clear();
-                textBoxPass.Clear();
+                    if (result != null)
+                    {
+                        tipoUsuario = result.ToString();
 
-                //Ocultar Formulario inicio de sesion
-                //Esta alternativa si no se utiliza con un evento que la vuelva a activar
-                // deja a la aplicación en estado de ejecución, lo que imposibilita volver a ejecutarla.
-                this.Hide();
-                
-            }else if (usuario == "gerente" && pass == "gerente")
-            {
-                //Se instancia un objeto del tipo menu_admin
-                menu_gerente Principal = new menu_gerente();
+                        // Verificar el tipo de usuario y abrir la vista correspondiente
+                        if (tipoUsuario == "admin")
+                        {
+                            menu_admin Principal = new menu_admin();
+                            Principal.FormClosed += (s, args) => this.Show();
+                            Principal.Show();
+                        }
+                        else if (tipoUsuario == "gerente")
+                        {
+                            menu_gerente Principal = new menu_gerente();
+                            Principal.FormClosed += (s, args) => this.Show();
+                            Principal.Show();
+                        }
+                        else if (tipoUsuario == "vendedor")
+                        {
+                            /*menu_vendedor Principal = new menu_vendedor();
+                            Principal.FormClosed += (s, args) => this.Show();
+                            Principal.Show();*/
+                            MessageBox.Show("En construccion xd", "Alert xd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
 
-                //Suscribir al evento FormClosed del formulario de admin
-                //Explicacion: Cuando Principal se cierre, se vuelve a mostrar este form.
-                //Esto hace que el Inicio de Sesion vuelve a aparecer evitando que la aplicacion
-                // siga en estado de ejecucion aunque se hayan cerrado todas las ventanas.
-                Principal.FormClosed += (s, args) => this.Show();
+                        // Limpiar campos de texto por seguridad
+                        textBoxUsuario.Clear();
+                        textBoxPass.Clear();
 
-                //Mostrar menu del administrador
-                Principal.Show();
-
-                //Se limpian las textboxes por seguridad.
-                textBoxUsuario.Clear();
-                textBoxPass.Clear();
-
-                //Ocultar Formulario inicio de sesion
-                //Esta alternativa si no se utiliza con un evento que la vuelva a activar
-                // deja a la aplicación en estado de ejecución, lo que imposibilita volver a ejecutarla.
-                this.Hide();
+                        // Ocultar formulario de inicio de sesión
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("El usuario y/o contraseña son incorrectos", "Usuario Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al conectar con la base de datos: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
-            {
-                //En caso de error al ingresar los datos, se muestra un mensaje.
-                MessageBox.Show("El usuario y/o contraseña son incorrectos","Usuario Invalido", MessageBoxButtons.OK,MessageBoxIcon.Error);
-            }
-            
         }
+
+
 
         private void textBoxUsuario_KeyPress(object sender, KeyPressEventArgs e)
         {

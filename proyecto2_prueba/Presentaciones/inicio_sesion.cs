@@ -86,9 +86,9 @@ namespace proyecto2_prueba
                         }
                         else if (tipoUsuario == "vendedor")
                         {
-                            /*menu_vendedor Principal = new menu_vendedor();
+                            menu_vendedor Principal = new menu_vendedor();
                             Principal.FormClosed += (s, args) => this.Show();
-                            Principal.Show();*/
+                            Principal.Show();
                             MessageBox.Show("En construccion xd", "Alert xd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 

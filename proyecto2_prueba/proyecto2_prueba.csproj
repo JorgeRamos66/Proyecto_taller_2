@@ -121,6 +121,12 @@
     <Compile Include="Presentaciones\gerente\menu_gerente.Designer.cs">
       <DependentUpon>menu_gerente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentaciones\vendedor\menu_vendedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\vendedor\menu_vendedor.Designer.cs">
+      <DependentUpon>menu_vendedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proyecto_Taller_2DataSet.Designer.cs">
@@ -164,6 +170,9 @@
     <EmbeddedResource Include="Presentaciones\gerente\menu_gerente.resx">
       <DependentUpon>menu_gerente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\vendedor\menu_vendedor.resx">
+      <DependentUpon>menu_vendedor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -187,9 +196,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Presentaciones\vendedor\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Proyecto_Taller_2DataSet.xsc">
       <DependentUpon>Proyecto_Taller_2DataSet.xsd</DependentUpon>

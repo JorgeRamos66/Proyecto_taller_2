@@ -48,7 +48,7 @@
             // 
             // menuStripAdmin
             // 
-            this.menuStripAdmin.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.menuStripAdmin.BackColor = System.Drawing.Color.PaleGreen;
             this.menuStripAdmin.Dock = System.Windows.Forms.DockStyle.Left;
             this.menuStripAdmin.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
@@ -193,7 +193,7 @@
             this.label1.BackColor = System.Drawing.Color.SteelBlue;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.ForeColor = System.Drawing.Color.PaleGreen;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(333, 34);

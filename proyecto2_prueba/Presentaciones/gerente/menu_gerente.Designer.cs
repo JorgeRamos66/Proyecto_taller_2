@@ -65,7 +65,7 @@
             this.archivoToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.main_32px;
             this.archivoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(79, 52);
             this.archivoToolStripMenuItem.Text = "Menu";
             this.archivoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -87,7 +87,7 @@
             this.StripMenuItemEstadisticas.Image = global::proyecto2_prueba.Properties.Resources.editar_32px;
             this.StripMenuItemEstadisticas.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.StripMenuItemEstadisticas.Name = "StripMenuItemEstadisticas";
-            this.StripMenuItemEstadisticas.Size = new System.Drawing.Size(113, 52);
+            this.StripMenuItemEstadisticas.Size = new System.Drawing.Size(79, 52);
             this.StripMenuItemEstadisticas.Text = "Estadisticas";
             this.StripMenuItemEstadisticas.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -97,7 +97,7 @@
             this.aBMCategoriasToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.box_32px;
             this.aBMCategoriasToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.aBMCategoriasToolStripMenuItem.Name = "aBMCategoriasToolStripMenuItem";
-            this.aBMCategoriasToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
+            this.aBMCategoriasToolStripMenuItem.Size = new System.Drawing.Size(79, 52);
             this.aBMCategoriasToolStripMenuItem.Text = "Ventas";
             this.aBMCategoriasToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -129,10 +129,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.label1.BackColor = System.Drawing.Color.SteelBlue;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.ForeColor = System.Drawing.Color.LightBlue;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(219, 34);

@@ -258,7 +258,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\468034.png" />
+    <None Include="Resources\3d-scanner.png" />
+    <None Include="Resources\pie-chart.png" />
     <Content Include="Resources\restore_24px.png" />
+    <None Include="Resources\shopping-cart.png" />
+    <None Include="Resources\shopping-cart %281%29.png" />
     <Content Include="Resources\suma_24px.png" />
     <Content Include="Resources\user_24px.png" />
   </ItemGroup>

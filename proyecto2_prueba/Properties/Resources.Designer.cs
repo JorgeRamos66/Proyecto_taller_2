@@ -63,6 +63,16 @@ namespace proyecto2_prueba.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _3d_scanner {
+            get {
+                object obj = ResourceManager.GetObject("3d-scanner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _468034 {
             get {
                 object obj = ResourceManager.GetObject("468034", resourceCulture);
@@ -203,6 +213,16 @@ namespace proyecto2_prueba.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pie_chart {
+            get {
+                object obj = ResourceManager.GetObject("pie-chart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap producto_256px {
             get {
                 object obj = ResourceManager.GetObject("producto_256px", resourceCulture);
@@ -216,6 +236,26 @@ namespace proyecto2_prueba.Properties {
         internal static System.Drawing.Bitmap server_32px {
             get {
                 object obj = ResourceManager.GetObject("server_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shopping_cart {
+            get {
+                object obj = ResourceManager.GetObject("shopping-cart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shopping_cart__1_ {
+            get {
+                object obj = ResourceManager.GetObject("shopping-cart (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

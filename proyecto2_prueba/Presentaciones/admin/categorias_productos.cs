@@ -194,26 +194,20 @@ namespace proyecto2_prueba.Presentaciones.admin
             });
 
             // Botón Modificar (Color Amarillo)
-            var modificarButtonColumn = new DataGridViewButtonColumn
+            datagrid_categorias.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CModificar",
                 HeaderText = "Modificar",
-                Text = "Modificar",
-                UseColumnTextForButtonValue = true,
-                FlatStyle = FlatStyle.Popup,
-            };
-            datagrid_categorias.Columns.Add(modificarButtonColumn);
+                DataPropertyName = "modificar_categoria"
+            });
 
             // Botón Baja/Alta (Color Rojo)
-            var bajaButtonColumn = new DataGridViewButtonColumn
+            datagrid_categorias.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = "CBaja_Alta",
-                HeaderText = "Baja",
-                Text = "Eliminar",
-                UseColumnTextForButtonValue = true,
-                FlatStyle = FlatStyle.Popup,
-            };
-            datagrid_categorias.Columns.Add(bajaButtonColumn);
+                Name = "CEstado",
+                HeaderText = "Estado",
+                DataPropertyName = "eliminar_categoria"
+            });
 
             datagrid_categorias.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -240,6 +234,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                     {
                         // Cambia el valor a "Sí" o "No" según el estado
                         e.Value = bajaValue == 1 ? "No" : "Si";
+                        e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
                         e.FormattingApplied = true; // Evita que el valor predeterminado se siga mostrando
                     }
                     else
@@ -264,10 +259,14 @@ namespace proyecto2_prueba.Presentaciones.admin
                 e.FormattingApplied = true;
             }
 
-            // Verifica si la columna es la de "CBaja_Alta" para cambiar el estado de Baja/Alta
-            if (datagrid_categorias.Columns[e.ColumnIndex].Name == "CBaja_Alta")
+            // Verifica si la columna es la de "CEstado" para cambiar el estado de Baja/Alta
+            if (datagrid_categorias.Columns[e.ColumnIndex].Name == "CEstado")
             {
                 // Verifica que el valor de la celda no sea nulo o DBNull
+                if (e.Value == null)
+                {
+                    e.Value = "Estado";
+                }
                 if (e.Value != null && e.Value != DBNull.Value)
                 {
                     try
@@ -328,9 +327,14 @@ namespace proyecto2_prueba.Presentaciones.admin
             if (datagrid_categorias.Columns[e.ColumnIndex].Name == "CModificar")
             {
                 // Solo aplicar formateo si la celda tiene un valor no nulo
-                e.CellStyle.ForeColor = Color.Black; // Cambia el color del texto
-                e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
-                e.FormattingApplied = true;
+                if (datagrid_categorias.Columns[e.ColumnIndex].Name == "CModificar")
+                {
+                    e.Value = "Modificar";
+                    e.CellStyle.BackColor = Color.Yellow;
+                    e.CellStyle.ForeColor = Color.Black;
+                    e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    e.FormattingApplied = true;
+                }
             }
 
             
@@ -469,11 +473,11 @@ namespace proyecto2_prueba.Presentaciones.admin
                 // Verifica si la celda clicada es válida
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
-                    // Verifica si la celda clicada es un botón
-                    if (datagrid_categorias.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
+                    // Verifica si la columna es un textbox
+                    if (datagrid_categorias.Columns[e.ColumnIndex] is DataGridViewTextBoxColumn)
                     {
-                        // Verifica si se ha hecho clic en la columna de estado (CBaja_Alta)
-                        if (datagrid_categorias.Columns[e.ColumnIndex].Name == "CBaja_Alta")
+                        // Verifica si se ha hecho clic en la columna de estado (CEstado)
+                        if (datagrid_categorias.Columns[e.ColumnIndex].Name == "CEstado")
                         {
                             // Obtiene el ID de la categoría de la celda correspondiente
                             object cellValue = datagrid_categorias.Rows[e.RowIndex].Cells["CIdCategoria"].Value;

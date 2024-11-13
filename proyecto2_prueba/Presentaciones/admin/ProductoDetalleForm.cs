@@ -20,14 +20,20 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Asignar la imagen al PictureBox o control que usas para mostrar la imagen
             pictureBoxProducto.Image = imagenProducto;
 
-            // Subscribirse al evento Deactivate para cerrar cuando se pierde el foco
-            this.Deactivate += new EventHandler(Form_Deactivate);
+            
+
+            // Suscribirse al evento Click del PictureBox (cierre cuando se hace clic en la imagen)
+            pictureBoxProducto.Click += new EventHandler(PictureBox_Click);
         }
 
-        // Evento que se dispara cuando el formulario pierde el foco
-        private void Form_Deactivate(object sender, EventArgs e)
+
+
+        
+
+        // Evento que se dispara cuando se hace clic en el PictureBox (evitar cierre)
+        private void PictureBox_Click(object sender, EventArgs e)
         {
-            this.Close(); // Cerrar el formulario cuando pierde el foco
+            this.Close(); // Cerrar el formulario si se hace clic en la imagen
         }
 
         // Sobrescribir el evento de teclas para interceptar la tecla Esc

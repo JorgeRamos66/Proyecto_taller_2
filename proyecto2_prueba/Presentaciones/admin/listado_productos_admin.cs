@@ -201,11 +201,11 @@ namespace proyecto2_prueba.Presentaciones.admin
                 {
                     connection.Open();
                     string query = @"
-                SELECT p.id_producto, p.nombre_producto, p.stock_producto, p.precio_producto, 
-                       p.id_categoria, p.descripcion_producto, p.ruta_imagen, p.baja_producto 
-                FROM PRODUCTO p
-                INNER JOIN CATEGORIA c ON p.id_categoria = c.id_categoria
-                WHERE c.estado_categoria = 1"; // Solo productos de categorías activas
+                        SELECT p.id_producto, p.nombre_producto, p.stock_producto, p.precio_producto, 
+                               p.id_categoria, p.descripcion_producto, p.ruta_imagen, p.baja_producto 
+                        FROM PRODUCTO p
+                        INNER JOIN CATEGORIA c ON p.id_categoria = c.id_categoria
+                        WHERE c.estado_categoria = 1"; // Solo productos de categorías activas
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -326,7 +326,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                 DataPropertyName = "descripcion_producto"
             });
 
-            // Botón Modificar (Color Amarillo)
+            // Botón Modificar (Color Verde)
             datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CModificar",
@@ -336,7 +336,7 @@ namespace proyecto2_prueba.Presentaciones.admin
 
 
 
-            // Botón Estado (Color Rojo o Verde según el estado)
+            // Botón Estado (Color Rojo o Celeste según el estado)
             datagrid_productos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CEstado",
@@ -402,6 +402,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                 if (e.Value != null && e.Value != DBNull.Value && e.Value is int bajaValue)
                 {
                     e.Value = bajaValue == 1 ? "No" : "Si";
+                    e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
                     e.FormattingApplied = true;
                 }
                 else
@@ -571,7 +572,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Verificar que no se está haciendo clic en el encabezado
             if (e.RowIndex >= 0)
             {
-                // Si se hace clic en la columna de descripción o imagen
+                // Si se hace clic en la columna de imagen
                 if (datagrid_productos.Columns[e.ColumnIndex].Name == "Imagen")
                 {
 
@@ -593,7 +594,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Verifica si la celda clicada es válida
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Si se hace clic en la columna de descripción o imagen
+                // Si se hace clic en la columna de descripción
                 if (datagrid_productos.Columns[e.ColumnIndex].Name == "CDescripcion")
                 {
                     // Obtener la información del producto de la fila seleccionada
@@ -667,8 +668,8 @@ namespace proyecto2_prueba.Presentaciones.admin
                                             string descripcion = reader["descripcion_producto"].ToString();
                                             string rutaImagen = reader["ruta_imagen"]?.ToString(); // Ruta de la imagen
 
-                                            // Abrir el formulario de alta_producto con los datos cargados
-                                            alta_producto modificarProducto = new alta_producto(idProducto, nombre, stock, precio, idCategoria, descripcion, rutaImagen, this);
+                                            // Crear y mostrar el formulario de modificación con la ruta de la imagen
+                                            modificar_producto modificarProducto = new modificar_producto(idProducto, nombre, stock, precio, idCategoria, descripcion, rutaImagen, this);
                                             modificarProducto.ShowDialog();
                                         }
                                         else

@@ -52,64 +52,87 @@ namespace proyecto2_prueba
             // Conectar a la base de datos y verificar el usuario junto con su rol
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                // Consulta con JOIN para obtener el nombre del rol desde la tabla ROL
-                string query = @"SELECT R.nombre_rol
+                // Consulta con JOIN para obtener el nombre del rol y estado de baja
+                string query = @"SELECT R.nombre_rol, U.baja_usuario, U.pass
                          FROM USUARIO U
                          INNER JOIN ROL R ON U.id_rol = R.id_rol
-                         WHERE U.usuario = @usuario AND U.pass = @pass";
+                         WHERE U.usuario = @usuario";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@usuario", usuario);
-                command.Parameters.AddWithValue("@pass", pass);
 
                 try
                 {
                     connection.Open();
-                    object result = command.ExecuteScalar();
-
-                    if (result != null)
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        tipoUsuario = result.ToString();
-
-                        // Verificar el tipo de usuario y abrir la vista correspondiente
-                        if (tipoUsuario == "admin")
+                        if (reader.Read())
                         {
-                            menu_admin Principal = new menu_admin();
-                            Principal.FormClosed += (s, args) => this.Show();
-                            Principal.Show();
-                        }
-                        else if (tipoUsuario == "gerente")
-                        {
-                            menu_gerente Principal = new menu_gerente();
-                            Principal.FormClosed += (s, args) => this.Show();
-                            Principal.Show();
-                        }
-                        else if (tipoUsuario == "vendedor")
-                        {
-                            menu_vendedor Principal = new menu_vendedor();
-                            Principal.FormClosed += (s, args) => this.Show();
-                            Principal.Show();
-                            MessageBox.Show("En construccion xd", "Alert xd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                            // Obtener valores de nombre_rol y baja_usuario
+                            tipoUsuario = reader["nombre_rol"].ToString();
+                            bool usuarioDeshabilitado = Convert.ToBoolean(reader["baja_usuario"]);
+                            
 
-                        // Limpiar campos de texto por seguridad
-                        textBoxUsuario.Clear();
-                        textBoxPass.Clear();
+                            if (!usuarioDeshabilitado)
+                            {
+                                MessageBox.Show("Su usuario fue deshabilitado. Contacte con el administrador para recuperarlo.",
+                                                "USUARIO DESHABILITADO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
 
-                        // Ocultar formulario de inicio de sesión
-                        this.Hide();
-                    }
-                    else
-                    {
-                        MessageBox.Show("El usuario y/o contraseña son incorrectos", "Usuario Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // Hashea la contraseña ingresada y compárala con la almacenada
+                            string storedHashedPassword = reader["pass"].ToString();
+                            string hashedInputPassword = PasswordHasher.HashPassword(pass);
+                            if (hashedInputPassword != storedHashedPassword)
+                            {
+                                MessageBox.Show("El usuario y/o contraseña son incorrectos",
+                                                "Usuario Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                            // Verificar el tipo de usuario y abrir la vista correspondiente
+                            Form menu = null;
+                            if (tipoUsuario == "admin")
+                            {
+                                menu = new menu_admin();
+                            }
+                            else if (tipoUsuario == "gerente")
+                            {
+                                menu = new menu_gerente();
+                            }
+                            else if (tipoUsuario == "vendedor")
+                            {
+                                menu = new menu_vendedor();
+                            }
+
+                            if (menu != null)
+                            {
+                                menu.FormClosed += (s, args) => this.Show();
+                                menu.Show();
+
+                                // Limpiar campos de texto por seguridad
+                                textBoxUsuario.Clear();
+                                textBoxPass.Clear();
+
+                                // Ocultar formulario de inicio de sesión
+                                this.Hide();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("El usuario y/o contraseña son incorrectos",
+                                            "Usuario Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error al conectar con la base de datos: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error al conectar con la base de datos: {ex.Message}",
+                                    "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
 
 
 

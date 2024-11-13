@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,14 +14,51 @@ namespace proyecto2_prueba.Presentaciones.admin
     public partial class modificar_producto : Form
     {
         //Referencia al formulario principal
-        private listado_productos_admin formularioListado; 
+        private listado_productos_admin formularioListado;
+        private string rutaImagen;
 
         //Se pasa como referencia el formulario listado de productos
-        public modificar_producto(listado_productos_admin formularioListado)
+        public modificar_producto(int idProducto, string nombre, int stock, decimal precio, int idCategoria, string descripcion, string rutaImagen, listado_productos_admin formularioListado)
         {
             InitializeComponent();
-            this.formularioListado = formularioListado; // Asigna la referencia
+            this.formularioListado = formularioListado;
+            this.rutaImagen = rutaImagen; // Asigna la ruta de imagen recibida
+
+            // Llama a un método para inicializar los valores de los controles
+            InicializarCampos(nombre, stock, precio, idCategoria, descripcion, rutaImagen);
         }
+
+        private void InicializarCampos(string nombre, int stock, decimal precio, int idCategoria, string descripcion, string rutaImagen)
+        {
+            textBoxNombre.Text = nombre;
+            textBoxStock.Text = stock.ToString();
+            textBoxPrecio.Text = precio.ToString();
+            comboBoxCategoria.SelectedItem = idCategoria.ToString(); // Ajusta según cómo manejes la categoría
+            textBoxDescripcion.Text = descripcion;
+            textBoxRutaFoto.Text = rutaImagen;
+
+            // Carga la imagen en el PictureBox si la ruta es válida
+            string rutaCompleta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\", rutaImagen);
+            try
+            {
+                if (File.Exists(rutaCompleta))
+                {
+                    // Convertir la imagen a un objeto Image y asignarla a la columna de imagen
+                    pictureBoxProducto.Image = Image.FromFile(rutaCompleta);
+                }
+                
+                else
+                {
+                    MessageBox.Show("No se encontró la imagen del producto en la ruta especificada.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la imagen: " + ex.Message);
+            }
+        }
+
+
 
         private void textBoxNombre_KeyPress(object sender, KeyPressEventArgs e)
         {

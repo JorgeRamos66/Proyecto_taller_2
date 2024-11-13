@@ -57,10 +57,8 @@ namespace proyecto2_prueba.Presentaciones.admin
                         // Asignar el DataTable como DataSource del DataGridView
                         datagrid_personal.DataSource = dataTable;
 
-                        // Ocultar la columna "Eliminado?" si es necesario
-                        //datagrid_personal.Columns["CId"].Visible = false; 
+                        datagrid_personal.Columns["CId"].Visible = false; // Ocultar ID Personal
 
-                        // Otras configuraciones adicionales (si las necesitas)
                     }
                 }
                 catch (Exception ex)
@@ -152,27 +150,23 @@ namespace proyecto2_prueba.Presentaciones.admin
                 DataPropertyName = "nombre_rol"
             });
 
+
+
             // Botón Modificar (Color Amarillo)
-            var modificarButtonColumn = new DataGridViewButtonColumn
+            datagrid_personal.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CModificar",
                 HeaderText = "Modificar",
-                Text = "Modificar",
-                UseColumnTextForButtonValue = true,
-                FlatStyle = FlatStyle.Popup,
-            };
-            datagrid_personal.Columns.Add(modificarButtonColumn);
+                DataPropertyName = "modificar_personal"
+            });
 
-            // Botón Estado (Color Rojo o Verde según el estado)
-            var estadoButtonColumn = new DataGridViewButtonColumn
+            // Botón Estado (Color Rojo o Celeste según el estado)
+            datagrid_personal.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "CEstado",
                 HeaderText = "Estado",
-                Text = "Eliminar", // Se cambiará dinámicamente a "Activar" según el estado del personal
-                UseColumnTextForButtonValue = true,
-                FlatStyle = FlatStyle.Popup,
-            };
-            datagrid_personal.Columns.Add(estadoButtonColumn);
+                DataPropertyName = "eliminar_personal"
+            });
 
             datagrid_personal.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -199,6 +193,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                     {
                         // Cambia el valor a "No" o "Sí" según el estado
                         e.Value = bajaValue == 1 ? "No" : "Si";
+                        e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
                         e.FormattingApplied = true; // Evita que el valor predeterminado se siga mostrando
                     }
                     else
@@ -213,6 +208,10 @@ namespace proyecto2_prueba.Presentaciones.admin
             if (datagrid_personal.Columns[e.ColumnIndex].Name == "CEstado")
             {
                 // Verifica que el valor de la celda no sea nulo o DBNull
+                if (e.Value == null)
+                {
+                    e.Value = "Estado";
+                }
                 if (e.Value != null && e.Value != DBNull.Value)
                 {
                     try
@@ -266,15 +265,25 @@ namespace proyecto2_prueba.Presentaciones.admin
                         e.FormattingApplied = false;
                     }
                 }
+                else
+                {
+                    // Si el valor es nulo o no es válido, no aplicar el formato
+                    e.FormattingApplied = false;
+                }
             }
 
-            // Cambiar el color del botón Modificar a amarillo
+            // Cambiar el color del texto de "Modificar"
             if (datagrid_personal.Columns[e.ColumnIndex].Name == "CModificar")
             {
-                e.CellStyle.BackColor = Color.ForestGreen; // Cambia el color de fondo
-                e.CellStyle.ForeColor = Color.White; // Cambia el color del texto
-                e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
-                e.FormattingApplied = true;
+                // Solo aplicar formateo si la celda tiene un valor no nulo
+                if (datagrid_personal.Columns[e.ColumnIndex].Name == "CModificar")
+                {
+                    e.Value = "Modificar";
+                    e.CellStyle.BackColor = Color.ForestGreen;
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    e.FormattingApplied = true;
+                }
             }
 
             // Cambiar el fondo de la fila si el usuario está eliminado
@@ -365,8 +374,8 @@ namespace proyecto2_prueba.Presentaciones.admin
                     MessageBox.Show($"Usuario: {apellidoUsuario}, {nombreUsuario} \nDireccion: {direccion}", "Detalles del Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                // Verifica si la columna es un botón
-                if (datagrid_personal.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
+                // Verifica si la columna es un textbox
+                if (datagrid_personal.Columns[e.ColumnIndex] is DataGridViewTextBoxColumn)
                 {
                     // Verifica si se ha hecho clic en la columna de estado
                     if (datagrid_personal.Columns[e.ColumnIndex].Name == "CEstado")
@@ -401,10 +410,10 @@ namespace proyecto2_prueba.Presentaciones.admin
                     // Si se hizo clic en la columna "Modificar"
                     if (datagrid_personal.Columns[e.ColumnIndex].Name == "CModificar")
                     {
-                        // Obtener el ID del usuario de la fila seleccionada
+                        // Obtener el ID de la persona de la fila seleccionada en el DataGridView
                         object cellValue = datagrid_personal.Rows[e.RowIndex].Cells["CId"].Value;
 
-                        if (cellValue != null && int.TryParse(cellValue.ToString(), out int idUsuario))
+                        if (cellValue != null && int.TryParse(cellValue.ToString(), out int idPersona))
                         {
                             string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
 
@@ -412,34 +421,46 @@ namespace proyecto2_prueba.Presentaciones.admin
                             {
                                 connection.Open();
 
-                                // Consulta para obtener los detalles del usuario y sus relaciones
+                                // Consulta para obtener detalles de usuario, persona, y rol basado en idPersona
                                 string query = @"
-                                SELECT p.nombre_persona, p.apellido_persona, p.dni, p.email_persona, p.direccion_persona, 
-                                       l.nombre_localidad, pr.nombre_provincia
-                                FROM PERSONA p
-                                INNER JOIN LOCALIDAD l ON p.id_localidad = l.id_localidad
-                                INNER JOIN PROVINCIA pr ON l.id_provincia = pr.id_provincia
-                                WHERE p.id_persona = (SELECT id_persona FROM USUARIO WHERE id_usuario = @IdUsuario)";
+                                    SELECT U.id_usuario, p.nombre_persona, p.apellido_persona, p.dni, p.email_persona, 
+                                           p.direccion_persona, l.nombre_localidad, pr.nombre_provincia, 
+                                           U.usuario, R.nombre_rol, p.fecha_nacimiento
+                                    FROM USUARIO U
+                                    INNER JOIN PERSONA p ON U.id_persona = p.id_persona
+                                    INNER JOIN LOCALIDAD l ON p.id_localidad = l.id_localidad
+                                    INNER JOIN PROVINCIA pr ON l.id_provincia = pr.id_provincia
+                                    INNER JOIN ROL R ON U.id_rol = R.id_rol
+                                    WHERE p.id_persona = @IdPersona";
 
                                 using (SqlCommand command = new SqlCommand(query, connection))
                                 {
-                                    command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                                    command.Parameters.AddWithValue("@IdPersona", idPersona);
 
                                     using (SqlDataReader reader = command.ExecuteReader())
                                     {
                                         if (reader.Read()) // Verifica si se encontró el usuario
                                         {
-                                            // Obtener los datos del usuario
+                                            // Obtener los datos de la persona y usuario
+                                            int idUsuario = Convert.ToInt32(reader["id_usuario"]);
                                             string nombre = reader["nombre_persona"].ToString();
                                             string apellido = reader["apellido_persona"].ToString();
                                             string dni = reader["dni"].ToString();
                                             string email = reader["email_persona"].ToString();
                                             string direccion = reader["direccion_persona"].ToString();
-                                            string ciudad = reader["nombre_localidad"].ToString();  // Localidad
-                                            string provincia = reader["nombre_provincia"].ToString(); // Provincia
+                                            string ciudad = reader["nombre_localidad"].ToString();
+                                            string provincia = reader["nombre_provincia"].ToString();
+                                            string usuarioNombre = reader["usuario"].ToString();
+                                            string rol = reader["nombre_rol"].ToString();
+
+                                            // Recuperar la fecha de nacimiento, asegurándonos de que no sea nula
+                                            DateTime fechaNacimiento = reader["fecha_nacimiento"] != DBNull.Value
+                                                ? Convert.ToDateTime(reader["fecha_nacimiento"])
+                                                : DateTime.MinValue; // Si no tiene fecha, asignar un valor por defecto
 
                                             // Abrir el formulario de modificar usuario con los datos cargados
-                                            registrar_personal modificarUsuario = new registrar_personal(idUsuario, nombre, apellido, dni, email, direccion, ciudad, provincia, this);
+                                            registrar_personal modificarUsuario = new registrar_personal(
+                                                idUsuario, nombre, apellido, dni, email, direccion, ciudad, provincia, usuarioNombre, rol, fechaNacimiento, this);
                                             modificarUsuario.ShowDialog();
                                         }
                                         else
@@ -450,6 +471,8 @@ namespace proyecto2_prueba.Presentaciones.admin
                                 }
                             }
                         }
+
+
                     }
                 }
             }

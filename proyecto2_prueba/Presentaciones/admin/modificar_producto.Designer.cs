@@ -126,6 +126,7 @@
             // 
             this.pictureBoxProducto.BackColor = System.Drawing.Color.DarkKhaki;
             this.pictureBoxProducto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBoxProducto.Image = global::proyecto2_prueba.Properties.Resources.producto_256px;
             this.pictureBoxProducto.Location = new System.Drawing.Point(415, 165);
             this.pictureBoxProducto.Name = "pictureBoxProducto";
             this.pictureBoxProducto.Size = new System.Drawing.Size(190, 175);

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using proyecto2_prueba;
 
 namespace proyecto2_prueba
 {
@@ -23,14 +24,16 @@ namespace proyecto2_prueba
             InitializeComponent();
             CargarRoles();
             formularioListado = listado; // Guardar la referencia del formulario listado_personal
-            IdUsuario = 0; // Establecer por defecto a 0 para inserción
+            IdUsuario = 0; // Establecer por defecto a 0 para inserción nueva
         }
 
-        public registrar_personal(int idUsuario, string nombre, string apellido, string dni, string email, string direccion, string ciudad, string provincia, personal listado)
+        public registrar_personal(int idUsuario, string nombre, string apellido, string dni, string email, string direccion, string ciudad, string provincia, string usuarioNombre, string rol, DateTime fechaNacimiento, personal listado)
         {
             InitializeComponent();
+            CargarRoles();
             formularioListado = listado; // Guardar la referencia del formulario listado_personal
             IdUsuario = idUsuario; // Guardar el ID del usuario
+            Linfo.Text = "MODIFICAR PERSONAL";
 
             // Cargar los datos en los controles del formulario
             textBoxNombre.Text = nombre;
@@ -40,6 +43,24 @@ namespace proyecto2_prueba
             textCiudad.Text = ciudad;
             textProvincia.Text = provincia;
             textBoxDireccion.Text = direccion;
+            textBoxUsuario.Text = usuarioNombre;
+
+            // Asignar la fecha de nacimiento al DateTimePicker
+            dateTimePicker1.Value = fechaNacimiento;
+            
+            // Seleccionar el rol en el ComboBox
+            int rolIndex = comboBoxRol.Items.Cast<ComboBoxItem>()
+                    .ToList()
+                    .FindIndex(item => string.Equals(item.Text, rol, StringComparison.OrdinalIgnoreCase));
+
+            if (rolIndex != -1)
+            {
+                comboBoxRol.SelectedIndex = rolIndex;
+            }
+            else
+            {
+                MessageBox.Show("Rol no encontrado en la lista de roles.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -122,6 +143,9 @@ namespace proyecto2_prueba
             ComboBoxItem selectedItem = comboBoxRol.SelectedItem as ComboBoxItem;
             string rolId = selectedItem != null ? selectedItem.Value : string.Empty;
 
+            // Hashear la contraseña antes de almacenarla
+            string hashedPassword = PasswordHasher.HashPassword(password);
+
             // Validar los campos
             if (string.IsNullOrWhiteSpace(nombre) ||
                 string.IsNullOrWhiteSpace(apellido) ||
@@ -131,7 +155,7 @@ namespace proyecto2_prueba
                 string.IsNullOrWhiteSpace(ciudad) ||
                 string.IsNullOrWhiteSpace(provincia) ||
                 string.IsNullOrWhiteSpace(nombreUsuario) ||
-                string.IsNullOrWhiteSpace(password) ||
+                (IdUsuario == 0 && string.IsNullOrWhiteSpace(password)) || // Solo verificar la contraseña si el ID es 0 (nuevo usuario)
                 string.IsNullOrWhiteSpace(rolId))
             {
                 MessageBox.Show("Debe rellenar todos los campos para registrar el personal.",
@@ -239,8 +263,8 @@ namespace proyecto2_prueba
                             using (SqlCommand commandUsuario = new SqlCommand(queryUsuario, connection))
                             {
                                 commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario);
-                                commandUsuario.Parameters.AddWithValue("@Pass", password); // Se puede agregar encriptación de contraseña aquí si es necesario
-                                commandUsuario.Parameters.AddWithValue("@BajaUsuario", 0); // Suponiendo que el usuario no está dado de baja inicialmente
+                                commandUsuario.Parameters.AddWithValue("@Pass", hashedPassword);
+                                commandUsuario.Parameters.AddWithValue("@BajaUsuario", 1); // Suponiendo que el usuario no está dado de baja inicialmente
                                 commandUsuario.Parameters.AddWithValue("@IdPersona", idPersona);
                                 commandUsuario.Parameters.AddWithValue("@Rol", rolIdInt);
 
@@ -297,26 +321,49 @@ namespace proyecto2_prueba
 
                         // Crear el comando SQL para actualizar los datos del usuario
                         string updateQueryUsuario = @"
-                        UPDATE USUARIO 
-                        SET usuario = @Usuario, pass = @Pass, baja_usuario = @BajaUsuario, id_rol = @Rol 
-                        WHERE id_usuario = @IdUsuario";
+                            UPDATE USUARIO 
+                            SET usuario = @Usuario, baja_usuario = @BajaUsuario, id_rol = @Rol 
+                            WHERE id_usuario = @IdUsuario";
 
-                        using (SqlCommand commandUsuario = new SqlCommand(updateQueryUsuario, connection))
+                        // Si la contraseña no está vacía, agregarla al comando de actualización
+                        if (!string.IsNullOrWhiteSpace(password))
                         {
-                            commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario);
-                            commandUsuario.Parameters.AddWithValue("@Pass", password); // Se puede agregar encriptación de contraseña aquí si es necesario
-                            commandUsuario.Parameters.AddWithValue("@BajaUsuario", 0); // Suponiendo que el usuario no está dado de baja inicialmente
-                            commandUsuario.Parameters.AddWithValue("@Rol", rolIdInt);
-                            commandUsuario.Parameters.AddWithValue("@IdUsuario", IdUsuario);
+                            
+                            updateQueryUsuario = @"
+                                UPDATE USUARIO 
+                                SET usuario = @Usuario, pass = @Pass, baja_usuario = @BajaUsuario, id_rol = @Rol 
+                                WHERE id_usuario = @IdUsuario";
 
-                            commandUsuario.ExecuteNonQuery();
+                            using (SqlCommand commandUsuario = new SqlCommand(updateQueryUsuario, connection))
+                            {
+                                commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                                commandUsuario.Parameters.AddWithValue("@Pass", hashedPassword);
+                                commandUsuario.Parameters.AddWithValue("@BajaUsuario", 1); // Suponiendo que el usuario no está dado de baja inicialmente
+                                commandUsuario.Parameters.AddWithValue("@Rol", rolIdInt);
+                                commandUsuario.Parameters.AddWithValue("@IdUsuario", IdUsuario);
 
-                            // Mensaje de éxito
-                            MessageBox.Show($"El personal '{nombre} {apellido}' se ha actualizado correctamente.",
-                                            "Éxito",
-                                            MessageBoxButtons.OK,
-                                            MessageBoxIcon.Information);
+                                commandUsuario.ExecuteNonQuery();
+                            }
                         }
+                        else
+                        {
+                            // Si la contraseña está vacía, no la actualices
+                            using (SqlCommand commandUsuario = new SqlCommand(updateQueryUsuario, connection))
+                            {
+                                commandUsuario.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                                commandUsuario.Parameters.AddWithValue("@BajaUsuario", 0); // Suponiendo que el usuario no está dado de baja inicialmente
+                                commandUsuario.Parameters.AddWithValue("@Rol", rolIdInt);
+                                commandUsuario.Parameters.AddWithValue("@IdUsuario", IdUsuario);
+
+                                commandUsuario.ExecuteNonQuery();
+                            }
+                        }
+
+                        // Mensaje de éxito
+                        MessageBox.Show($"El personal '{nombre} {apellido}' se ha actualizado correctamente.",
+                                        "Éxito",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
                     }
 
                     // Llamar al método para cargar el personal al DataGridView en listado_personal

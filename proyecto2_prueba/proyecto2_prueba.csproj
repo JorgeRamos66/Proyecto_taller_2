@@ -122,6 +122,12 @@
     <Compile Include="Presentaciones\gerente\menu_gerente.Designer.cs">
       <DependentUpon>menu_gerente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentaciones\vendedor\carrito.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentaciones\vendedor\carrito.Designer.cs">
+      <DependentUpon>carrito.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentaciones\vendedor\menu_vendedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentaciones\gerente\menu_gerente.resx">
       <DependentUpon>menu_gerente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentaciones\vendedor\carrito.resx">
+      <DependentUpon>carrito.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentaciones\vendedor\menu_vendedor.resx">
       <DependentUpon>menu_vendedor.cs</DependentUpon>

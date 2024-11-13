@@ -81,7 +81,7 @@ namespace proyecto2_prueba
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(167, 20);
             this.textBoxUsuario.TabIndex = 3;
-            this.textBoxUsuario.Text = "admin";
+            this.textBoxUsuario.Text = "jorgeramos";
             this.textBoxUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsuario_KeyPress);
             // 
             // textBoxPass
@@ -91,7 +91,7 @@ namespace proyecto2_prueba
             this.textBoxPass.PasswordChar = '*';
             this.textBoxPass.Size = new System.Drawing.Size(167, 20);
             this.textBoxPass.TabIndex = 4;
-            this.textBoxPass.Text = "admin";
+            this.textBoxPass.Text = "ramos";
             this.textBoxPass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPass_KeyPress);
             // 
             // panel1

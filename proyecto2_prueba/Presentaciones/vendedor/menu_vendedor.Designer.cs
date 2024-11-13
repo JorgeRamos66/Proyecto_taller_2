@@ -33,9 +33,7 @@
             this.cerrarSesionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarProgramaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuItemCarrito = new System.Windows.Forms.ToolStripMenuItem();
-            this.StripMenuItemProductos = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuItemMiHistorial = new System.Windows.Forms.ToolStripMenuItem();
-            this.aBMCategoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipal = new System.Windows.Forms.MenuStrip();
             this.sALIRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,9 +48,7 @@
             this.menuStripGerente.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
             this.StripMenuItemCarrito,
-            this.StripMenuItemProductos,
-            this.StripMenuItemMiHistorial,
-            this.aBMCategoriasToolStripMenuItem});
+            this.StripMenuItemMiHistorial});
             this.menuStripGerente.Location = new System.Drawing.Point(0, 47);
             this.menuStripGerente.Name = "menuStripGerente";
             this.menuStripGerente.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
@@ -76,14 +72,16 @@
             // cerrarSesionToolStripMenuItem
             // 
             this.cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
-            this.cerrarSesionToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.cerrarSesionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cerrarSesionToolStripMenuItem.Text = "Cerrar Sesion";
+            this.cerrarSesionToolStripMenuItem.Click += new System.EventHandler(this.cerrarSesionToolStripMenuItem_Click_1);
             // 
             // cerrarProgramaToolStripMenuItem
             // 
             this.cerrarProgramaToolStripMenuItem.Name = "cerrarProgramaToolStripMenuItem";
-            this.cerrarProgramaToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.cerrarProgramaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cerrarProgramaToolStripMenuItem.Text = "Cerrar Programa";
+            this.cerrarProgramaToolStripMenuItem.Click += new System.EventHandler(this.cerrarProgramaToolStripMenuItem_Click_1);
             // 
             // StripMenuItemCarrito
             // 
@@ -94,16 +92,7 @@
             this.StripMenuItemCarrito.Size = new System.Drawing.Size(113, 52);
             this.StripMenuItemCarrito.Text = "Carrito";
             this.StripMenuItemCarrito.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // StripMenuItemProductos
-            // 
-            this.StripMenuItemProductos.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StripMenuItemProductos.Image = global::proyecto2_prueba.Properties.Resources._3d_scanner;
-            this.StripMenuItemProductos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.StripMenuItemProductos.Name = "StripMenuItemProductos";
-            this.StripMenuItemProductos.Size = new System.Drawing.Size(113, 52);
-            this.StripMenuItemProductos.Text = "Productos";
-            this.StripMenuItemProductos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.StripMenuItemCarrito.Click += new System.EventHandler(this.StripMenuItemCarrito_Click);
             // 
             // StripMenuItemMiHistorial
             // 
@@ -114,16 +103,7 @@
             this.StripMenuItemMiHistorial.Size = new System.Drawing.Size(113, 52);
             this.StripMenuItemMiHistorial.Text = "Mi historial";
             this.StripMenuItemMiHistorial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // aBMCategoriasToolStripMenuItem
-            // 
-            this.aBMCategoriasToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aBMCategoriasToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources._3d_scanner;
-            this.aBMCategoriasToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.aBMCategoriasToolStripMenuItem.Name = "aBMCategoriasToolStripMenuItem";
-            this.aBMCategoriasToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
-            this.aBMCategoriasToolStripMenuItem.Text = "Productos";
-            this.aBMCategoriasToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.StripMenuItemMiHistorial.Click += new System.EventHandler(this.StripMenuItemMiHistorial_Click);
             // 
             // menuPrincipal
             // 
@@ -194,12 +174,10 @@
         private System.Windows.Forms.ToolStripMenuItem archivoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cerrarSesionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cerrarProgramaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aBMCategoriasToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuPrincipal;
         private System.Windows.Forms.ToolStripMenuItem sALIRToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem StripMenuItemCarrito;
-        private System.Windows.Forms.ToolStripMenuItem StripMenuItemProductos;
         private System.Windows.Forms.ToolStripMenuItem StripMenuItemMiHistorial;
     }
 }

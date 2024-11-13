@@ -60,3 +60,4 @@ C:\Users\Jorge\source\repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyect
 C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_gerente.resources
 C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_vendedor.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_vendedor.resources
+C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.vendedor.carrito.resources

@@ -1,4 +1,4 @@
-﻿
+﻿using proyecto2_prueba.Presentaciones.vendedor;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,7 +15,7 @@ namespace proyecto2_prueba
 
         private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // Aquí puedes implementar acciones específicas para el menú "Archivo" si las tienes en mente.
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -67,11 +67,34 @@ namespace proyecto2_prueba
             }
         }
 
-        private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StripMenuItemCarrito_Click(object sender, EventArgs e)
+        {
+            // Abre el formulario del carrito de compras del vendedor
+            AbrirFormulario<carrito>("El carrito ya está abierto. ¿Deseas cerrar el anterior y abrir uno nuevo?");
+        }
+
+        private void StripMenuItemProductos_Click(object sender, EventArgs e)
+        {
+            // Abre el formulario de productos disponibles para el vendedor
+            //AbrirFormulario<productos_disponibles>("Este formulario ya está abierto. ¿Deseas cerrar el anterior y abrir uno nuevo?");
+        }
+
+        private void StripMenuItemMiHistorial_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cerrarSesionToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             // Cerrar el formulario de vendedor y se redirige al inicio de sesión por el evento form closed
             this.Close();
             inicio_sesion sesion = new inicio_sesion();
+            sesion.Show(); // Abrir el formulario de inicio de sesión al cerrar sesión
+        }
+
+        private void cerrarProgramaToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

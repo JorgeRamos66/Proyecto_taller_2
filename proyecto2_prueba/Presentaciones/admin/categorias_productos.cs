@@ -327,7 +327,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             // Cambiar color del botón Modificar a amarillo
             if (datagrid_categorias.Columns[e.ColumnIndex].Name == "CModificar")
             {
-                e.CellStyle.BackColor = Color.Yellow; // Cambia el color de fondo
+                // Solo aplicar formateo si la celda tiene un valor no nulo
                 e.CellStyle.ForeColor = Color.Black; // Cambia el color del texto
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra el texto
                 e.FormattingApplied = true;

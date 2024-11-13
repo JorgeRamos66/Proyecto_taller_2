@@ -42,7 +42,7 @@
             this.textBoxNombreCategoria = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bSalir = new System.Windows.Forms.Button();
             this.textBoxIDcategoria = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_categorias)).BeginInit();
@@ -194,20 +194,21 @@
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // button1
+            // bSalir
             // 
-            this.button1.BackColor = System.Drawing.Color.Tomato;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Image = global::proyecto2_prueba.Properties.Resources.log_out_32px;
-            this.button1.Location = new System.Drawing.Point(327, 544);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 47);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "EXIT";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bSalir.BackColor = System.Drawing.Color.Tomato;
+            this.bSalir.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bSalir.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bSalir.Image = global::proyecto2_prueba.Properties.Resources.log_out_32px;
+            this.bSalir.Location = new System.Drawing.Point(327, 544);
+            this.bSalir.Name = "bSalir";
+            this.bSalir.Size = new System.Drawing.Size(83, 47);
+            this.bSalir.TabIndex = 7;
+            this.bSalir.Text = "EXIT";
+            this.bSalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.bSalir.UseVisualStyleBackColor = false;
+            this.bSalir.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBoxIDcategoria
             // 
@@ -223,9 +224,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.CancelButton = this.bSalir;
             this.ClientSize = new System.Drawing.Size(719, 597);
             this.Controls.Add(this.textBoxIDcategoria);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bSalir);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.datagrid_categorias);
             this.Controls.Add(this.panel1);
@@ -253,7 +255,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxDescripcionCategoria;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bSalir;
         public System.Windows.Forms.DataGridView datagrid_categorias;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cid;
         private System.Windows.Forms.DataGridViewTextBoxColumn CNombreCategoria;

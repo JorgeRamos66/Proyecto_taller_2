@@ -147,7 +147,6 @@ namespace proyecto2_prueba.Presentaciones.admin
             }
         }
 
-
         private void ConfigurarDataGridViewCategorias()
         {
             // Limpiar columnas existentes
@@ -447,7 +446,6 @@ namespace proyecto2_prueba.Presentaciones.admin
                 }
             }
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {

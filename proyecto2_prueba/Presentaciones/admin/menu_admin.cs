@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -131,5 +133,84 @@ namespace proyecto2_prueba
             AbrirFormulario<niveles_clientes>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
+        private void realizarBackupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Establecer la cadena de conexión a tu base de datos
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
+
+            // Pedir al usuario que elija una ubicación para guardar el archivo de backup
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivo de Backup (*.bak)|*.bak"; // Filtro para solo mostrar archivos .bak
+            saveFileDialog.FileName = "backup_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".bak"; // Nombre por defecto del archivo
+
+            // Si el usuario selecciona una ubicación y un nombre de archivo, realizar el backup
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string backupFilePath = saveFileDialog.FileName; // Obtener la ruta del archivo seleccionado
+
+                // Consulta SQL para realizar el backup de la base de datos
+                string query = "BACKUP DATABASE [Proyecto_Taller_2] TO DISK = @backupFilePath";
+
+                // Establecer la conexión a la base de datos y ejecutar el backup
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@backupFilePath", backupFilePath);
+
+                    try
+                    {
+                        // Abrir la conexión y ejecutar el comando de backup
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Backup realizado con éxito. El archivo se guardó en: " + backupFilePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        // En caso de error, mostrar un mensaje
+                        MessageBox.Show("Error al realizar el backup: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void restaurarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Establecer la cadena de conexión a tu base de datos
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
+
+            // Pedir al usuario que seleccione el archivo de backup (.bak) a restaurar
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivo de Backup (*.bak)|*.bak"; // Filtro para solo mostrar archivos .bak
+            openFileDialog.Title = "Seleccionar archivo de backup para restaurar";
+
+            // Si el usuario selecciona un archivo, realizar la restauración
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string backupFilePath = openFileDialog.FileName; // Obtener la ruta del archivo seleccionado
+
+                // Consulta SQL para restaurar la base de datos desde el archivo de backup
+                string query = "RESTORE DATABASE [Proyecto_Taller_2] FROM DISK = @backupFilePath WITH REPLACE";
+
+                // Establecer la conexión a la base de datos y ejecutar la restauración
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@backupFilePath", backupFilePath);
+
+                    try
+                    {
+                        // Abrir la conexión y ejecutar el comando de restauración
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Restauración completada con éxito desde el archivo: " + backupFilePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        // En caso de error, mostrar un mensaje
+                        MessageBox.Show("Error al restaurar la base de datos: " + ex.Message);
+                    }
+                }
+            }
+        }
     }
 }

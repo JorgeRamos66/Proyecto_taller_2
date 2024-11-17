@@ -16,5 +16,15 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         {
             InitializeComponent();
         }
+
+        private void BSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BGuardar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

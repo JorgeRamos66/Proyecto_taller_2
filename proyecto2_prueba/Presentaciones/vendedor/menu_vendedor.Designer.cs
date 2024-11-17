@@ -52,7 +52,7 @@
             this.menuStripGerente.Location = new System.Drawing.Point(0, 47);
             this.menuStripGerente.Name = "menuStripGerente";
             this.menuStripGerente.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
-            this.menuStripGerente.Size = new System.Drawing.Size(126, 368);
+            this.menuStripGerente.Size = new System.Drawing.Size(90, 368);
             this.menuStripGerente.TabIndex = 0;
             this.menuStripGerente.Text = "menuStripGerente";
             // 
@@ -65,21 +65,21 @@
             this.archivoToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.main_32px;
             this.archivoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(77, 52);
             this.archivoToolStripMenuItem.Text = "Menu";
             this.archivoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // cerrarSesionToolStripMenuItem
             // 
             this.cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
-            this.cerrarSesionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cerrarSesionToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.cerrarSesionToolStripMenuItem.Text = "Cerrar Sesion";
             this.cerrarSesionToolStripMenuItem.Click += new System.EventHandler(this.cerrarSesionToolStripMenuItem_Click_1);
             // 
             // cerrarProgramaToolStripMenuItem
             // 
             this.cerrarProgramaToolStripMenuItem.Name = "cerrarProgramaToolStripMenuItem";
-            this.cerrarProgramaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cerrarProgramaToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.cerrarProgramaToolStripMenuItem.Text = "Cerrar Programa";
             this.cerrarProgramaToolStripMenuItem.Click += new System.EventHandler(this.cerrarProgramaToolStripMenuItem_Click_1);
             // 
@@ -89,7 +89,7 @@
             this.StripMenuItemCarrito.Image = global::proyecto2_prueba.Properties.Resources.shopping_cart__1_;
             this.StripMenuItemCarrito.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.StripMenuItemCarrito.Name = "StripMenuItemCarrito";
-            this.StripMenuItemCarrito.Size = new System.Drawing.Size(113, 52);
+            this.StripMenuItemCarrito.Size = new System.Drawing.Size(77, 52);
             this.StripMenuItemCarrito.Text = "Carrito";
             this.StripMenuItemCarrito.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.StripMenuItemCarrito.Click += new System.EventHandler(this.StripMenuItemCarrito_Click);
@@ -100,7 +100,7 @@
             this.StripMenuItemMiHistorial.Image = global::proyecto2_prueba.Properties.Resources.pie_chart;
             this.StripMenuItemMiHistorial.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.StripMenuItemMiHistorial.Name = "StripMenuItemMiHistorial";
-            this.StripMenuItemMiHistorial.Size = new System.Drawing.Size(113, 52);
+            this.StripMenuItemMiHistorial.Size = new System.Drawing.Size(77, 52);
             this.StripMenuItemMiHistorial.Text = "Mi historial";
             this.StripMenuItemMiHistorial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.StripMenuItemMiHistorial.Click += new System.EventHandler(this.StripMenuItemMiHistorial_Click);
@@ -129,6 +129,7 @@
             this.sALIRToolStripMenuItem.Size = new System.Drawing.Size(87, 43);
             this.sALIRToolStripMenuItem.Text = "SALIR";
             this.sALIRToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.sALIRToolStripMenuItem.Click += new System.EventHandler(this.sALIRToolStripMenuItem_Click);
             // 
             // label1
             // 

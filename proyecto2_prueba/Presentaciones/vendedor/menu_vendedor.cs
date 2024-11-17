@@ -96,5 +96,10 @@ namespace proyecto2_prueba
         {
 
         }
+
+        private void sALIRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close(); // Cerrar el formulario
+        }
     }
 }

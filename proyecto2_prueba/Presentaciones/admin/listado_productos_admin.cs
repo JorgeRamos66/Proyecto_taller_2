@@ -80,7 +80,6 @@ namespace proyecto2_prueba.Presentaciones.admin
             }
         }
 
-
         private void BSalir_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -258,8 +257,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                 }
             }
         }
-
-        
+                
         private void ConfigurarDataGridView()
         {
             // Limpiar columnas existentes

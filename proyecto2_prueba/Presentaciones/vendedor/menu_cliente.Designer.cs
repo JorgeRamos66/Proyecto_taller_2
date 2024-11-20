@@ -23,10 +23,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.panelSuperior = new System.Windows.Forms.Panel();
             this.lblBuscador = new System.Windows.Forms.Label();
             this.dgvClientes = new System.Windows.Forms.DataGridView();
-            this.cNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cSeleccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.panelInferior = new System.Windows.Forms.Panel();
@@ -49,6 +45,12 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.txtLocalidad = new System.Windows.Forms.TextBox();
             this.txtDomicilio = new System.Windows.Forms.TextBox();
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
+            this.cIdCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cSeleccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBoxIdAuxiliar = new System.Windows.Forms.TextBox();
             this.panelSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).BeginInit();
             this.panelInferior.SuspendLayout();
@@ -91,6 +93,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.dgvClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvClientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cIdCliente,
             this.cNombre,
             this.cApellido,
             this.cDNI,
@@ -100,37 +103,14 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.dgvClientes.ReadOnly = true;
             this.dgvClientes.Size = new System.Drawing.Size(522, 121);
             this.dgvClientes.TabIndex = 2;
-            // 
-            // cNombre
-            // 
-            this.cNombre.HeaderText = "Nombre";
-            this.cNombre.Name = "cNombre";
-            this.cNombre.ReadOnly = true;
-            // 
-            // cApellido
-            // 
-            this.cApellido.HeaderText = "Apellido";
-            this.cApellido.Name = "cApellido";
-            this.cApellido.ReadOnly = true;
-            // 
-            // cDNI
-            // 
-            this.cDNI.HeaderText = "DNI";
-            this.cDNI.Name = "cDNI";
-            this.cDNI.ReadOnly = true;
-            // 
-            // cSeleccion
-            // 
-            this.cSeleccion.HeaderText = "Seleccion";
-            this.cSeleccion.Name = "cSeleccion";
-            this.cSeleccion.ReadOnly = true;
+            this.dgvClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvClientes_CellClick);
             // 
             // btnLimpiar
             // 
             this.btnLimpiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(535, 52);
+            this.btnLimpiar.Location = new System.Drawing.Point(535, 50);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 3;
@@ -153,6 +133,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // panelInferior
             // 
             this.panelInferior.BackColor = System.Drawing.Color.Tan;
+            this.panelInferior.Controls.Add(this.textBoxIdAuxiliar);
             this.panelInferior.Controls.Add(this.BCancelar);
             this.panelInferior.Controls.Add(this.BConfirmar);
             this.panelInferior.Controls.Add(this.LProvincia);
@@ -356,6 +337,45 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(98, 20);
             this.dtpFechaNacimiento.TabIndex = 7;
             // 
+            // cIdCliente
+            // 
+            this.cIdCliente.HeaderText = "IdCliente";
+            this.cIdCliente.Name = "cIdCliente";
+            this.cIdCliente.ReadOnly = true;
+            this.cIdCliente.Visible = false;
+            // 
+            // cNombre
+            // 
+            this.cNombre.HeaderText = "Nombre";
+            this.cNombre.Name = "cNombre";
+            this.cNombre.ReadOnly = true;
+            // 
+            // cApellido
+            // 
+            this.cApellido.HeaderText = "Apellido";
+            this.cApellido.Name = "cApellido";
+            this.cApellido.ReadOnly = true;
+            // 
+            // cDNI
+            // 
+            this.cDNI.HeaderText = "DNI";
+            this.cDNI.Name = "cDNI";
+            this.cDNI.ReadOnly = true;
+            // 
+            // cSeleccion
+            // 
+            this.cSeleccion.HeaderText = "Seleccion";
+            this.cSeleccion.Name = "cSeleccion";
+            this.cSeleccion.ReadOnly = true;
+            // 
+            // textBoxIdAuxiliar
+            // 
+            this.textBoxIdAuxiliar.Location = new System.Drawing.Point(593, 17);
+            this.textBoxIdAuxiliar.Name = "textBoxIdAuxiliar";
+            this.textBoxIdAuxiliar.Size = new System.Drawing.Size(166, 20);
+            this.textBoxIdAuxiliar.TabIndex = 37;
+            this.textBoxIdAuxiliar.Visible = false;
+            // 
             // menu_cliente
             // 
             this.BackColor = System.Drawing.Color.SteelBlue;
@@ -402,9 +422,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         private System.Windows.Forms.Label LNombre;
         private System.Windows.Forms.Button BCancelar;
         private System.Windows.Forms.Button BConfirmar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cIdCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn cNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn cApellido;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDNI;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSeleccion;
+        private System.Windows.Forms.TextBox textBoxIdAuxiliar;
     }
 }

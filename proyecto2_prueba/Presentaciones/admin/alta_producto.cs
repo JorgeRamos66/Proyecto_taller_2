@@ -61,7 +61,7 @@ namespace proyecto2_prueba.Presentaciones.admin
         private void CargarCategorias()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString; // Asegúrate de que 'MiCadenaDeConexion' está definido en tu archivo de configuración
-            string query = "SELECT id_categoria, nombre_categoria FROM CATEGORIA";
+            string query = "SELECT id_categoria, nombre_categoria FROM CATEGORIA WHERE estado_categoria = 1";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

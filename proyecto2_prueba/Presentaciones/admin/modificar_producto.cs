@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using static proyecto2_prueba.Presentaciones.vendedor.carrito;
 
 namespace proyecto2_prueba.Presentaciones.admin
 {
@@ -12,15 +13,18 @@ namespace proyecto2_prueba.Presentaciones.admin
         //Referencia al formulario principal
         private listado_productos_admin formularioListado;
         private string rutaImagen;
+        private int idProducto;
 
         //Se pasa como referencia el formulario listado de productos
         public modificar_producto(int idProducto, string nombre, int stock, decimal precio, int idCategoria, string descripcion, string rutaImagen, listado_productos_admin formularioListado)
         {
             InitializeComponent();
+            this.idProducto = idProducto; // Almacenar el ID del producto en el campo privado
             this.formularioListado = formularioListado;
             this.rutaImagen = rutaImagen; // Asigna la ruta de imagen recibida
 
             // Llama a un método para inicializar los valores de los controles
+            CargarCategorias(); // Llenar las categorías en el ComboBox
             InicializarCampos(nombre, stock, precio, idCategoria, descripcion, rutaImagen);
         }
 
@@ -29,32 +33,82 @@ namespace proyecto2_prueba.Presentaciones.admin
             textBoxNombre.Text = nombre;
             textBoxStock.Text = stock.ToString();
             textBoxPrecio.Text = precio.ToString();
-            comboBoxCategoria.SelectedItem = idCategoria.ToString(); // Ajusta según cómo manejes la categoría
             textBoxDescripcion.Text = descripcion;
             textBoxRutaFoto.Text = rutaImagen;
 
-            // Carga la imagen en el PictureBox si la ruta es válida
-            string rutaCompleta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\", rutaImagen);
-            try
+            // Seleccionar la categoría correspondiente
+            foreach (ComboBoxItem item in comboBoxCategoria.Items)
             {
-                if (File.Exists(rutaCompleta))
+                if (item.Value == idCategoria.ToString())
                 {
-                    // Convertir la imagen a un objeto Image y asignarla a la columna de imagen
-                    pictureBoxProducto.Image = Image.FromFile(rutaCompleta);
-                }
-                
-                else
-                {
-                    MessageBox.Show("No se encontró la imagen del producto en la ruta especificada.");
+                    comboBoxCategoria.SelectedItem = item;
+                    break;
                 }
             }
-            catch (Exception ex)
+
+            // Cargar la imagen en el PictureBox
+            string rutaCompleta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\", rutaImagen);
+            if (File.Exists(rutaCompleta))
             {
-                MessageBox.Show("Error al cargar la imagen: " + ex.Message);
+                pictureBoxProducto.Image = Image.FromFile(rutaCompleta);
+            }
+            else
+            {
+                MessageBox.Show("No se encontró la imagen del producto en la ruta especificada.");
             }
         }
 
 
+        private void CargarCategorias()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
+            string query = "SELECT id_categoria, nombre_categoria FROM CATEGORIA WHERE estado_categoria = 1";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    comboBoxCategoria.Items.Clear(); // Limpiar los elementos existentes
+
+                    while (reader.Read())
+                    {
+                        // Crear un objeto ComboBoxItem para almacenar el ID y el nombre
+                        var item = new ComboBoxItem
+                        {
+                            Value = reader["id_categoria"].ToString(),
+                            Text = reader["nombre_categoria"].ToString()
+                        };
+                        comboBoxCategoria.Items.Add(item);
+                    }
+
+                    reader.Close();
+
+                    // Configurar el valor seleccionado
+                    comboBoxCategoria.DisplayMember = "Text";
+                    comboBoxCategoria.ValueMember = "Value";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al cargar las categorías: " + ex.Message);
+                }
+            }
+        }
+
+        // Clase auxiliar para manejar las categorías en el ComboBox
+        public class ComboBoxItem
+        {
+            public string Value { get; set; }
+            public string Text { get; set; }
+
+            public override string ToString()
+            {
+                return Text; // Esto es lo que se mostrará en el ComboBox
+            }
+        }
 
         private void textBoxNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -81,8 +135,6 @@ namespace proyecto2_prueba.Presentaciones.admin
             }
         }
 
-        //FilaIndex guarda el indice de la fila para saber cual modificar
-        public int FilaIndex { get; set; }
 
         //Al presionar el boton de modificar producto se realiza la modificacion.
         private void BModificarProducto_Click(object sender, EventArgs e)
@@ -91,7 +143,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             string nombre = textBoxNombre.Text;
             string stockText = textBoxStock.Text;
             string precioText = textBoxPrecio.Text;
-            string categoria = comboBoxCategoria.SelectedItem.ToString();
+            string categoria = comboBoxCategoria.SelectedItem != null ? comboBoxCategoria.SelectedItem.ToString() : string.Empty;
             string descripcion = textBoxDescripcion.Text;
             string rutaImagen = textBoxRutaFoto.Text;
 
@@ -190,7 +242,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                         cmd.Parameters.AddWithValue("@stock", stock);
                         cmd.Parameters.AddWithValue("@idCategoria", idCategoriaSeleccionada);
                         cmd.Parameters.AddWithValue("@rutaImagen", rutaImagen);
-                        cmd.Parameters.AddWithValue("@idProducto", FilaIndex); // Cambia esto si `FilaIndex` no es el ID del producto.
+                        cmd.Parameters.AddWithValue("@idProducto", this.idProducto);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
@@ -224,27 +276,52 @@ namespace proyecto2_prueba.Presentaciones.admin
 
 
 
-
         private void BAgregarImagen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures); // Carpeta de imágenes del usuario
             openFileDialog.Filter = "Archivos de imagen (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png|Todos los archivos (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                // Obtener la ruta del archivo seleccionado
                 string filePath = openFileDialog.FileName;
 
-                // Mostrar la ruta en el TextBox
-                textBoxRutaFoto.Text = filePath;
+                // Generar un nombre único aleatorio para la imagen
+                string uniqueFileName = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(filePath);
 
-                // Mostrar la imagen en el PictureBox
-                pictureBoxProducto.Image = Image.FromFile(filePath);
+                // Ruta relativa donde se copiará la imagen
+                string targetDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources\\imagenes_productos");
+                string targetPath = System.IO.Path.Combine(targetDirectory, uniqueFileName);
+
+                try
+                {
+                    // Crear el directorio si no existe
+                    if (!System.IO.Directory.Exists(targetDirectory))
+                    {
+                        System.IO.Directory.CreateDirectory(targetDirectory);
+                    }
+
+                    // Copiar el archivo al directorio de recursos
+                    System.IO.File.Copy(filePath, targetPath);
+
+                    // Mostrar la ruta relativa en el TextBox
+                    textBoxRutaFoto.Text = System.IO.Path.Combine("Resources", "imagenes_productos", uniqueFileName);
+
+                    // Mostrar la imagen en el PictureBox
+                    pictureBoxProducto.Image = Image.FromFile(targetPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar la imagen: {ex.Message}",
+                                    "Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
             }
         }
+
 
         private void BSalirModificacion_Click(object sender, EventArgs e)
         {

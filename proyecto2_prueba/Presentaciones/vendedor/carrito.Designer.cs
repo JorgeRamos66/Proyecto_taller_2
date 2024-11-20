@@ -48,6 +48,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.CNombre_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CCategoria_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CStock_Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CCantidad_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operacionAgregar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operacionQuitar = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -113,6 +114,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.CNombre_producto,
             this.CCategoria_producto,
             this.CPrecio,
+            this.CStock_Producto,
             this.CCantidad_producto,
             this.operacionAgregar,
             this.operacionQuitar,
@@ -194,11 +196,16 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.CPrecio.Name = "CPrecio";
             this.CPrecio.ReadOnly = true;
             // 
+            // CStock_Producto
+            // 
+            this.CStock_Producto.HeaderText = "En Stock";
+            this.CStock_Producto.Name = "CStock_Producto";
+            this.CStock_Producto.ReadOnly = true;
+            // 
             // CCantidad_producto
             // 
-            this.CCantidad_producto.HeaderText = "Cantidad (Stock)";
+            this.CCantidad_producto.HeaderText = "Cantidad";
             this.CCantidad_producto.Name = "CCantidad_producto";
-            this.CCantidad_producto.Width = 110;
             // 
             // operacionAgregar
             // 
@@ -273,6 +280,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         private DataGridViewTextBoxColumn CNombre_producto;
         private DataGridViewTextBoxColumn CCategoria_producto;
         private DataGridViewTextBoxColumn CPrecio;
+        private DataGridViewTextBoxColumn CStock_Producto;
         private DataGridViewTextBoxColumn CCantidad_producto;
         private DataGridViewTextBoxColumn operacionAgregar;
         private DataGridViewTextBoxColumn operacionQuitar;

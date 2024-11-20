@@ -1,4 +1,6 @@
-﻿namespace proyecto2_prueba
+﻿using static proyecto2_prueba.inicio_sesion;
+
+namespace proyecto2_prueba
 {
     partial class menu_vendedor
     {
@@ -37,6 +39,7 @@
             this.menuPrincipal = new System.Windows.Forms.MenuStrip();
             this.sALIRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.LNombreUsuario = new System.Windows.Forms.Label();
             this.menuStripGerente.SuspendLayout();
             this.menuPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -140,10 +143,27 @@
             this.label1.ForeColor = System.Drawing.Color.Gold;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(248, 34);
+            this.label1.Size = new System.Drawing.Size(255, 34);
             this.label1.TabIndex = 2;
-            this.label1.Text = "MENU VENDEDOR";
+            this.label1.Text = "MENU VENDEDOR:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LNombreUsuario
+            // 
+            this.LNombreUsuario.AutoSize = true;
+            this.LNombreUsuario.BackColor = System.Drawing.Color.SteelBlue;
+            this.LNombreUsuario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LNombreUsuario.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LNombreUsuario.ForeColor = System.Drawing.Color.Gold;
+            this.LNombreUsuario.Location = new System.Drawing.Point(273, 9);
+            this.LNombreUsuario.Name = "LNombreUsuario";
+            this.LNombreUsuario.Size = new System.Drawing.Size(69, 34);
+            this.LNombreUsuario.TabIndex = 3;
+            this.LNombreUsuario.Text = "user";
+            this.LNombreUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // Actualizar el label con el nombre y apellido
+            LNombreUsuario.Text = $"{UsuarioSesion.Nombre} {UsuarioSesion.Apellido}";
+
             // 
             // menu_vendedor
             // 
@@ -151,6 +171,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(800, 415);
+            this.Controls.Add(this.LNombreUsuario);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStripGerente);
             this.Controls.Add(this.menuPrincipal);
@@ -180,5 +201,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem StripMenuItemCarrito;
         private System.Windows.Forms.ToolStripMenuItem StripMenuItemMiHistorial;
+        private System.Windows.Forms.Label LNombreUsuario;
     }
 }

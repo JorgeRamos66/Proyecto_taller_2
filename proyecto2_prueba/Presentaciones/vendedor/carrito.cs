@@ -25,13 +25,23 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 return;
             }
 
-            connection = new SqlConnection(connectionString); // Usar la cadena de conexión válida
+            connection = new SqlConnection(connectionString);
             textBoxBusqueda.TextChanged += textBoxBusqueda_TextChanged;
             datagrid_carrito.CellClick += datagrid_carrito_CellClick;
             datagrid_carrito.CellValidating += datagrid_carrito_CellValidating;
             datagrid_carrito.CellBeginEdit += datagrid_carrito_CellBeginEdit;
             datagrid_carrito.CellEndEdit += datagrid_carrito_CellEndEdit;
             datagrid_carrito.CellFormatting += datagrid_carrito_CellFormatting;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close(); // Cerrar el formulario cuando se presiona Esc
+                return true;  // Indicar que la tecla ha sido manejada
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void textBoxBusqueda_TextChanged(object sender, EventArgs e)
@@ -60,11 +70,10 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
         private void MostrarProductos(string busqueda)
         {
-            // Si la búsqueda está vacía, no mostrar productos
             if (string.IsNullOrEmpty(busqueda))
             {
                 datagrid_carrito.Rows.Clear(); // Limpiar el DataGrid
-                return; // No hacer nada más si no hay búsqueda
+                return;
             }
 
             var productos = ObtenerProductosFiltrados(busqueda);
@@ -76,16 +85,14 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 datagrid_carrito.Rows[row].Cells["CNombre_producto"].Value = producto.Nombre;
                 datagrid_carrito.Rows[row].Cells["CCategoria_producto"].Value = producto.Categoria;
                 datagrid_carrito.Rows[row].Cells["CPrecio"].Value = producto.Precio;
-                datagrid_carrito.Rows[row].Cells["CCantidad_producto"].Value = 1; // Establecer valor predeterminado 1
+                datagrid_carrito.Rows[row].Cells["CCantidad_producto"].Value = 1; // Valor inicial predeterminado
+                datagrid_carrito.Rows[row].Cells["CStock_producto"].Value = producto.Stock; // Mostrar el stock en la nueva columna
                 datagrid_carrito.Rows[row].Cells["CIdProducto"].Value = producto.Id;
 
-                datagrid_carrito.Rows[row].Cells["CCantidad_producto"].ReadOnly = false; // Esto permite que la celda sea editable
-
-                // Asignar el texto "Agregar" a la celda de la columna operacionAgregar
-                datagrid_carrito.Rows[row].Cells["operacionAgregar"].Value = "Agregar";  // Aquí asignamos el texto
+                datagrid_carrito.Rows[row].Cells["CCantidad_producto"].ReadOnly = false; // Permitir edición
+                datagrid_carrito.Rows[row].Cells["operacionAgregar"].Value = "Agregar";
             }
         }
-
 
         private void datagrid_carrito_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
@@ -93,12 +100,9 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             if (datagrid_carrito.Columns[e.ColumnIndex].Name == "CCantidad_producto")
             {
                 string cantidadStr = e.FormattedValue.ToString();
-
-                // Extraer solo la parte numérica antes de cualquier carácter especial
-                string cantidadSolo = cantidadStr.Split('(')[0].Trim();  // Eliminar el texto entre paréntesis si existe
-
                 int cantidad;
-                if (!int.TryParse(cantidadSolo, out cantidad) || cantidad < 0)
+
+                if (!int.TryParse(cantidadStr, out cantidad) || cantidad < 0)
                 {
                     MessageBox.Show("Por favor ingresa un valor válido para la cantidad (número entero no negativo).");
                     e.Cancel = true;
@@ -106,9 +110,9 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 else
                 {
                     var row = datagrid_carrito.Rows[e.RowIndex];
-                    var producto = listaCarrito.FirstOrDefault(p => p.Id == (int)row.Cells["CIdProducto"].Value);
+                    int stockDisponible = Convert.ToInt32(row.Cells["CStock_producto"].Value);
 
-                    if (producto != null && cantidad > producto.Stock)
+                    if (cantidad > stockDisponible)
                     {
                         MessageBox.Show("La cantidad ingresada excede el stock disponible.");
                         e.Cancel = true;
@@ -116,7 +120,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 }
             }
         }
-
 
         private void datagrid_carrito_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -149,7 +152,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             }
         }
 
-
         private List<Producto> ObtenerProductosFiltrados(string busqueda)
         {
             List<Producto> productos = new List<Producto>();
@@ -158,8 +160,20 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             string query = @"
                 SELECT * 
                 FROM PRODUCTO 
-                WHERE (nombre_producto LIKE @busqueda OR id_categoria IN (SELECT id_categoria FROM CATEGORIA WHERE nombre_categoria LIKE @busqueda)) 
-                AND baja_producto = 1";
+                WHERE 
+                    (nombre_producto LIKE @busqueda 
+                    OR id_categoria IN (
+                        SELECT id_categoria 
+                        FROM CATEGORIA 
+                        WHERE nombre_categoria LIKE @busqueda 
+                        AND estado_categoria = 1)) 
+                AND baja_producto = 1
+                AND id_categoria IN (
+                    SELECT id_categoria 
+                    FROM CATEGORIA 
+                    WHERE estado_categoria = 1
+                )";
+
 
             string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"]?.ConnectionString;
 
@@ -208,8 +222,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             return productos;
         }
 
-
-
         private string ObtenerNombreCategoria(int idCategoria)
         {
             string nombreCategoria = "Desconocido"; // Valor predeterminado
@@ -248,8 +260,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             }
             return nombreCategoria;
         }
-
-
 
         private void datagrid_carrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -291,6 +301,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 }
             }
         }
+
         private void datagrid_carrito_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (datagrid_carrito.Columns[e.ColumnIndex].Name == "CCantidad_producto" && e.RowIndex >= 0)
@@ -327,8 +338,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 datagrid_carrito.Refresh();
             }
         }
-
-
 
         public Producto ObtenerProductoPorId(int idProducto)
         {
@@ -370,7 +379,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             return producto;
         }
 
-
         private void AgregarFilaProducto(Producto producto)
         {
             var row = datagrid_carrito.Rows.Add();
@@ -378,6 +386,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             datagrid_carrito.Rows[row].Cells["CCategoria_producto"].Value = producto.Categoria;
             datagrid_carrito.Rows[row].Cells["CPrecio"].Value = producto.Precio;
             datagrid_carrito.Rows[row].Cells["CCantidad_producto"].Value = producto.Cantidad;
+            datagrid_carrito.Rows[row].Cells["CStock_producto"].Value = producto.Stock; // Mostrar el stock en la nueva columna
             datagrid_carrito.Rows[row].Cells["CIdProducto"].Value = producto.Id;
             datagrid_carrito.Rows[row].Cells["operacionQuitar"].Value = "Quitar";
         }
@@ -439,6 +448,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
             // Al volver del formulario de clientes, se puede procesar la venta.
             // Implementar la lógica de guardado si es necesario.
+            // Limpiar la lista del carrito
+            listaCarrito.Clear();
+
+            // Actualizar el DataGridView
+            ActualizarCarrito();
         }
 
         private void BLimpiarCarrito_Click(object sender, EventArgs e)

@@ -38,13 +38,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.BBorrar = new System.Windows.Forms.Button();
             this.textBoxBusqueda = new System.Windows.Forms.TextBox();
             this.datagrid_carrito = new System.Windows.Forms.DataGridView();
-            this.proyecto_Taller_2DataSet = new proyecto2_prueba.Proyecto_Taller_2DataSet();
-            this.proyectoTaller2DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.pRODUCTOBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.pRODUCTOTableAdapter = new proyecto2_prueba.Proyecto_Taller_2DataSetTableAdapters.PRODUCTOTableAdapter();
-            this.proyectoTaller2DataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.bConfirmarVenta = new System.Windows.Forms.Button();
-            this.BLimpiarCarrito = new System.Windows.Forms.Button();
             this.CNombre_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CCategoria_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,6 +46,13 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.operacionAgregar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operacionQuitar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CIdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.proyecto_Taller_2DataSet = new proyecto2_prueba.Proyecto_Taller_2DataSet();
+            this.proyectoTaller2DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pRODUCTOBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pRODUCTOTableAdapter = new proyecto2_prueba.Proyecto_Taller_2DataSetTableAdapters.PRODUCTOTableAdapter();
+            this.proyectoTaller2DataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.bConfirmarVenta = new System.Windows.Forms.Button();
+            this.BLimpiarCarrito = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_carrito)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.proyecto_Taller_2DataSet)).BeginInit();
@@ -126,56 +126,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.datagrid_carrito.Size = new System.Drawing.Size(971, 371);
             this.datagrid_carrito.TabIndex = 8;
             // 
-            // proyecto_Taller_2DataSet
-            // 
-            this.proyecto_Taller_2DataSet.DataSetName = "Proyecto_Taller_2DataSet";
-            this.proyecto_Taller_2DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // proyectoTaller2DataSetBindingSource
-            // 
-            this.proyectoTaller2DataSetBindingSource.DataSource = this.proyecto_Taller_2DataSet;
-            this.proyectoTaller2DataSetBindingSource.Position = 0;
-            // 
-            // pRODUCTOBindingSource
-            // 
-            this.pRODUCTOBindingSource.DataMember = "PRODUCTO";
-            this.pRODUCTOBindingSource.DataSource = this.proyectoTaller2DataSetBindingSource;
-            // 
-            // pRODUCTOTableAdapter
-            // 
-            this.pRODUCTOTableAdapter.ClearBeforeFill = true;
-            // 
-            // proyectoTaller2DataSetBindingSource1
-            // 
-            this.proyectoTaller2DataSetBindingSource1.DataSource = this.proyecto_Taller_2DataSet;
-            this.proyectoTaller2DataSetBindingSource1.Position = 0;
-            // 
-            // bConfirmarVenta
-            // 
-            this.bConfirmarVenta.BackColor = System.Drawing.Color.ForestGreen;
-            this.bConfirmarVenta.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bConfirmarVenta.ForeColor = System.Drawing.SystemColors.Control;
-            this.bConfirmarVenta.Location = new System.Drawing.Point(811, 67);
-            this.bConfirmarVenta.Name = "bConfirmarVenta";
-            this.bConfirmarVenta.Size = new System.Drawing.Size(113, 33);
-            this.bConfirmarVenta.TabIndex = 13;
-            this.bConfirmarVenta.Text = "Confirmar Venta";
-            this.bConfirmarVenta.UseVisualStyleBackColor = false;
-            this.bConfirmarVenta.Click += new System.EventHandler(this.bConfirmarVenta_Click);
-            // 
-            // BLimpiarCarrito
-            // 
-            this.BLimpiarCarrito.BackColor = System.Drawing.Color.Red;
-            this.BLimpiarCarrito.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BLimpiarCarrito.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BLimpiarCarrito.Location = new System.Drawing.Point(930, 67);
-            this.BLimpiarCarrito.Name = "BLimpiarCarrito";
-            this.BLimpiarCarrito.Size = new System.Drawing.Size(113, 34);
-            this.BLimpiarCarrito.TabIndex = 14;
-            this.BLimpiarCarrito.Text = "Limpiar Carrito";
-            this.BLimpiarCarrito.UseVisualStyleBackColor = false;
-            this.BLimpiarCarrito.Click += new System.EventHandler(this.BLimpiarCarrito_Click);
-            // 
             // CNombre_producto
             // 
             this.CNombre_producto.HeaderText = "Nombre";
@@ -234,6 +184,56 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.CIdProducto.HeaderText = "IdProducto";
             this.CIdProducto.Name = "CIdProducto";
             this.CIdProducto.Visible = false;
+            // 
+            // proyecto_Taller_2DataSet
+            // 
+            this.proyecto_Taller_2DataSet.DataSetName = "Proyecto_Taller_2DataSet";
+            this.proyecto_Taller_2DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // proyectoTaller2DataSetBindingSource
+            // 
+            this.proyectoTaller2DataSetBindingSource.DataSource = this.proyecto_Taller_2DataSet;
+            this.proyectoTaller2DataSetBindingSource.Position = 0;
+            // 
+            // pRODUCTOBindingSource
+            // 
+            this.pRODUCTOBindingSource.DataMember = "PRODUCTO";
+            this.pRODUCTOBindingSource.DataSource = this.proyectoTaller2DataSetBindingSource;
+            // 
+            // pRODUCTOTableAdapter
+            // 
+            this.pRODUCTOTableAdapter.ClearBeforeFill = true;
+            // 
+            // proyectoTaller2DataSetBindingSource1
+            // 
+            this.proyectoTaller2DataSetBindingSource1.DataSource = this.proyecto_Taller_2DataSet;
+            this.proyectoTaller2DataSetBindingSource1.Position = 0;
+            // 
+            // bConfirmarVenta
+            // 
+            this.bConfirmarVenta.BackColor = System.Drawing.Color.ForestGreen;
+            this.bConfirmarVenta.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bConfirmarVenta.ForeColor = System.Drawing.SystemColors.Control;
+            this.bConfirmarVenta.Location = new System.Drawing.Point(811, 67);
+            this.bConfirmarVenta.Name = "bConfirmarVenta";
+            this.bConfirmarVenta.Size = new System.Drawing.Size(113, 33);
+            this.bConfirmarVenta.TabIndex = 13;
+            this.bConfirmarVenta.Text = "Confirmar Venta";
+            this.bConfirmarVenta.UseVisualStyleBackColor = false;
+            this.bConfirmarVenta.Click += new System.EventHandler(this.bConfirmarVenta_Click);
+            // 
+            // BLimpiarCarrito
+            // 
+            this.BLimpiarCarrito.BackColor = System.Drawing.Color.Red;
+            this.BLimpiarCarrito.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BLimpiarCarrito.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BLimpiarCarrito.Location = new System.Drawing.Point(930, 67);
+            this.BLimpiarCarrito.Name = "BLimpiarCarrito";
+            this.BLimpiarCarrito.Size = new System.Drawing.Size(113, 34);
+            this.BLimpiarCarrito.TabIndex = 14;
+            this.BLimpiarCarrito.Text = "Limpiar Carrito";
+            this.BLimpiarCarrito.UseVisualStyleBackColor = false;
+            this.BLimpiarCarrito.Click += new System.EventHandler(this.BLimpiarCarrito_Click);
             // 
             // carrito
             // 

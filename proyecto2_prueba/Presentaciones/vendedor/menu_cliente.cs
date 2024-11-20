@@ -4,11 +4,17 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using static proyecto2_prueba.inicio_sesion;
 using static proyecto2_prueba.Presentaciones.vendedor.carrito;
 using static proyecto2_prueba.Presentaciones.vendedor.menu_cliente;
+
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.Diagnostics;
+
 
 namespace proyecto2_prueba.Presentaciones.vendedor
 {
@@ -429,13 +435,21 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                     // Insertar productos en la tabla de ventas detalles
                     foreach (var producto in listaCarrito)
                     {
+                        // Insertar detalles de la venta
                         InsertarVentaDetalle(ventaId, producto, transaction);
+
+                        // Actualizar stock del producto
+                        ActualizarStockProducto(producto.Id, producto.Cantidad, transaction);
                     }
 
                     // Confirmar transacción
                     transaction.Commit();
 
-                    MessageBox.Show("Venta registrada exitosamente.");
+                    
+                    // 2. Generar el PDF de la factura
+                    GenerarFacturaPDF(ventaId,listaCarrito);
+
+                    MessageBox.Show("Venta registrada y factura generada exitosamente.");
                     this.DialogResult = DialogResult.OK; // Cerrar formulario
                     this.Close();
                 }
@@ -447,6 +461,106 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 }
             }
         }
+        // Método para actualizar el stock del producto
+        private void ActualizarStockProducto(int idProducto, int cantidadVendida, SqlTransaction transaction)
+        {
+            try
+            {
+                string query = @"UPDATE Producto
+                         SET stock = stock - @cantidadVendida
+                         WHERE id_producto = @idProducto";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    cmd.Parameters.AddWithValue("@cantidadVendida", cantidadVendida);
+
+                    cmd.ExecuteNonQuery(); // Ejecuta la consulta
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar el stock del producto", ex);
+            }
+        }
+        public void GenerarFacturaPDF(int idVenta, List<Producto> listaCarrito)
+        {
+            string rutaArchivo = $"Factura_{idVenta}.pdf"; // Nombre del archivo
+
+            try
+            {
+                // Crear un archivo PDF
+                using (FileStream fs = new FileStream(rutaArchivo, FileMode.Create))
+                using (Document documento = new Document(PageSize.A4, 25, 25, 30, 30))
+                using (PdfWriter writer = PdfWriter.GetInstance(documento, fs))
+                {
+                    documento.Open();
+
+                    // Agregar encabezado
+                    iTextSharp.text.Font fontTitulo = iTextSharp.text.FontFactory.GetFont(iTextSharp.text.FontFactory.HELVETICA_BOLD, 16);
+                    documento.Add(new Paragraph("Factura de Venta", fontTitulo));
+                    documento.Add(new Paragraph($"ID de la Venta: {idVenta}"));
+                    documento.Add(new Paragraph($"Fecha: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}"));
+                    documento.Add(new Paragraph("\n"));
+
+                    // Crear tabla con encabezado
+                    PdfPTable tabla = new PdfPTable(3); // 3 columnas: Producto, Cantidad, Subtotal
+                    tabla.WidthPercentage = 100;
+                    tabla.SetWidths(new float[] { 50f, 25f, 25f }); // Ajustar proporciones de las columnas
+                    tabla.AddCell(new PdfPCell(new Phrase("Producto", fontTitulo)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                    tabla.AddCell(new PdfPCell(new Phrase("Cantidad", fontTitulo)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                    tabla.AddCell(new PdfPCell(new Phrase("Subtotal", fontTitulo)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+
+                    // Agregar filas de la tabla
+                    foreach (var producto in listaCarrito)
+                    {
+                        tabla.AddCell(producto.Nombre); // Nombre del producto
+                        tabla.AddCell(producto.Cantidad.ToString()); // Cantidad
+                        tabla.AddCell($"${(producto.Cantidad * producto.Precio):0.00}"); // Subtotal
+                    }
+
+                    // Total de la venta
+                    double total = listaCarrito.Sum(p => p.Cantidad * p.Precio);
+                    documento.Add(tabla);
+                    documento.Add(new Paragraph($"\nTotal: ${total:0.00}", fontTitulo));
+
+                    documento.Close();
+                }
+
+                MessageBox.Show($"Factura generada: {rutaArchivo}");
+                // Abrir el PDF automáticamente en el navegador
+                AbrirPDFEnNavegador(rutaArchivo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar la factura: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void AbrirPDFEnNavegador(string rutaArchivo)
+        {
+            try
+            {
+                // Usar Process.Start para abrir el archivo PDF en el navegador predeterminado
+                // Asegúrate de que la ruta sea válida
+                if (File.Exists(rutaArchivo))
+                {
+                    // En algunos sistemas, podrías necesitar pasar la ruta completa
+                    string filePath = Path.GetFullPath(rutaArchivo);
+
+                    // Abre el PDF en el navegador predeterminado (generalmente el navegador web predeterminado)
+                    Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo encontrar el archivo PDF.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al abrir el PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private int InsertarPersona()
         {
@@ -697,5 +811,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             txtBuscar.Text = string.Empty;
             MostrarClientes(string.Empty);
         }
+
+
     }
 }

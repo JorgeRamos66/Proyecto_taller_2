@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using static proyecto2_prueba.inicio_sesion;
 
 namespace proyecto2_prueba
 {
@@ -11,6 +12,9 @@ namespace proyecto2_prueba
         {
             InitializeComponent();
             this.IsMdiContainer = true; // Hace que el formulario sea un contenedor MDI
+
+            // Actualizar el label con el nombre y apellido del usuario
+            LNombreUsuario.Text = $"{UsuarioSesion.Nombre} {UsuarioSesion.Apellido}";
         }
 
         private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,7 +85,30 @@ namespace proyecto2_prueba
 
         private void StripMenuItemMiHistorial_Click(object sender, EventArgs e)
         {
+            // Verifica si el formulario ya está abierto, si no lo está lo abre
+            Form historialForm = this.MdiChildren.FirstOrDefault(f => f is historial_ventas);
 
+            if (historialForm != null)
+            {
+                // Si ya está abierto, pregunta si desea cerrarlo y abrir uno nuevo
+                var result = MessageBox.Show("El historial ya está abierto. ¿Deseas cerrar el anterior y abrir uno nuevo?",
+                                             "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    historialForm.Close(); // Cerrar el formulario anterior
+                    historialForm.Dispose(); // Liberar recursos
+                }
+                else
+                {
+                    return; // Si elige No, no hace nada
+                }
+            }
+
+            // Si no está abierto o lo cerró, crear y abrir un nuevo formulario de historial de ventas
+            historial_ventas nuevoHistorial = new historial_ventas();
+            nuevoHistorial.MdiParent = this;
+            nuevoHistorial.Show();
         }
 
         private void cerrarSesionToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -94,7 +121,7 @@ namespace proyecto2_prueba
 
         private void cerrarProgramaToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-
+            // Lógica vacía para el evento, ya que el método `cerrarProgramaToolStripMenuItem_Click` ya está implementado arriba
         }
 
         private void sALIRToolStripMenuItem_Click(object sender, EventArgs e)

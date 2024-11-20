@@ -161,8 +161,7 @@ namespace proyecto2_prueba
             this.LNombreUsuario.TabIndex = 3;
             this.LNombreUsuario.Text = "user";
             this.LNombreUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // Actualizar el label con el nombre y apellido
-            LNombreUsuario.Text = $"{UsuarioSesion.Nombre} {UsuarioSesion.Apellido}";
+            
 
             // 
             // menu_vendedor

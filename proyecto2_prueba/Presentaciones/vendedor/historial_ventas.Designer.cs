@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.BLimpiarCarrito = new System.Windows.Forms.Button();
-            this.bConfirmarVenta = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LHistorialVentas = new System.Windows.Forms.Label();
             this.datagrid_carrito = new System.Windows.Forms.DataGridView();
@@ -45,30 +43,6 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_carrito)).BeginInit();
             this.SuspendLayout();
-            // 
-            // BLimpiarCarrito
-            // 
-            this.BLimpiarCarrito.BackColor = System.Drawing.Color.Red;
-            this.BLimpiarCarrito.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BLimpiarCarrito.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BLimpiarCarrito.Location = new System.Drawing.Point(870, 75);
-            this.BLimpiarCarrito.Name = "BLimpiarCarrito";
-            this.BLimpiarCarrito.Size = new System.Drawing.Size(113, 34);
-            this.BLimpiarCarrito.TabIndex = 20;
-            this.BLimpiarCarrito.Text = "Limpiar Carrito";
-            this.BLimpiarCarrito.UseVisualStyleBackColor = false;
-            // 
-            // bConfirmarVenta
-            // 
-            this.bConfirmarVenta.BackColor = System.Drawing.Color.ForestGreen;
-            this.bConfirmarVenta.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bConfirmarVenta.ForeColor = System.Drawing.SystemColors.Control;
-            this.bConfirmarVenta.Location = new System.Drawing.Point(751, 75);
-            this.bConfirmarVenta.Name = "bConfirmarVenta";
-            this.bConfirmarVenta.Size = new System.Drawing.Size(113, 33);
-            this.bConfirmarVenta.TabIndex = 19;
-            this.bConfirmarVenta.Text = "Confirmar Venta";
-            this.bConfirmarVenta.UseVisualStyleBackColor = false;
             // 
             // panel1
             // 
@@ -151,7 +125,7 @@
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(505, 89);
+            this.dateTimePicker2.Location = new System.Drawing.Point(478, 89);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker2.TabIndex = 22;
@@ -162,9 +136,9 @@
             this.LFechaInicio.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LFechaInicio.Location = new System.Drawing.Point(51, 89);
             this.LFechaInicio.Name = "LFechaInicio";
-            this.LFechaInicio.Size = new System.Drawing.Size(80, 16);
+            this.LFechaInicio.Size = new System.Drawing.Size(84, 16);
             this.LFechaInicio.TabIndex = 28;
-            this.LFechaInicio.Text = "Fecha Inicio";
+            this.LFechaInicio.Text = "Fecha Inicio:";
             // 
             // LFechaFin
             // 
@@ -172,9 +146,9 @@
             this.LFechaFin.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LFechaFin.Location = new System.Drawing.Point(403, 92);
             this.LFechaFin.Name = "LFechaFin";
-            this.LFechaFin.Size = new System.Drawing.Size(65, 16);
+            this.LFechaFin.Size = new System.Drawing.Size(69, 16);
             this.LFechaFin.TabIndex = 29;
-            this.LFechaFin.Text = "Fecha Fin";
+            this.LFechaFin.Text = "Fecha Fin:";
             // 
             // ventas
             // 
@@ -185,14 +159,13 @@
             this.Controls.Add(this.LFechaInicio);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.BLimpiarCarrito);
-            this.Controls.Add(this.bConfirmarVenta);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.datagrid_carrito);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ventas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ventas";
+            this.Load += new System.EventHandler(this.ventas_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_carrito)).EndInit();
@@ -202,9 +175,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button BLimpiarCarrito;
-        private System.Windows.Forms.Button bConfirmarVenta;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label LHistorialVentas;
         public System.Windows.Forms.DataGridView datagrid_carrito;

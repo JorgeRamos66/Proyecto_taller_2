@@ -37,6 +37,7 @@
             this.menuPrincipal = new System.Windows.Forms.MenuStrip();
             this.sALIRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.LNombreUsuario = new System.Windows.Forms.Label();
             this.menuStripGerente.SuspendLayout();
             this.menuPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +53,7 @@
             this.menuStripGerente.Location = new System.Drawing.Point(0, 47);
             this.menuStripGerente.Name = "menuStripGerente";
             this.menuStripGerente.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
-            this.menuStripGerente.Size = new System.Drawing.Size(126, 368);
+            this.menuStripGerente.Size = new System.Drawing.Size(92, 368);
             this.menuStripGerente.TabIndex = 0;
             this.menuStripGerente.Text = "menuStripGerente";
             // 
@@ -140,12 +141,27 @@
             this.label1.Text = "MENU GERENTE";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // LNombreUsuario
+            // 
+            this.LNombreUsuario.AutoSize = true;
+            this.LNombreUsuario.BackColor = System.Drawing.Color.SteelBlue;
+            this.LNombreUsuario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LNombreUsuario.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LNombreUsuario.ForeColor = System.Drawing.Color.LightBlue;
+            this.LNombreUsuario.Location = new System.Drawing.Point(237, 9);
+            this.LNombreUsuario.Name = "LNombreUsuario";
+            this.LNombreUsuario.Size = new System.Drawing.Size(69, 34);
+            this.LNombreUsuario.TabIndex = 4;
+            this.LNombreUsuario.Text = "user";
+            this.LNombreUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // menu_gerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(800, 415);
+            this.Controls.Add(this.LNombreUsuario);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStripGerente);
             this.Controls.Add(this.menuPrincipal);
@@ -175,5 +191,6 @@
         private System.Windows.Forms.MenuStrip menuPrincipal;
         private System.Windows.Forms.ToolStripMenuItem sALIRToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LNombreUsuario;
     }
 }

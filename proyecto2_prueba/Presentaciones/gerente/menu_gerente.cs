@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using static proyecto2_prueba.inicio_sesion;
 
 namespace proyecto2_prueba
 {
@@ -11,6 +12,8 @@ namespace proyecto2_prueba
         {
             InitializeComponent();
             this.IsMdiContainer = true; // Hace que el formulario sea un contenedor MDI
+            // Actualizar el label con el nombre y apellido del usuario
+            LNombreUsuario.Text = $"{UsuarioSesion.Nombre} {UsuarioSesion.Apellido}";
         }
 
         private void archivoToolStripMenuItem_Click(object sender, EventArgs e)

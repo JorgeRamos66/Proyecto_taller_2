@@ -1,12 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace proyecto2_prueba.Presentaciones.admin
@@ -91,17 +87,15 @@ namespace proyecto2_prueba.Presentaciones.admin
         //Al presionar el boton de modificar producto se realiza la modificacion.
         private void BModificarProducto_Click(object sender, EventArgs e)
         {
-            //OBTENCION DE LOS DATOS DEL FORMULARIO
-            //Obtenenemos los datos ingresados por el usuario
+            // OBTENCION DE LOS DATOS DEL FORMULARIO
             string nombre = textBoxNombre.Text;
-            string stockText = textBoxStock.Text; //Se usa string temporalmente para validar
-            string precioText = textBoxPrecio.Text; //Se usa string temporalmente para validar
+            string stockText = textBoxStock.Text;
+            string precioText = textBoxPrecio.Text;
             string categoria = comboBoxCategoria.SelectedItem.ToString();
             string descripcion = textBoxDescripcion.Text;
             string rutaImagen = textBoxRutaFoto.Text;
 
-            //INICIO VALIDACIONES
-            //Validamos los campos como Strings
+            // VALIDACIONES
             if (string.IsNullOrWhiteSpace(nombre) ||
                 string.IsNullOrWhiteSpace(stockText) ||
                 string.IsNullOrWhiteSpace(precioText) ||
@@ -110,63 +104,126 @@ namespace proyecto2_prueba.Presentaciones.admin
                 string.IsNullOrWhiteSpace(rutaImagen))
             {
                 MessageBox.Show("Debe rellenar todos los campos para cargar el producto.",
-                 "Advertencia",
-                 MessageBoxButtons.OK,
-                 MessageBoxIcon.Warning);
-
-                return; //Salir si no se han completado todos los campos
+                                 "Advertencia",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Warning);
+                return;
             }
 
-            //Cargar la imagen desde la ruta
-            Image imagenProducto;
-            if (!string.IsNullOrEmpty(rutaImagen) && System.IO.File.Exists(rutaImagen))
+            // Validación de imagen
+            string rutaCompleta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\", rutaImagen);
+            if (!File.Exists(rutaCompleta))
             {
-                imagenProducto = Image.FromFile(rutaImagen);
-            }
-            else
-            {
-                //Si la imagen no es válida
                 MessageBox.Show("Ruta de imagen no válida.");
-                return; // Detener la ejecución si la imagen no es válida
+                return;
             }
 
-            // Validación de formato correcto para stock y precio
+            // Validación de stock y precio
             if (!int.TryParse(stockText, out int stock))
             {
                 MessageBox.Show("El campo de stock debe ser un número entero válido.");
-                return; // Salir si el stock no es válido
+                return;
             }
 
             if (!decimal.TryParse(precioText, out decimal precio))
             {
                 MessageBox.Show("El campo de precio debe ser un número decimal válido.");
-                return; // Salir si el precio no es válido
+                return;
             }
 
-            //FIN VALIDACIONES
+            // Obtener cadena de conexión desde el archivo config
+            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
 
-            //INICIO ACTUALIZACION DE FILA EN DATAGRID
-            // Obtener la fila correspondiente en el DataGridView
-            DataGridViewRow fila = formularioListado.datagrid_productos.Rows[FilaIndex];
+            int idCategoriaSeleccionada = 0;
 
-            // Actualizar los valores de la fila
-            fila.Cells["CNombre_producto"].Value = nombre;
-            fila.Cells["CStock_producto"].Value = stock;
-            fila.Cells["CPrecio"].Value = precio;
-            fila.Cells["CCategoria_producto"].Value = categoria;
-            fila.Cells["CDescripcion"].Value = descripcion;
-            fila.Cells["CRutaImagen"].Value = rutaImagen; // Actualizar la ruta de la imagen
-            fila.Cells["CImagen_Producto"].Value = Image.FromFile(rutaImagen); // Actualizar la imagen
+            // 1. Validar si la categoría seleccionada existe en la tabla CATEGORIA
+            string queryCategoria = "SELECT id_categoria FROM CATEGORIA WHERE nombre_categoria = @categoria AND estado_categoria = 1";
 
-            //Mensaje de que el producto se ha agregado de forma exitosa.
-            MessageBox.Show($"El producto '{nombre}' se ha modificado correctamente.",
-                "Éxito",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(queryCategoria, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@categoria", categoria);
+
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            idCategoriaSeleccionada = Convert.ToInt32(result);
+                        }
+                        else
+                        {
+                            MessageBox.Show("La categoría seleccionada no existe o está inactiva.");
+                            return;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al consultar la categoría: " + ex.Message);
+                    return;
+                }
+            }
+
+            // 2. Realizar la actualización en la tabla PRODUCTO
+            string queryUpdateProducto = "UPDATE PRODUCTO " +
+                                         "SET nombre_producto = @nombre, " +
+                                         "precio_producto = @precio, " +
+                                         "descripcion_producto = @descripcion, " +
+                                         "stock_producto = @stock, " +
+                                         "id_categoria = @idCategoria, " +
+                                         "ruta_imagen = @rutaImagen " +
+                                         "WHERE id_producto = @idProducto";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(queryUpdateProducto, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@nombre", nombre);
+                        cmd.Parameters.AddWithValue("@precio", precio);
+                        cmd.Parameters.AddWithValue("@descripcion", descripcion);
+                        cmd.Parameters.AddWithValue("@stock", stock);
+                        cmd.Parameters.AddWithValue("@idCategoria", idCategoriaSeleccionada);
+                        cmd.Parameters.AddWithValue("@rutaImagen", rutaImagen);
+                        cmd.Parameters.AddWithValue("@idProducto", FilaIndex); // Cambia esto si `FilaIndex` no es el ID del producto.
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show($"El producto '{nombre}' se ha modificado correctamente.",
+                                             "Éxito",
+                                             MessageBoxButtons.OK,
+                                             MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo modificar el producto. Asegúrate de que el producto exista en la base de datos.",
+                                             "Error",
+                                             MessageBoxButtons.OK,
+                                             MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al modificar el producto: " + ex.Message,
+                                     "Error",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Error);
+                }
+            }
 
             // Cerrar el formulario de modificación
             this.Close();
         }
+
+
+
 
         private void BAgregarImagen_Click(object sender, EventArgs e)
         {

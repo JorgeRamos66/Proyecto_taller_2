@@ -44,10 +44,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.pRODUCTOTableAdapter = new proyecto2_prueba.Proyecto_Taller_2DataSetTableAdapters.PRODUCTOTableAdapter();
             this.proyectoTaller2DataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bConfirmarVenta = new System.Windows.Forms.Button();
+            this.BLimpiarCarrito = new System.Windows.Forms.Button();
             this.CNombre_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CCategoria_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CStock_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CCantidad_producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operacionAgregar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operacionQuitar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CIdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -112,7 +113,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.CNombre_producto,
             this.CCategoria_producto,
             this.CPrecio,
-            this.CStock_producto,
+            this.CCantidad_producto,
             this.operacionAgregar,
             this.operacionQuitar,
             this.CIdProducto});
@@ -149,17 +150,29 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // 
             // bConfirmarVenta
             // 
-            this.bConfirmarVenta.BackColor = System.Drawing.Color.Red;
-            this.bConfirmarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bConfirmarVenta.BackColor = System.Drawing.Color.ForestGreen;
             this.bConfirmarVenta.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bConfirmarVenta.ForeColor = System.Drawing.SystemColors.Control;
-            this.bConfirmarVenta.Location = new System.Drawing.Point(915, 80);
+            this.bConfirmarVenta.Location = new System.Drawing.Point(811, 67);
             this.bConfirmarVenta.Name = "bConfirmarVenta";
-            this.bConfirmarVenta.Size = new System.Drawing.Size(128, 23);
+            this.bConfirmarVenta.Size = new System.Drawing.Size(113, 33);
             this.bConfirmarVenta.TabIndex = 13;
             this.bConfirmarVenta.Text = "Confirmar Venta";
             this.bConfirmarVenta.UseVisualStyleBackColor = false;
             this.bConfirmarVenta.Click += new System.EventHandler(this.bConfirmarVenta_Click);
+            // 
+            // BLimpiarCarrito
+            // 
+            this.BLimpiarCarrito.BackColor = System.Drawing.Color.Red;
+            this.BLimpiarCarrito.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BLimpiarCarrito.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BLimpiarCarrito.Location = new System.Drawing.Point(930, 67);
+            this.BLimpiarCarrito.Name = "BLimpiarCarrito";
+            this.BLimpiarCarrito.Size = new System.Drawing.Size(113, 34);
+            this.BLimpiarCarrito.TabIndex = 14;
+            this.BLimpiarCarrito.Text = "Limpiar Carrito";
+            this.BLimpiarCarrito.UseVisualStyleBackColor = false;
+            this.BLimpiarCarrito.Click += new System.EventHandler(this.BLimpiarCarrito_Click);
             // 
             // CNombre_producto
             // 
@@ -181,11 +194,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.CPrecio.Name = "CPrecio";
             this.CPrecio.ReadOnly = true;
             // 
-            // CStock_producto
+            // CCantidad_producto
             // 
-            this.CStock_producto.HeaderText = "Cantidad";
-            this.CStock_producto.Name = "CStock_producto";
-            this.CStock_producto.Width = 70;
+            this.CCantidad_producto.HeaderText = "Cantidad (Stock)";
+            this.CCantidad_producto.Name = "CCantidad_producto";
+            this.CCantidad_producto.Width = 110;
             // 
             // operacionAgregar
             // 
@@ -220,6 +233,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1125, 546);
+            this.Controls.Add(this.BLimpiarCarrito);
             this.Controls.Add(this.bConfirmarVenta);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BBorrar);
@@ -255,10 +269,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         private Proyecto_Taller_2DataSetTableAdapters.PRODUCTOTableAdapter pRODUCTOTableAdapter;
         private System.Windows.Forms.BindingSource proyectoTaller2DataSetBindingSource1;
         private Button bConfirmarVenta;
+        private Button BLimpiarCarrito;
         private DataGridViewTextBoxColumn CNombre_producto;
         private DataGridViewTextBoxColumn CCategoria_producto;
         private DataGridViewTextBoxColumn CPrecio;
-        private DataGridViewTextBoxColumn CStock_producto;
+        private DataGridViewTextBoxColumn CCantidad_producto;
         private DataGridViewTextBoxColumn operacionAgregar;
         private DataGridViewTextBoxColumn operacionQuitar;
         private DataGridViewTextBoxColumn CIdProducto;

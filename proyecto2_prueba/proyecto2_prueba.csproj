@@ -104,101 +104,107 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\BackupService.cs" />
+    <Compile Include="DAL\DatabaseService.cs" />
+    <Compile Include="DAL\UsuarioDAL.cs" />
     <Compile Include="Encriptador\PasswordHasher.cs" />
-    <Compile Include="Presentaciones\admin\alta_producto.cs">
+    <Compile Include="ML\UsuarioSesion.cs" />
+    <Compile Include="ML\UsuarioEntidad.cs" />
+    <Compile Include="BLL\UsuarioBLL.cs" />
+    <Compile Include="PL\admin\alta_producto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\alta_producto.Designer.cs">
+    <Compile Include="PL\admin\alta_producto.Designer.cs">
       <DependentUpon>alta_producto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\categorias_productos.cs">
+    <Compile Include="PL\admin\categorias_productos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\categorias_productos.Designer.cs">
+    <Compile Include="PL\admin\categorias_productos.Designer.cs">
       <DependentUpon>categorias_productos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\niveles_clientes.cs">
+    <Compile Include="PL\admin\niveles_clientes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\niveles_clientes.Designer.cs">
+    <Compile Include="PL\admin\niveles_clientes.Designer.cs">
       <DependentUpon>niveles_clientes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\personal.cs">
+    <Compile Include="PL\admin\personal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\personal.Designer.cs">
+    <Compile Include="PL\admin\personal.Designer.cs">
       <DependentUpon>personal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\ProductoDetalleForm.cs">
+    <Compile Include="PL\admin\ProductoDetalleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\ProductoDetalleForm.Designer.cs">
+    <Compile Include="PL\admin\ProductoDetalleForm.Designer.cs">
       <DependentUpon>ProductoDetalleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\listado_productos_admin.cs">
+    <Compile Include="PL\admin\listado_productos_admin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\listado_productos_admin.Designer.cs">
+    <Compile Include="PL\admin\listado_productos_admin.Designer.cs">
       <DependentUpon>listado_productos_admin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\modificar_producto.cs">
+    <Compile Include="PL\admin\modificar_producto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\modificar_producto.Designer.cs">
+    <Compile Include="PL\admin\modificar_producto.Designer.cs">
       <DependentUpon>modificar_producto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\nueva_categoria.cs">
+    <Compile Include="PL\admin\nueva_categoria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\nueva_categoria.Designer.cs">
+    <Compile Include="PL\admin\nueva_categoria.Designer.cs">
       <DependentUpon>nueva_categoria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\registrar_personal.cs">
+    <Compile Include="PL\admin\registrar_personal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\registrar_personal.Designer.cs">
+    <Compile Include="PL\admin\registrar_personal.Designer.cs">
       <DependentUpon>registrar_personal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\inicio_sesion.cs">
+    <Compile Include="PL\inicio_sesion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\inicio_sesion.Designer.cs">
+    <Compile Include="PL\inicio_sesion.Designer.cs">
       <DependentUpon>inicio_sesion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\admin\menu_admin.cs">
+    <Compile Include="PL\admin\menu_admin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\admin\menu_admin.Designer.cs">
+    <Compile Include="PL\admin\menu_admin.Designer.cs">
       <DependentUpon>menu_admin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\gerente\menu_gerente.cs">
+    <Compile Include="PL\gerente\menu_gerente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\gerente\menu_gerente.Designer.cs">
+    <Compile Include="PL\gerente\menu_gerente.Designer.cs">
       <DependentUpon>menu_gerente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\carrito.cs">
+    <Compile Include="PL\vendedor\carrito.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\carrito.Designer.cs">
+    <Compile Include="PL\vendedor\carrito.Designer.cs">
       <DependentUpon>carrito.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\historial_ventas.cs">
+    <Compile Include="PL\vendedor\historial_ventas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\historial_ventas.Designer.cs">
+    <Compile Include="PL\vendedor\historial_ventas.Designer.cs">
       <DependentUpon>historial_ventas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\menu_cliente.cs">
+    <Compile Include="PL\vendedor\menu_cliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\menu_cliente.Designer.cs">
+    <Compile Include="PL\vendedor\menu_cliente.Designer.cs">
       <DependentUpon>menu_cliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\menu_vendedor.cs">
+    <Compile Include="PL\vendedor\menu_vendedor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentaciones\vendedor\menu_vendedor.Designer.cs">
+    <Compile Include="PL\vendedor\menu_vendedor.Designer.cs">
       <DependentUpon>menu_vendedor.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -208,52 +214,52 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Proyecto_Taller_2DataSet.xsd</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Presentaciones\admin\alta_producto.resx">
+    <EmbeddedResource Include="PL\admin\alta_producto.resx">
       <DependentUpon>alta_producto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\categorias_productos.resx">
+    <EmbeddedResource Include="PL\admin\categorias_productos.resx">
       <DependentUpon>categorias_productos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\listado_productos_admin.resx">
+    <EmbeddedResource Include="PL\admin\listado_productos_admin.resx">
       <DependentUpon>listado_productos_admin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\modificar_producto.resx">
+    <EmbeddedResource Include="PL\admin\modificar_producto.resx">
       <DependentUpon>modificar_producto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\niveles_clientes.resx">
+    <EmbeddedResource Include="PL\admin\niveles_clientes.resx">
       <DependentUpon>niveles_clientes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\nueva_categoria.resx">
+    <EmbeddedResource Include="PL\admin\nueva_categoria.resx">
       <DependentUpon>nueva_categoria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\personal.resx">
+    <EmbeddedResource Include="PL\admin\personal.resx">
       <DependentUpon>personal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\ProductoDetalleForm.resx">
+    <EmbeddedResource Include="PL\admin\ProductoDetalleForm.resx">
       <DependentUpon>ProductoDetalleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\registrar_personal.resx">
+    <EmbeddedResource Include="PL\admin\registrar_personal.resx">
       <DependentUpon>registrar_personal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\inicio_sesion.resx">
+    <EmbeddedResource Include="PL\inicio_sesion.resx">
       <DependentUpon>inicio_sesion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\admin\menu_admin.resx">
+    <EmbeddedResource Include="PL\admin\menu_admin.resx">
       <DependentUpon>menu_admin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\gerente\menu_gerente.resx">
+    <EmbeddedResource Include="PL\gerente\menu_gerente.resx">
       <DependentUpon>menu_gerente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\vendedor\carrito.resx">
+    <EmbeddedResource Include="PL\vendedor\carrito.resx">
       <DependentUpon>carrito.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\vendedor\historial_ventas.resx">
+    <EmbeddedResource Include="PL\vendedor\historial_ventas.resx">
       <DependentUpon>historial_ventas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\vendedor\menu_cliente.resx">
+    <EmbeddedResource Include="PL\vendedor\menu_cliente.resx">
       <DependentUpon>menu_cliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentaciones\vendedor\menu_vendedor.resx">
+    <EmbeddedResource Include="PL\vendedor\menu_vendedor.resx">
       <DependentUpon>menu_vendedor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

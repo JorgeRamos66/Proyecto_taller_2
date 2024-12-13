@@ -105,9 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\BackupService.cs" />
+    <Compile Include="BLL\ProductoBLL.cs" />
+    <Compile Include="DAL\ProductoDAL.cs" />
     <Compile Include="DAL\DatabaseService.cs" />
     <Compile Include="DAL\UsuarioDAL.cs" />
     <Compile Include="Encriptador\PasswordHasher.cs" />
+    <Compile Include="ML\Producto.cs" />
     <Compile Include="ML\UsuarioSesion.cs" />
     <Compile Include="ML\UsuarioEntidad.cs" />
     <Compile Include="BLL\UsuarioBLL.cs" />

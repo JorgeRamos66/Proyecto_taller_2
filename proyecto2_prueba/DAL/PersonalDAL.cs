@@ -195,7 +195,7 @@ namespace DAL
                         {
                             cmd.Parameters.AddWithValue("@IdUsuario", personal.IdUsuario);
                             cmd.Parameters.AddWithValue("@Usuario", personal.Usuario);
-                            cmd.Parameters.AddWithValue("@Password", personal.Password);
+                            cmd.Parameters.AddWithValue("@Password", PasswordHasher.HashPassword(personal.Password));
                             cmd.Parameters.AddWithValue("@IdRol", personal.IdRol);
 
                             cmd.ExecuteNonQuery();

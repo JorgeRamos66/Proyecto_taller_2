@@ -31,6 +31,25 @@ namespace BLL
             }
         }
 
+        public void GuardarPersonal(Personal personal)
+        {
+            try
+            {
+                if (personal.IdUsuario == 0)
+                {
+                    personalDAL.InsertarPersonal(personal);
+                }
+                else
+                {
+                    personalDAL.ActualizarPersonal(personal);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al guardar el personal: {ex.Message}");
+            }
+        }
+
         public DataTable BuscarPersonal(string textoBusqueda, DataTable dataTable)
         {
             if (string.IsNullOrEmpty(textoBusqueda))

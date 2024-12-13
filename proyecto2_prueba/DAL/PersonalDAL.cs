@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using ML;
+using proyecto2_prueba;
 
 namespace DAL
 {
@@ -74,6 +75,138 @@ namespace DAL
                             };
                         }
                         return null;
+                    }
+                }
+            }
+        }
+
+        public void InsertarPersonal(Personal personal)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Insertar en la tabla PERSONA
+                        string queryPersona = @"
+                            INSERT INTO PERSONA (nombre_persona, apellido_persona, dni, email_persona, 
+                                            direccion_persona, id_localidad, fecha_nacimiento)
+                            OUTPUT INSERTED.id_persona
+                            VALUES (@Nombre, @Apellido, @DNI, @Email, @Direccion, 
+                                (SELECT id_localidad FROM LOCALIDAD WHERE nombre_localidad = @Localidad), 
+                                @FechaNacimiento)";
+
+                        int idPersona;
+                        using (SqlCommand cmd = new SqlCommand(queryPersona, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Nombre", personal.Nombre);
+                            cmd.Parameters.AddWithValue("@Apellido", personal.Apellido);
+                            cmd.Parameters.AddWithValue("@DNI", personal.DNI);
+                            cmd.Parameters.AddWithValue("@Email", personal.Email);
+                            cmd.Parameters.AddWithValue("@Direccion", personal.Direccion);
+                            cmd.Parameters.AddWithValue("@Localidad", personal.Localidad);
+                            cmd.Parameters.AddWithValue("@FechaNacimiento", personal.FechaNacimiento);
+
+                            idPersona = (int)cmd.ExecuteScalar();
+                        }
+
+                        // 2. Insertar en la tabla USUARIO
+                        string queryUsuario = @"
+                            INSERT INTO USUARIO (id_persona, usuario, pass, id_rol, baja_usuario)
+                            VALUES (@IdPersona, @Usuario, @Password, @IdRol, @BajaUsuario)";
+
+                        using (SqlCommand cmd = new SqlCommand(queryUsuario, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@IdPersona", idPersona);
+                            cmd.Parameters.AddWithValue("@Usuario", personal.Usuario);
+                            cmd.Parameters.AddWithValue("@Password", PasswordHasher.HashPassword(personal.Password));
+                            cmd.Parameters.AddWithValue("@IdRol", personal.IdRol);
+                            cmd.Parameters.AddWithValue("@BajaUsuario", personal.BajaUsuario);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public void ActualizarPersonal(Personal personal)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Obtener id_persona desde USUARIO
+                        string queryGetIdPersona = "SELECT id_persona FROM USUARIO WHERE id_usuario = @IdUsuario";
+                        int idPersona;
+                        using (SqlCommand cmd = new SqlCommand(queryGetIdPersona, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@IdUsuario", personal.IdUsuario);
+                            idPersona = (int)cmd.ExecuteScalar();
+                        }
+
+                        // 2. Actualizar PERSONA
+                        string queryPersona = @"
+                            UPDATE PERSONA 
+                            SET nombre_persona = @Nombre,
+                                apellido_persona = @Apellido,
+                                dni = @DNI,
+                                email_persona = @Email,
+                                direccion_persona = @Direccion,
+                                id_localidad = (SELECT id_localidad FROM LOCALIDAD WHERE nombre_localidad = @Localidad),
+                                fecha_nacimiento = @FechaNacimiento
+                            WHERE id_persona = @IdPersona";
+
+                        using (SqlCommand cmd = new SqlCommand(queryPersona, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@IdPersona", idPersona);
+                            cmd.Parameters.AddWithValue("@Nombre", personal.Nombre);
+                            cmd.Parameters.AddWithValue("@Apellido", personal.Apellido);
+                            cmd.Parameters.AddWithValue("@DNI", personal.DNI);
+                            cmd.Parameters.AddWithValue("@Email", personal.Email);
+                            cmd.Parameters.AddWithValue("@Direccion", personal.Direccion);
+                            cmd.Parameters.AddWithValue("@Localidad", personal.Localidad);
+                            cmd.Parameters.AddWithValue("@FechaNacimiento", personal.FechaNacimiento);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // 3. Actualizar USUARIO
+                        string queryUsuario = @"
+                            UPDATE USUARIO 
+                            SET usuario = @Usuario,
+                                pass = CASE WHEN @Password = '' THEN pass ELSE @Password END,
+                                id_rol = @IdRol
+                            WHERE id_usuario = @IdUsuario";
+
+                        using (SqlCommand cmd = new SqlCommand(queryUsuario, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@IdUsuario", personal.IdUsuario);
+                            cmd.Parameters.AddWithValue("@Usuario", personal.Usuario);
+                            cmd.Parameters.AddWithValue("@Password", personal.Password);
+                            cmd.Parameters.AddWithValue("@IdRol", personal.IdRol);
+
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
                     }
                 }
             }

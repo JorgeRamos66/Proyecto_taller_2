@@ -253,7 +253,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                 return;
             }
 
-            var nuevo_personal = new registrar_personal(this);
+            var nuevo_personal = new registrar_personal(listado: this);
             nuevo_personal.ShowDialog();
         }
 

@@ -43,22 +43,24 @@
             this.textBoxDireccion = new System.Windows.Forms.TextBox();
             this.textBoxUsuario = new System.Windows.Forms.TextBox();
             this.textBoxContraseña = new System.Windows.Forms.TextBox();
-            this.Linfo = new System.Windows.Forms.Label();
+            this.LinfoNuevo = new System.Windows.Forms.Label();
             this.BGuardar = new System.Windows.Forms.Button();
             this.BSalir = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.LDni = new System.Windows.Forms.Label();
-            this.radioButtonDNI = new System.Windows.Forms.RadioButton();
-            this.radioButtonCUIT = new System.Windows.Forms.RadioButton();
             this.radioButtonCUIL = new System.Windows.Forms.RadioButton();
+            this.radioButtonCUIT = new System.Windows.Forms.RadioButton();
+            this.radioButtonDNI = new System.Windows.Forms.RadioButton();
+            this.LDni = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textProvincia = new System.Windows.Forms.TextBox();
             this.labelRol = new System.Windows.Forms.Label();
             this.comboBoxRol = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LModificarContraseña = new System.Windows.Forms.Label();
+            this.LInfoModificar = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -72,7 +74,6 @@
             this.LNombre.Size = new System.Drawing.Size(57, 16);
             this.LNombre.TabIndex = 0;
             this.LNombre.Text = "Nombre";
-            this.LNombre.Click += new System.EventHandler(this.LNombre_Click);
             // 
             // LApellido
             // 
@@ -160,14 +161,14 @@
             this.textBoxDNI.Location = new System.Drawing.Point(315, 139);
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(173, 20);
-            this.textBoxDNI.TabIndex = 11;
+            this.textBoxDNI.TabIndex = 17;
             // 
             // textCiudad
             // 
             this.textCiudad.Location = new System.Drawing.Point(88, 173);
             this.textCiudad.Name = "textCiudad";
             this.textCiudad.Size = new System.Drawing.Size(173, 20);
-            this.textCiudad.TabIndex = 12;
+            this.textCiudad.TabIndex = 11;
             // 
             // textBoxDireccion
             // 
@@ -190,15 +191,16 @@
             this.textBoxContraseña.Size = new System.Drawing.Size(173, 20);
             this.textBoxContraseña.TabIndex = 15;
             // 
-            // Linfo
+            // LinfoNuevo
             // 
-            this.Linfo.AutoSize = true;
-            this.Linfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Linfo.Location = new System.Drawing.Point(102, 14);
-            this.Linfo.Name = "Linfo";
-            this.Linfo.Size = new System.Drawing.Size(357, 25);
-            this.Linfo.TabIndex = 16;
-            this.Linfo.Text = "REGISTRAR NUEVO PERSONAL";
+            this.LinfoNuevo.AutoSize = true;
+            this.LinfoNuevo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LinfoNuevo.Location = new System.Drawing.Point(102, 14);
+            this.LinfoNuevo.Name = "LinfoNuevo";
+            this.LinfoNuevo.Size = new System.Drawing.Size(357, 25);
+            this.LinfoNuevo.TabIndex = 16;
+            this.LinfoNuevo.Text = "REGISTRAR NUEVO PERSONAL";
+            this.LinfoNuevo.Visible = false;
             // 
             // BGuardar
             // 
@@ -209,7 +211,7 @@
             this.BGuardar.Location = new System.Drawing.Point(350, 228);
             this.BGuardar.Name = "BGuardar";
             this.BGuardar.Size = new System.Drawing.Size(140, 48);
-            this.BGuardar.TabIndex = 17;
+            this.BGuardar.TabIndex = 19;
             this.BGuardar.Text = "REGISTRAR";
             this.BGuardar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BGuardar.UseVisualStyleBackColor = false;
@@ -226,7 +228,7 @@
             this.BSalir.Location = new System.Drawing.Point(350, 285);
             this.BSalir.Name = "BSalir";
             this.BSalir.Size = new System.Drawing.Size(140, 44);
-            this.BSalir.TabIndex = 18;
+            this.BSalir.TabIndex = 20;
             this.BSalir.Text = "SALIR";
             this.BSalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BSalir.UseVisualStyleBackColor = false;
@@ -248,7 +250,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(315, 187);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 23;
+            this.dateTimePicker1.TabIndex = 18;
             // 
             // label2
             // 
@@ -272,26 +274,16 @@
             this.panel2.Size = new System.Drawing.Size(215, 54);
             this.panel2.TabIndex = 25;
             // 
-            // LDni
+            // radioButtonCUIL
             // 
-            this.LDni.AutoSize = true;
-            this.LDni.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDni.Location = new System.Drawing.Point(21, 5);
-            this.LDni.Name = "LDni";
-            this.LDni.Size = new System.Drawing.Size(111, 16);
-            this.LDni.TabIndex = 3;
-            this.LDni.Text = "Tipo Documento";
-            // 
-            // radioButtonDNI
-            // 
-            this.radioButtonDNI.AutoSize = true;
-            this.radioButtonDNI.Location = new System.Drawing.Point(131, 24);
-            this.radioButtonDNI.Name = "radioButtonDNI";
-            this.radioButtonDNI.Size = new System.Drawing.Size(44, 17);
-            this.radioButtonDNI.TabIndex = 19;
-            this.radioButtonDNI.TabStop = true;
-            this.radioButtonDNI.Text = "DNI";
-            this.radioButtonDNI.UseVisualStyleBackColor = true;
+            this.radioButtonCUIL.AutoSize = true;
+            this.radioButtonCUIL.Location = new System.Drawing.Point(20, 24);
+            this.radioButtonCUIL.Name = "radioButtonCUIL";
+            this.radioButtonCUIL.Size = new System.Drawing.Size(49, 17);
+            this.radioButtonCUIL.TabIndex = 21;
+            this.radioButtonCUIL.TabStop = true;
+            this.radioButtonCUIL.Text = "CUIL";
+            this.radioButtonCUIL.UseVisualStyleBackColor = true;
             // 
             // radioButtonCUIT
             // 
@@ -304,16 +296,26 @@
             this.radioButtonCUIT.Text = "CUIT";
             this.radioButtonCUIT.UseVisualStyleBackColor = true;
             // 
-            // radioButtonCUIL
+            // radioButtonDNI
             // 
-            this.radioButtonCUIL.AutoSize = true;
-            this.radioButtonCUIL.Location = new System.Drawing.Point(20, 24);
-            this.radioButtonCUIL.Name = "radioButtonCUIL";
-            this.radioButtonCUIL.Size = new System.Drawing.Size(49, 17);
-            this.radioButtonCUIL.TabIndex = 21;
-            this.radioButtonCUIL.TabStop = true;
-            this.radioButtonCUIL.Text = "CUIL";
-            this.radioButtonCUIL.UseVisualStyleBackColor = true;
+            this.radioButtonDNI.AutoSize = true;
+            this.radioButtonDNI.Location = new System.Drawing.Point(131, 24);
+            this.radioButtonDNI.Name = "radioButtonDNI";
+            this.radioButtonDNI.Size = new System.Drawing.Size(44, 17);
+            this.radioButtonDNI.TabIndex = 19;
+            this.radioButtonDNI.TabStop = true;
+            this.radioButtonDNI.Text = "DNI";
+            this.radioButtonDNI.UseVisualStyleBackColor = true;
+            // 
+            // LDni
+            // 
+            this.LDni.AutoSize = true;
+            this.LDni.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LDni.Location = new System.Drawing.Point(21, 5);
+            this.LDni.Name = "LDni";
+            this.LDni.Size = new System.Drawing.Size(111, 16);
+            this.LDni.TabIndex = 3;
+            this.LDni.Text = "Tipo Documento";
             // 
             // label3
             // 
@@ -330,13 +332,13 @@
             this.textProvincia.Location = new System.Drawing.Point(88, 209);
             this.textProvincia.Name = "textProvincia";
             this.textProvincia.Size = new System.Drawing.Size(173, 20);
-            this.textProvincia.TabIndex = 27;
+            this.textProvincia.TabIndex = 12;
             // 
             // labelRol
             // 
             this.labelRol.AutoSize = true;
             this.labelRol.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRol.Location = new System.Drawing.Point(158, 357);
+            this.labelRol.Location = new System.Drawing.Point(157, 377);
             this.labelRol.Name = "labelRol";
             this.labelRol.Size = new System.Drawing.Size(27, 16);
             this.labelRol.TabIndex = 28;
@@ -345,7 +347,7 @@
             // comboBoxRol
             // 
             this.comboBoxRol.FormattingEnabled = true;
-            this.comboBoxRol.Location = new System.Drawing.Point(191, 355);
+            this.comboBoxRol.Location = new System.Drawing.Point(190, 375);
             this.comboBoxRol.Name = "comboBoxRol";
             this.comboBoxRol.Size = new System.Drawing.Size(204, 21);
             this.comboBoxRol.TabIndex = 30;
@@ -354,6 +356,8 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Tan;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.LInfoModificar);
+            this.panel1.Controls.Add(this.LModificarContraseña);
             this.panel1.Controls.Add(this.comboBoxRol);
             this.panel1.Controls.Add(this.labelRol);
             this.panel1.Controls.Add(this.textProvincia);
@@ -364,7 +368,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.BSalir);
             this.panel1.Controls.Add(this.BGuardar);
-            this.panel1.Controls.Add(this.Linfo);
+            this.panel1.Controls.Add(this.LinfoNuevo);
             this.panel1.Controls.Add(this.textBoxContraseña);
             this.panel1.Controls.Add(this.textBoxUsuario);
             this.panel1.Controls.Add(this.textBoxDireccion);
@@ -384,6 +388,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(558, 449);
             this.panel1.TabIndex = 0;
+            // 
+            // LModificarContraseña
+            // 
+            this.LModificarContraseña.AutoSize = true;
+            this.LModificarContraseña.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.LModificarContraseña.Location = new System.Drawing.Point(91, 341);
+            this.LModificarContraseña.Name = "LModificarContraseña";
+            this.LModificarContraseña.Size = new System.Drawing.Size(170, 13);
+            this.LModificarContraseña.TabIndex = 31;
+            this.LModificarContraseña.Text = "(dejar en blanco para no modificar)";
+            this.LModificarContraseña.Visible = false;
+            // 
+            // LInfoModificar
+            // 
+            this.LInfoModificar.AutoSize = true;
+            this.LInfoModificar.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LInfoModificar.Location = new System.Drawing.Point(155, 14);
+            this.LInfoModificar.Name = "LInfoModificar";
+            this.LInfoModificar.Size = new System.Drawing.Size(266, 25);
+            this.LInfoModificar.TabIndex = 32;
+            this.LInfoModificar.Text = "MODIFICAR PERSONAL";
+            this.LInfoModificar.Visible = false;
             // 
             // registrar_personal
             // 
@@ -424,7 +450,7 @@
         private System.Windows.Forms.TextBox textBoxDireccion;
         private System.Windows.Forms.TextBox textBoxUsuario;
         private System.Windows.Forms.TextBox textBoxContraseña;
-        private System.Windows.Forms.Label Linfo;
+        private System.Windows.Forms.Label LinfoNuevo;
         private System.Windows.Forms.Button BGuardar;
         private System.Windows.Forms.Button BSalir;
         private System.Windows.Forms.Label label1;
@@ -440,5 +466,7 @@
         private System.Windows.Forms.Label labelRol;
         private System.Windows.Forms.ComboBox comboBoxRol;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label LModificarContraseña;
+        private System.Windows.Forms.Label LInfoModificar;
     }
 }

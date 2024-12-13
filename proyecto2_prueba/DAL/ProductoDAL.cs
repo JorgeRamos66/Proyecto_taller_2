@@ -116,6 +116,31 @@ namespace DAL
                 return dt;
             }
         }
+        
+        public void InsertarProducto(Producto producto)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"INSERT INTO PRODUCTO 
+                               (nombre_producto, stock_producto, precio_producto, 
+                                id_categoria, descripcion_producto, ruta_imagen) 
+                               VALUES 
+                               (@Nombre, @Stock, @Precio, @Categoria, @Descripcion, @RutaImagen)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Nombre", producto.NombreProducto);
+                    command.Parameters.AddWithValue("@Stock", producto.StockProducto);
+                    command.Parameters.AddWithValue("@Precio", producto.PrecioProducto);
+                    command.Parameters.AddWithValue("@Categoria", producto.IdCategoria);
+                    command.Parameters.AddWithValue("@Descripcion", producto.DescripcionProducto);
+                    command.Parameters.AddWithValue("@RutaImagen", producto.RutaImagen);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
 
         public void ActualizarProducto(Producto producto)
         {

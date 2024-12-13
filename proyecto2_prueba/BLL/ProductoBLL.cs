@@ -35,24 +35,48 @@ namespace BLL
             return productoDAL.ObtenerCategorias();
         }
 
-        public void ModificarProducto(Producto producto)
+        public void InsertarProducto(Producto producto)
         {
-            // Validaciones de negocio
-            if (string.IsNullOrWhiteSpace(producto.NombreProducto) ||
-                producto.StockProducto < 0 ||
-                producto.PrecioProducto <= 0 ||
-                string.IsNullOrWhiteSpace(producto.DescripcionProducto) ||
-                string.IsNullOrWhiteSpace(producto.RutaImagen))
-            {
-                throw new Exception("Todos los campos son obligatorios y deben ser válidos.");
-            }
+            // Validaciones de negocio 
+            if (string.IsNullOrEmpty(producto.NombreProducto))
+                throw new Exception("El nombre del producto es requerido");
 
-            // Validar que la imagen existe
+            if (producto.StockProducto < 0)
+                throw new Exception("El stock no puede ser negativo");
+
+            if (producto.PrecioProducto <= 0)
+                throw new Exception("El precio debe ser mayor a 0");
+
+            // Validación de imagen
+            if (string.IsNullOrEmpty(producto.RutaImagen))
+                throw new Exception("La ruta de la imagen es requerida");
+
             string rutaCompleta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\", producto.RutaImagen);
             if (!File.Exists(rutaCompleta))
-            {
-                throw new Exception("La imagen no existe en la ruta especificada.");
-            }
+                throw new Exception("No se encontró la imagen en la ruta especificada");
+
+            productoDAL.InsertarProducto(producto);
+        }
+
+        public void ActualizarProducto(Producto producto)
+        {
+            // Validaciones de negocio
+            if (string.IsNullOrEmpty(producto.NombreProducto))
+                throw new Exception("El nombre del producto es requerido");
+
+            if (producto.StockProducto < 0)
+                throw new Exception("El stock no puede ser negativo");
+
+            if (producto.PrecioProducto <= 0)
+                throw new Exception("El precio debe ser mayor a 0");
+
+            // Validación de imagen
+            if (string.IsNullOrEmpty(producto.RutaImagen))
+                throw new Exception("La ruta de la imagen es requerida");
+
+            string rutaCompleta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\", producto.RutaImagen);
+            if (!File.Exists(rutaCompleta))
+                throw new Exception("No se encontró la imagen en la ruta especificada");
 
             productoDAL.ActualizarProducto(producto);
         }

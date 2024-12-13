@@ -36,14 +36,18 @@ namespace proyecto2_prueba
                 if (user == null)
                 {
                     MessageBox.Show("El usuario y/o contraseña son incorrectos.",
-                                    "Usuario Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Usuario Inválido", 
+                                    MessageBoxButtons.OK, 
+                                    MessageBoxIcon.Error);
                     return;
                 }
 
-                // Guardar los detalles del usuario en la clase estática
+                // Guardar los detalles del usuario en la clase estática UsuarioSesion
                 UsuarioSesion.IdUsuario = user.IdUsuario;
                 UsuarioSesion.Nombre = user.Nombre;
                 UsuarioSesion.Apellido = user.Apellido;
+                UsuarioSesion.NombreUsuario = usuario;
+                UsuarioSesion.Rol = user.Rol;
 
                 // Verificar el tipo de usuario y abrir la vista correspondiente
                 Form menu = null;
@@ -62,9 +66,19 @@ namespace proyecto2_prueba
 
                 if (menu != null)
                 {
-                    menu.FormClosed += (s, args) => this.Show();
-                    menu.Show();
+                    menu.FormClosed += (s, args) => 
+                    {
+                        // Limpiar los datos de sesión al cerrar el formulario
+                        UsuarioSesion.IdUsuario = 0;
+                        UsuarioSesion.Nombre = null;
+                        UsuarioSesion.Apellido = null;
+                        UsuarioSesion.NombreUsuario = null;
+                        UsuarioSesion.Rol = null;
+                        
+                        this.Show();
+                    };
 
+                    menu.Show();
                     textBoxUsuario.Clear();
                     textBoxPass.Clear();
                     this.Hide();
@@ -74,13 +88,6 @@ namespace proyecto2_prueba
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        public static class UsuarioSesion
-        {
-            public static int IdUsuario { get; set; }
-            public static string Nombre { get; set; }
-            public static string Apellido { get; set; }
         }
 
         private void textBoxUsuario_KeyPress(object sender, KeyPressEventArgs e)

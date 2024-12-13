@@ -7,9 +7,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using static proyecto2_prueba.inicio_sesion;
 using static proyecto2_prueba.Presentaciones.vendedor.carrito;
 using static proyecto2_prueba.Presentaciones.vendedor.menu_cliente;
+using ML;
 
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -21,9 +21,9 @@ namespace proyecto2_prueba.Presentaciones.vendedor
     public partial class menu_cliente : Form
     {
         private SqlConnection connection;
-        private List<Producto> listaCarrito; // Lista de productos del carrito
+        private List<carrito.Producto> listaCarrito; // Lista de productos del carrito
 
-        public menu_cliente(List<Producto> listaProductos)
+        public menu_cliente(List<carrito.Producto> listaProductos)
         {
             InitializeComponent();
             listaCarrito = listaProductos; // Guardamos la lista de productos recibida
@@ -483,7 +483,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 throw new Exception("Error al actualizar el stock del producto", ex);
             }
         }
-        public void GenerarFacturaPDF(int idVenta, List<Producto> listaCarrito)
+        public void GenerarFacturaPDF(int idVenta, List<carrito.Producto> listaCarrito)
         {
             string rutaArchivo = $"Factura_{idVenta}.pdf"; // Nombre del archivo
 
@@ -751,7 +751,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
 
         // Método para insertar los productos en la tabla de detalles de venta
-        private void InsertarVentaDetalle(int idVenta, Producto producto, SqlTransaction transaction)
+        private void InsertarVentaDetalle(int idVenta, carrito.Producto producto, SqlTransaction transaction)
         {
             // Calcular el precio subtotal (cantidad * precio unitario)
             double precioSubtotal = producto.Precio * producto.Cantidad;

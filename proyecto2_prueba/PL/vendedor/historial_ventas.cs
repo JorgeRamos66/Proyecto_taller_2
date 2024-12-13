@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using static proyecto2_prueba.inicio_sesion;
 using System.Configuration; // Necesario para ConfigurationManager
+using ML;
 
 
 namespace proyecto2_prueba.Presentaciones.vendedor

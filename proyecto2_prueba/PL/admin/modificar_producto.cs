@@ -127,7 +127,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                     RutaImagen = textBoxRutaFoto.Text
                 };
 
-                productoBLL.ModificarProducto(producto);
+                productoBLL.ActualizarProducto(producto);
                 MessageBox.Show($"El producto '{producto.NombreProducto}' se ha modificado correctamente.",
                               "Éxito",
                               MessageBoxButtons.OK,

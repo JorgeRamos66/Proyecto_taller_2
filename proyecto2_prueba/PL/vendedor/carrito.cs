@@ -51,7 +51,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                     new DataGridViewButtonColumn
                     {
                         Name = "Agregar",
-                        HeaderText = "",
+                        HeaderText = "Operacion",
                         Width = 80,
                         Text = "Agregar",
                         UseColumnTextForButtonValue = true
@@ -70,7 +70,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                     new DataGridViewButtonColumn
                     {
                         Name = "Quitar",
-                        HeaderText = "",
+                        HeaderText = "Operacion",
                         Width = 80,
                         Text = "Quitar",
                         UseColumnTextForButtonValue = true
@@ -185,6 +185,9 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         private void datagrid_carrito_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             if (_mostrandoResultadosBusqueda) return;
+
+            // Verificar si la columna "Cantidad" existe
+            if (datagrid_carrito.Columns["Cantidad"] == null) return;
 
             if (e.ColumnIndex == datagrid_carrito.Columns["Cantidad"].Index)
             {

@@ -128,5 +128,16 @@ namespace proyecto2_prueba.PL.vendedor
                 lblVuelto.Text = "Vuelto: $0.00";
             }
         }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        
     }
 }

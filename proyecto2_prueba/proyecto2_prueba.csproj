@@ -105,26 +105,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\BackupService.cs" />
+    <Compile Include="BLL\CarritoBLL.cs" />
     <Compile Include="BLL\CategoriaBLL.cs" />
+    <Compile Include="BLL\ClienteBLL.cs" />
+    <Compile Include="BLL\MenuVendedorBLL.cs" />
     <Compile Include="BLL\NivelBLL.cs" />
     <Compile Include="BLL\PersonalBLL.cs" />
     <Compile Include="BLL\ProductoBLL.cs" />
     <Compile Include="BLL\RegistroPersonalBLL.cs" />
+    <Compile Include="BLL\VentaBLL.cs" />
+    <Compile Include="DAL\CarritoDAL.cs" />
     <Compile Include="DAL\CategoriaDAL.cs" />
+    <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\NivelDAL.cs" />
     <Compile Include="DAL\PersonalDAL.cs" />
     <Compile Include="DAL\ProductoDAL.cs" />
     <Compile Include="DAL\DatabaseService.cs" />
     <Compile Include="DAL\RegistroPersonalDAL.cs" />
     <Compile Include="DAL\UsuarioDAL.cs" />
+    <Compile Include="DAL\VentaDAL.cs" />
     <Compile Include="Encriptador\PasswordHasher.cs" />
+    <Compile Include="ML\Carrito.cs" />
     <Compile Include="ML\Categoria.cs" />
+    <Compile Include="ML\Cliente.cs" />
     <Compile Include="ML\Nivel.cs" />
     <Compile Include="ML\Personal.cs" />
     <Compile Include="ML\Producto.cs" />
     <Compile Include="ML\UsuarioSesion.cs" />
     <Compile Include="ML\UsuarioEntidad.cs" />
     <Compile Include="BLL\UsuarioBLL.cs" />
+    <Compile Include="ML\Venta.cs" />
     <Compile Include="PL\admin\alta_producto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +213,12 @@
     <Compile Include="PL\vendedor\historial_ventas.Designer.cs">
       <DependentUpon>historial_ventas.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\vendedor\ImpresionFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\vendedor\ImpresionFactura.Designer.cs">
+      <DependentUpon>ImpresionFactura.cs</DependentUpon>
+    </Compile>
     <Compile Include="PL\vendedor\menu_cliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -260,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\vendedor\historial_ventas.resx">
       <DependentUpon>historial_ventas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\vendedor\ImpresionFactura.resx">
+      <DependentUpon>ImpresionFactura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\vendedor\menu_cliente.resx">
       <DependentUpon>menu_cliente.cs</DependentUpon>
@@ -355,9 +374,12 @@
     <None Include="Resources\468034.png" />
     <None Include="Resources\3d-scanner.png" />
     <None Include="Resources\pie-chart.png" />
+    <None Include="Resources\people_11869303.png" />
+    <None Include="Resources\people_11869341.png" />
     <Content Include="Resources\restore_24px.png" />
     <None Include="Resources\shopping-cart.png" />
     <None Include="Resources\shopping-cart %281%29.png" />
+    <None Include="Resources\space_13170539.png" />
     <Content Include="Resources\suma_24px.png" />
     <Content Include="Resources\user_24px.png" />
   </ItemGroup>

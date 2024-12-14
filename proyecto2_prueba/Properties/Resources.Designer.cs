@@ -203,6 +203,26 @@ namespace proyecto2_prueba.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap people_11869303 {
+            get {
+                object obj = ResourceManager.GetObject("people_11869303", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap people_11869341 {
+            get {
+                object obj = ResourceManager.GetObject("people_11869341", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap photo_24px {
             get {
                 object obj = ResourceManager.GetObject("photo_24px", resourceCulture);
@@ -256,6 +276,16 @@ namespace proyecto2_prueba.Properties {
         internal static System.Drawing.Bitmap shopping_cart__1_ {
             get {
                 object obj = ResourceManager.GetObject("shopping-cart (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap space_13170539 {
+            get {
+                object obj = ResourceManager.GetObject("space_13170539", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

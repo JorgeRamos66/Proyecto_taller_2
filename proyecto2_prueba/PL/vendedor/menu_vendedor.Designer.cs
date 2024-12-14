@@ -34,6 +34,7 @@ namespace proyecto2_prueba
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarSesionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarProgramaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StripMenuItemClientes = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuItemCarrito = new System.Windows.Forms.ToolStripMenuItem();
             this.StripMenuItemMiHistorial = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipal = new System.Windows.Forms.MenuStrip();
@@ -50,12 +51,13 @@ namespace proyecto2_prueba
             this.menuStripGerente.Dock = System.Windows.Forms.DockStyle.Left;
             this.menuStripGerente.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
+            this.StripMenuItemClientes,
             this.StripMenuItemCarrito,
             this.StripMenuItemMiHistorial});
             this.menuStripGerente.Location = new System.Drawing.Point(0, 47);
             this.menuStripGerente.Name = "menuStripGerente";
             this.menuStripGerente.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
-            this.menuStripGerente.Size = new System.Drawing.Size(90, 368);
+            this.menuStripGerente.Size = new System.Drawing.Size(126, 368);
             this.menuStripGerente.TabIndex = 0;
             this.menuStripGerente.Text = "menuStripGerente";
             // 
@@ -68,7 +70,7 @@ namespace proyecto2_prueba
             this.archivoToolStripMenuItem.Image = global::proyecto2_prueba.Properties.Resources.main_32px;
             this.archivoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(77, 52);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(113, 52);
             this.archivoToolStripMenuItem.Text = "Menu";
             this.archivoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -84,7 +86,17 @@ namespace proyecto2_prueba
             this.cerrarProgramaToolStripMenuItem.Name = "cerrarProgramaToolStripMenuItem";
             this.cerrarProgramaToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.cerrarProgramaToolStripMenuItem.Text = "Cerrar Programa";
-            this.cerrarProgramaToolStripMenuItem.Click += new System.EventHandler(this.cerrarProgramaToolStripMenuItem_Click_1);
+            // 
+            // StripMenuItemClientes
+            // 
+            this.StripMenuItemClientes.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StripMenuItemClientes.Image = global::proyecto2_prueba.Properties.Resources.space_13170539;
+            this.StripMenuItemClientes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.StripMenuItemClientes.Name = "StripMenuItemClientes";
+            this.StripMenuItemClientes.Size = new System.Drawing.Size(113, 52);
+            this.StripMenuItemClientes.Text = "Clientes";
+            this.StripMenuItemClientes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.StripMenuItemClientes.Click += new System.EventHandler(this.StripMenuItemClientes_Click);
             // 
             // StripMenuItemCarrito
             // 
@@ -92,7 +104,7 @@ namespace proyecto2_prueba
             this.StripMenuItemCarrito.Image = global::proyecto2_prueba.Properties.Resources.shopping_cart__1_;
             this.StripMenuItemCarrito.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.StripMenuItemCarrito.Name = "StripMenuItemCarrito";
-            this.StripMenuItemCarrito.Size = new System.Drawing.Size(77, 52);
+            this.StripMenuItemCarrito.Size = new System.Drawing.Size(113, 52);
             this.StripMenuItemCarrito.Text = "Carrito";
             this.StripMenuItemCarrito.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.StripMenuItemCarrito.Click += new System.EventHandler(this.StripMenuItemCarrito_Click);
@@ -103,7 +115,7 @@ namespace proyecto2_prueba
             this.StripMenuItemMiHistorial.Image = global::proyecto2_prueba.Properties.Resources.pie_chart;
             this.StripMenuItemMiHistorial.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.StripMenuItemMiHistorial.Name = "StripMenuItemMiHistorial";
-            this.StripMenuItemMiHistorial.Size = new System.Drawing.Size(77, 52);
+            this.StripMenuItemMiHistorial.Size = new System.Drawing.Size(113, 52);
             this.StripMenuItemMiHistorial.Text = "Mi historial";
             this.StripMenuItemMiHistorial.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.StripMenuItemMiHistorial.Click += new System.EventHandler(this.StripMenuItemMiHistorial_Click);
@@ -161,8 +173,6 @@ namespace proyecto2_prueba
             this.LNombreUsuario.TabIndex = 3;
             this.LNombreUsuario.Text = "user";
             this.LNombreUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            
-
             // 
             // menu_vendedor
             // 
@@ -201,5 +211,6 @@ namespace proyecto2_prueba
         private System.Windows.Forms.ToolStripMenuItem StripMenuItemCarrito;
         private System.Windows.Forms.ToolStripMenuItem StripMenuItemMiHistorial;
         private System.Windows.Forms.Label LNombreUsuario;
+        private System.Windows.Forms.ToolStripMenuItem StripMenuItemClientes;
     }
 }

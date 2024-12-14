@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace proyecto2_prueba.Presentaciones.vendedor
+namespace proyecto2_prueba.PL.vendedor
 {
     partial class menu_cliente
     {

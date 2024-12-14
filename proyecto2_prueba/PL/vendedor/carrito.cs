@@ -1,471 +1,213 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Windows.Forms;
+using BLL;
+using ML;
 
 namespace proyecto2_prueba.Presentaciones.vendedor
 {
     public partial class carrito : Form
     {
-        private SqlConnection connection;
-        private List<Producto> listaCarrito = new List<Producto>(); // Lista para almacenar productos en el carrito
+        private readonly CarritoBLL _carritoBLL;
 
         public carrito()
         {
             InitializeComponent();
-            
-            // Obtener la cadena de conexión desde el archivo app.config
-            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"]?.ConnectionString;
+            _carritoBLL = new CarritoBLL();
+            ConfigurarFormulario();
+        }
 
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                MessageBox.Show("Error: No se encontró la cadena de conexión en el archivo de configuración.");
-                return;
-            }
-
-            connection = new SqlConnection(connectionString);
+        private void ConfigurarFormulario()
+        {
             textBoxBusqueda.TextChanged += textBoxBusqueda_TextChanged;
+            datagrid_productos.CellClick += datagrid_productos_CellClick;
             datagrid_carrito.CellClick += datagrid_carrito_CellClick;
             datagrid_carrito.CellValidating += datagrid_carrito_CellValidating;
-            datagrid_carrito.CellBeginEdit += datagrid_carrito_CellBeginEdit;
-            datagrid_carrito.CellEndEdit += datagrid_carrito_CellEndEdit;
-            datagrid_carrito.CellFormatting += datagrid_carrito_CellFormatting;
+            ActualizarCarrito();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Escape)
             {
-                this.Close(); // Cerrar el formulario cuando se presiona Esc
-                return true;  // Indicar que la tecla ha sido manejada
+                this.Close();
+                return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void textBoxBusqueda_TextChanged(object sender, EventArgs e)
         {
-            // Verificar si el texto está vacío
-            if (string.IsNullOrEmpty(textBoxBusqueda.Text))
+            try
             {
-                // Si el cuadro de búsqueda está vacío, ocultamos las columnas y no mostramos nada en el DataGrid
-                datagrid_carrito.Columns["operacionQuitar"].Visible = true;
-                datagrid_carrito.Columns["operacionAgregar"].Visible = false;
-
-                // Limpiar el DataGrid cuando no hay búsqueda
-                datagrid_carrito.Rows.Clear();
+                var productos = _carritoBLL.BuscarProductos(textBoxBusqueda.Text);
+                MostrarProductosEnGrid(productos);
             }
-            else
+            catch (Exception ex)
             {
-                // Si hay texto en el cuadro de búsqueda, ocultamos la columna y mostramos los productos
-                datagrid_carrito.Columns["operacionQuitar"].Visible = false;
-                datagrid_carrito.Columns["operacionAgregar"].Visible = true;
+                MessageBox.Show($"Error al buscar productos: {ex.Message}");
             }
-
-            // Realizar la búsqueda solo si hay texto
-            string busqueda = textBoxBusqueda.Text;
-            MostrarProductos(busqueda);
         }
 
-        private void MostrarProductos(string busqueda)
+        private void MostrarProductosEnGrid(List<CarritoItem> productos)
         {
-            if (string.IsNullOrEmpty(busqueda))
-            {
-                datagrid_carrito.Rows.Clear(); // Limpiar el DataGrid
-                return;
-            }
-
-            var productos = ObtenerProductosFiltrados(busqueda);
-            datagrid_carrito.Rows.Clear();
-
+            datagrid_productos.Rows.Clear();
             foreach (var producto in productos)
             {
-                var row = datagrid_carrito.Rows.Add();
-                datagrid_carrito.Rows[row].Cells["CNombre_producto"].Value = producto.Nombre;
-                datagrid_carrito.Rows[row].Cells["CCategoria_producto"].Value = producto.Categoria;
-                datagrid_carrito.Rows[row].Cells["CPrecio"].Value = producto.Precio;
-                datagrid_carrito.Rows[row].Cells["CCantidad_producto"].Value = 1; // Valor inicial predeterminado
-                datagrid_carrito.Rows[row].Cells["CStock_producto"].Value = producto.Stock; // Mostrar el stock en la nueva columna
-                datagrid_carrito.Rows[row].Cells["CIdProducto"].Value = producto.Id;
-
-                datagrid_carrito.Rows[row].Cells["CCantidad_producto"].ReadOnly = false; // Permitir edición
-                datagrid_carrito.Rows[row].Cells["operacionAgregar"].Value = "Agregar";
+                datagrid_productos.Rows.Add(
+                    producto.IdProducto,
+                    producto.NombreProducto,
+                    producto.Categoria,
+                    producto.Precio.ToString("C"),
+                    producto.StockDisponible,
+                    "Agregar"
+                );
             }
         }
 
-        private void datagrid_carrito_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        private void datagrid_productos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Verificar si estamos en la columna "CCantidad_producto"
-            if (datagrid_carrito.Columns[e.ColumnIndex].Name == "CCantidad_producto")
+            if (e.RowIndex >= 0 && e.ColumnIndex == datagrid_productos.Columns["Agregar"].Index)
             {
-                string cantidadStr = e.FormattedValue.ToString();
-                int cantidad;
-
-                if (!int.TryParse(cantidadStr, out cantidad) || cantidad < 0)
+                try
                 {
-                    MessageBox.Show("Por favor ingresa un valor válido para la cantidad (número entero no negativo).");
-                    e.Cancel = true;
-                }
-                else
-                {
-                    var row = datagrid_carrito.Rows[e.RowIndex];
-                    int stockDisponible = Convert.ToInt32(row.Cells["CStock_producto"].Value);
-
-                    if (cantidad > stockDisponible)
+                    int idProducto = Convert.ToInt32(datagrid_productos.Rows[e.RowIndex].Cells["Id"].Value);
+                    using (var cantidadForm = new IngresarCantidad())
                     {
-                        MessageBox.Show("La cantidad ingresada excede el stock disponible.");
-                        e.Cancel = true;
-                    }
-                }
-            }
-        }
-
-        private void datagrid_carrito_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (datagrid_carrito.Columns[e.ColumnIndex].Name == "CCantidad_producto" && e.RowIndex >= 0)
-            {
-                var row = datagrid_carrito.Rows[e.RowIndex];
-                var producto = listaCarrito.FirstOrDefault(p => p.Id == (int)row.Cells["CIdProducto"].Value);
-
-                if (producto != null)
-                {
-                    // Mostrar solo la cantidad en la celda, como texto
-                    e.Value = producto.Cantidad.ToString();
-                    e.FormattingApplied = true;
-                }
-            }
-        }
-
-        private void datagrid_carrito_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            if (datagrid_carrito.Columns[e.ColumnIndex].Name == "CCantidad_producto" && e.RowIndex >= 0)
-            {
-                var row = datagrid_carrito.Rows[e.RowIndex];
-                var producto = listaCarrito.FirstOrDefault(p => p.Id == (int)row.Cells["CIdProducto"].Value);
-
-                if (producto != null)
-                {
-                    // Mostrar solo la cantidad para edición
-                    row.Cells["CCantidad_producto"].Value = producto.Cantidad;
-                }
-            }
-        }
-
-        private List<Producto> ObtenerProductosFiltrados(string busqueda)
-        {
-            List<Producto> productos = new List<Producto>();
-
-            // Modificar la consulta para que también busque por la categoría
-            string query = @"
-                SELECT * 
-                FROM PRODUCTO 
-                WHERE 
-                    (nombre_producto LIKE @busqueda 
-                    OR id_categoria IN (
-                        SELECT id_categoria 
-                        FROM CATEGORIA 
-                        WHERE nombre_categoria LIKE @busqueda 
-                        AND estado_categoria = 1)) 
-                AND baja_producto = 1
-                AND id_categoria IN (
-                    SELECT id_categoria 
-                    FROM CATEGORIA 
-                    WHERE estado_categoria = 1
-                )";
-
-
-            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"]?.ConnectionString;
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                MessageBox.Show("Error: No se encontró la cadena de conexión en el archivo de configuración.");
-                return productos;
-            }
-
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@busqueda", "%" + busqueda + "%"); // Buscar en nombre del producto y en categoría
-
-                    conn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Producto prod = new Producto
+                        if (cantidadForm.ShowDialog() == DialogResult.OK)
                         {
-                            Id = (int)reader["id_producto"],
-                            Nombre = reader["nombre_producto"].ToString(),
-                            Categoria = ObtenerNombreCategoria((int)reader["id_categoria"]),
-                            Precio = (double)reader["precio_producto"],
-                            Stock = (int)reader["stock_producto"]
-                        };
-
-                        // Depuración: Verificar si Categoria es nula o vacía
-                        if (string.IsNullOrEmpty(prod.Categoria))
-                        {
-                            MessageBox.Show("Categoria nula o vacía para el producto: " + prod.Nombre);
+                            _carritoBLL.AgregarProducto(idProducto, cantidadForm.Cantidad);
+                            ActualizarCarrito();
                         }
-
-                        if (!listaCarrito.Any(c => c.Id == prod.Id))
-                            productos.Add(prod);
                     }
-                    reader.Close();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al obtener productos: " + ex.Message);
-            }
-            return productos;
-        }
-
-        private string ObtenerNombreCategoria(int idCategoria)
-        {
-            string nombreCategoria = "Desconocido"; // Valor predeterminado
-            string connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"]?.ConnectionString;
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                MessageBox.Show("Error: No se encontró la cadena de conexión en el archivo de configuración.");
-                return nombreCategoria;
-            }
-
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                catch (Exception ex)
                 {
-                    string query = "SELECT nombre_categoria FROM CATEGORIA WHERE id_categoria = @idCategoria";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@idCategoria", idCategoria);
-
-                    conn.Open();
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
-                    {
-                        nombreCategoria = result.ToString();
-                    }
-                    else
-                    {
-                        // Depuración: Verificar si no se encontró categoría
-                        MessageBox.Show("No se encontró categoría para el ID: " + idCategoria);
-                    }
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al obtener nombre de categoría: " + ex.Message + "\n" + ex.StackTrace);
-            }
-            return nombreCategoria;
         }
 
         private void datagrid_carrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                var row = datagrid_carrito.Rows[e.RowIndex];
-                int idProducto = (int)row.Cells["CIdProducto"].Value;
-
-                // Verificar si la celda modificada es la de "Agregar" o "Quitar"
-                if (datagrid_carrito.Columns[e.ColumnIndex].Name == "operacionAgregar")
+                if (e.ColumnIndex == datagrid_carrito.Columns["operacionQuitar"]?.Index)
                 {
-                    Producto producto = ObtenerProductoPorId(idProducto);
-
-                    // Obtener el valor de la celda de stock en el DataGridView
-                    int cantidadDesdeCelda = Convert.ToInt32(row.Cells["CCantidad_producto"].Value);
-
-                    if (producto != null)
-                    {
-                        // Asignar el valor del stock ingresado en la celda al StockReal del producto
-                        producto.Cantidad = cantidadDesdeCelda;
-
-                        // Verificar si el producto ya está en el carrito
-                        if (!listaCarrito.Any(p => p.Id == idProducto))
-                        {
-                            listaCarrito.Add(producto);
-
-                            // Limpiar el cuadro de búsqueda después de agregar el producto
-                            textBoxBusqueda.Text = string.Empty;
-
-                            // Actualizar el carrito en el DataGridView
-                            ActualizarCarrito();
-                        }
-                    }
-                }
-                else if (datagrid_carrito.Columns[e.ColumnIndex].Name == "operacionQuitar")
-                {
-                    listaCarrito.RemoveAll(p => p.Id == idProducto);
+                    int idProducto = Convert.ToInt32(datagrid_carrito.Rows[e.RowIndex].Cells["Id"].Value);
+                    _carritoBLL.QuitarProducto(idProducto);
                     ActualizarCarrito();
                 }
             }
         }
 
-        private void datagrid_carrito_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void datagrid_carrito_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (datagrid_carrito.Columns[e.ColumnIndex].Name == "CCantidad_producto" && e.RowIndex >= 0)
+            if (e.ColumnIndex == datagrid_carrito.Columns["Cantidad"].Index)
             {
-                var row = datagrid_carrito.Rows[e.RowIndex];
-                var producto = listaCarrito.FirstOrDefault(p => p.Id == (int)row.Cells["CIdProducto"].Value);
-
-                if (producto != null)
+                try
                 {
-                    try
+                    if (int.TryParse(e.FormattedValue.ToString(), out int nuevaCantidad))
                     {
-                        // Obtener la cantidad editada
-                        int nuevaCantidad = Convert.ToInt32(row.Cells["CCantidad_producto"].Value);
-
-                        // Validar que no exceda el stock disponible
-                        if (nuevaCantidad > producto.Stock)
-                        {
-                            MessageBox.Show("La cantidad ingresada excede el stock disponible.");
-                            row.Cells["CCantidad_producto"].Value = producto.Cantidad; // Restaurar valor anterior
-                        }
-                        else
-                        {
-                            producto.Cantidad = nuevaCantidad; // Actualizar la cantidad
-                        }
+                        int idProducto = Convert.ToInt32(datagrid_carrito.Rows[e.RowIndex].Cells["Id"].Value);
+                        _carritoBLL.ActualizarCantidad(idProducto, nuevaCantidad);
+                        ActualizarCarrito();
                     }
-                    catch
+                    else
                     {
-                        MessageBox.Show("Por favor, ingrese un valor válido para la cantidad.");
-                        row.Cells["CCantidad_producto"].Value = producto.Cantidad; // Restaurar valor anterior
+                        e.Cancel = true;
+                        MessageBox.Show("Por favor ingrese un número válido", "Error", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-
-                // Actualizar la celda para mostrar el formato personalizado
-                datagrid_carrito.Refresh();
-            }
-        }
-
-        public Producto ObtenerProductoPorId(int idProducto)
-        {
-            Producto producto = null;
-            try
-            {
-                connection.Open();
-                string query = "SELECT * FROM PRODUCTO WHERE id_producto = @idProducto";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@idProducto", idProducto);
-
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
+                catch (Exception ex)
                 {
-                    producto = new Producto
-                    {
-                        Id = reader.GetInt32(0), // Asumiendo que este campo nunca será null
-                        Nombre = reader.IsDBNull(1) ? null : reader.GetString(1), // Si es null, asigna null
-                        Precio = reader.IsDBNull(2) ? 0.0 : reader.GetDouble(2), // Si es null, asigna 0.0
-                        Descripcion = reader.IsDBNull(3) ? null : reader.GetString(3), // Si es null, asigna null
-                        Stock = reader.IsDBNull(4) ? 0 : reader.GetInt32(4), // Si es null, asigna 0
-                        BajaProducto = reader.IsDBNull(5) ? 0 : reader.GetInt32(5), // Si es null, asigna 0
-                        IdCategoria = reader.IsDBNull(6) ? 0 : reader.GetInt32(6), // Si es null, asigna 0
-                        RutaImagen = reader.IsDBNull(7) ? null : reader.GetString(7), // Si es null, asigna null
-                    };
-                    // Asignamos el nombre de la categoría usando el ID de la categoría
-                    producto.Categoria = ObtenerNombreCategoria(producto.IdCategoria);
+                    e.Cancel = true;
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                reader.Close();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al obtener el producto: " + ex.ToString());
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return producto;
-        }
-
-        private void AgregarFilaProducto(Producto producto)
-        {
-            var row = datagrid_carrito.Rows.Add();
-            datagrid_carrito.Rows[row].Cells["CNombre_producto"].Value = producto.Nombre;
-            datagrid_carrito.Rows[row].Cells["CCategoria_producto"].Value = producto.Categoria;
-            datagrid_carrito.Rows[row].Cells["CPrecio"].Value = producto.Precio;
-            datagrid_carrito.Rows[row].Cells["CCantidad_producto"].Value = producto.Cantidad;
-            datagrid_carrito.Rows[row].Cells["CStock_producto"].Value = producto.Stock; // Mostrar el stock en la nueva columna
-            datagrid_carrito.Rows[row].Cells["CIdProducto"].Value = producto.Id;
-            datagrid_carrito.Rows[row].Cells["operacionQuitar"].Value = "Quitar";
         }
 
         private void ActualizarCarrito()
         {
             datagrid_carrito.Rows.Clear();
-            foreach (var producto in listaCarrito)
+            var items = _carritoBLL.ObtenerItems();
+            
+            foreach (var item in items)
             {
-                AgregarFilaProducto(producto);
+                datagrid_carrito.Rows.Add(
+                    item.IdProducto,
+                    item.NombreProducto,
+                    item.Categoria,
+                    item.Precio.ToString("C"),
+                    item.Cantidad,
+                    item.Subtotal.ToString("C"),
+                    "Quitar"
+                );
             }
-        }
 
-        public class Producto
-        {
-            public int Id { get; set; }
-            public string Nombre { get; set; }
-            public string Categoria { get; set; }
-            public double Precio { get; set; }
-            public int Stock { get; set; }
-            public string Descripcion { get; set; }
-            public int BajaProducto { get; set; }
-            public int IdCategoria { get; set; }
-            public string RutaImagen { get; set; }
-            public int Cantidad { get; set; }
-        }
-
-        private void BBorrar_Click(object sender, EventArgs e)
-        {
-            // Limpiar el cuadro de búsqueda
-            textBoxBusqueda.Text = string.Empty;
-            ActualizarCarrito();
-        }
-
-        private void carrito_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                // No mostrar productos al cargar la vista
-                datagrid_carrito.Rows.Clear();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar el formulario: " + ex.Message);
-            }
+            lblTotal.Text = _carritoBLL.ObtenerTotal().ToString("C");
         }
 
         private void bConfirmarVenta_Click(object sender, EventArgs e)
         {
-            if (listaCarrito.Count == 0)
+            if (!_carritoBLL.ObtenerItems().Any())
             {
-                MessageBox.Show("El carrito está vacío. Agrega productos antes de confirmar la venta.");
+                MessageBox.Show("El carrito está vacío", "Aviso", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // Abrir el formulario menu_cliente y pasarle el carrito
-            var menuClienteForm = new menu_cliente(listaCarrito);
+            var menuClienteForm = new menu_cliente(_carritoBLL);
             menuClienteForm.ShowDialog();
 
-            // Al volver del formulario de clientes, se puede procesar la venta.
-            // Implementar la lógica de guardado si es necesario.
-            // Limpiar la lista del carrito
-            listaCarrito.Clear();
-
-            // Actualizar el DataGridView
-            ActualizarCarrito();
+            if (menuClienteForm.VentaRealizada)
+            {
+                this.Close();
+            }
         }
 
         private void BLimpiarCarrito_Click(object sender, EventArgs e)
         {
-            // Limpiar la lista del carrito
-            listaCarrito.Clear();
+            if (MessageBox.Show("¿Está seguro de que desea limpiar el carrito?", "Confirmar",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _carritoBLL.LimpiarCarrito();
+                ActualizarCarrito();
+            }
+        }
 
-            // Actualizar el DataGridView
+        private void carrito_Load(object sender, EventArgs e)
+        {
+            ConfigurarGrillas();
             ActualizarCarrito();
+        }
 
-            // Mensaje de confirmación
-            MessageBox.Show("El carrito ha sido limpiado.");
+        private void ConfigurarGrillas()
+        {
+            // Configurar datagrid_productos
+            datagrid_productos.AutoGenerateColumns = false;
+            datagrid_productos.Columns.Clear();
+            datagrid_productos.Columns.AddRange(
+                new DataGridViewTextBoxColumn { Name = "Id", HeaderText = "ID", Visible = false },
+                new DataGridViewTextBoxColumn { Name = "Nombre", HeaderText = "Producto", Width = 200 },
+                new DataGridViewTextBoxColumn { Name = "Categoria", HeaderText = "Categoría", Width = 100 },
+                new DataGridViewTextBoxColumn { Name = "Precio", HeaderText = "Precio", Width = 100 },
+                new DataGridViewTextBoxColumn { Name = "Stock", HeaderText = "Stock", Width = 80 },
+                new DataGridViewButtonColumn { Name = "Agregar", HeaderText = "", Width = 80 }
+            );
+
+            // Configurar datagrid_carrito
+            datagrid_carrito.AutoGenerateColumns = false;
+            datagrid_carrito.Columns.Clear();
+            datagrid_carrito.Columns.AddRange(
+                new DataGridViewTextBoxColumn { Name = "Id", HeaderText = "ID", Visible = false },
+                new DataGridViewTextBoxColumn { Name = "Nombre", HeaderText = "Producto", Width = 200 },
+                new DataGridViewTextBoxColumn { Name = "Categoria", HeaderText = "Categoría", Width = 100 },
+                new DataGridViewTextBoxColumn { Name = "Precio", HeaderText = "Precio Unit.", Width = 100 },
+                new DataGridViewTextBoxColumn { Name = "Cantidad", HeaderText = "Cantidad", Width = 80 },
+                new DataGridViewTextBoxColumn { Name = "Subtotal", HeaderText = "Subtotal", Width = 100 },
+                new DataGridViewButtonColumn { Name = "operacionQuitar", HeaderText = "", Width = 80 }
+            );
         }
     }
 }
-

@@ -22,15 +22,15 @@ namespace DAL
                 SELECT 
                     P.id_producto,
                     P.nombre_producto,
+                    P.descripcion_producto,
                     C.nombre_categoria,
                     P.precio_producto,
                     P.stock_producto
                 FROM PRODUCTO P
                 INNER JOIN CATEGORIA C ON P.id_categoria = C.id_categoria
                 WHERE 
-                    P.baja_producto = 0 AND
-                    (P.nombre_producto LIKE @filtro OR
-                     C.nombre_categoria LIKE @filtro)";
+                    (P.baja_producto = 1 AND C.estado_categoria = 1) AND
+                    (P.nombre_producto LIKE @filtro OR C.nombre_categoria LIKE @filtro OR P.descripcion_producto LIKE @filtro)";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -69,7 +69,7 @@ namespace DAL
                     P.stock_producto
                 FROM PRODUCTO P
                 INNER JOIN CATEGORIA C ON P.id_categoria = C.id_categoria
-                WHERE P.id_producto = @idProducto AND P.baja_producto = 0";
+                WHERE P.id_producto = @idProducto AND P.baja_producto = 1";
 
             using (var connection = new SqlConnection(connectionString))
             {

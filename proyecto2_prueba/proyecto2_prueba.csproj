@@ -219,6 +219,9 @@
     <Compile Include="PL\vendedor\ImpresionFactura.Designer.cs">
       <DependentUpon>ImpresionFactura.cs</DependentUpon>
     </Compile>
+    <Compile Include="PL\vendedor\IngresarCantidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PL\vendedor\menu_cliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,6 +233,12 @@
     </Compile>
     <Compile Include="PL\vendedor\menu_vendedor.Designer.cs">
       <DependentUpon>menu_vendedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\vendedor\pasarela.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\vendedor\pasarela.Designer.cs">
+      <DependentUpon>pasarela.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -280,11 +289,17 @@
     <EmbeddedResource Include="PL\vendedor\ImpresionFactura.resx">
       <DependentUpon>ImpresionFactura.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\vendedor\IngresarCantidad.resx">
+      <DependentUpon>IngresarCantidad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\vendedor\menu_cliente.resx">
       <DependentUpon>menu_cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\vendedor\menu_vendedor.resx">
       <DependentUpon>menu_vendedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\vendedor\pasarela.resx">
+      <DependentUpon>pasarela.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

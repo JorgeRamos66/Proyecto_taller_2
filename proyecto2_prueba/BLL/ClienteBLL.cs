@@ -9,12 +9,22 @@ namespace BLL
     public class ClienteBLL
     {
         private readonly ClienteDAL _clienteDAL;
-        private readonly VentaBLL _ventaBLL;
 
         public ClienteBLL()
         {
             _clienteDAL = new ClienteDAL();
-            _ventaBLL = new VentaBLL();
+        }
+
+        public Cliente ObtenerClientePorId(int id)
+        {
+            try
+            {
+                return _clienteDAL.ObtenerClientePorId(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener cliente: {ex.Message}");
+            }
         }
 
         public List<Cliente> ObtenerClientesFiltrados(string filtro)
@@ -32,26 +42,6 @@ namespace BLL
             {
                 _clienteDAL.ActualizarCliente(cliente);
             }
-        }
-
-        public void RealizarVenta(Cliente cliente, List<Producto> productos)
-        {
-            var venta = new Venta
-            {
-                IdCliente = cliente.Id,
-                IdMetodoPago = 1, // Predeterminado
-                IdUsuario = UsuarioSesion.IdUsuario,
-                PrecioTotal = productos.Sum(p => p.Precio * p.Cantidad),
-                FechaVenta = DateTime.Now,
-                Detalles = productos.Select(p => new DetalleVenta
-                {
-                    IdProducto = p.Id,
-                    Cantidad = p.Cantidad,
-                    Precio = p.Precio
-                }).ToList()
-            };
-
-            _ventaBLL.ProcesarVenta(venta);
         }
     }
 }

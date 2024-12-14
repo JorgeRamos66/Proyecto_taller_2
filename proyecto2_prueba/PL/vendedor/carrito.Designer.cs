@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace proyecto2_prueba.Presentaciones.vendedor
 {
@@ -81,6 +82,14 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.label1.TabIndex = 1;
             this.label1.Text = "CARRITO DE COMPRAS";
             // 
+            // lblTotal
+            // 
+            this.lblTotal = new Label();
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
+            this.lblTotal.Location = new Point(800, 500);
+            this.Controls.Add(this.lblTotal);
+            // 
             // BBorrar
             // 
             this.BBorrar.BackColor = System.Drawing.Color.Beige;
@@ -104,27 +113,14 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // datagrid_carrito
             // 
             this.datagrid_carrito.AllowUserToAddRows = false;
-            this.datagrid_carrito.AllowUserToOrderColumns = true;
+            this.datagrid_carrito.AllowUserToDeleteRows = false;
             this.datagrid_carrito.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.datagrid_carrito.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.datagrid_carrito.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
-            this.datagrid_carrito.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            this.datagrid_carrito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.datagrid_carrito.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.CNombre_producto,
-            this.CCategoria_producto,
-            this.CPrecio,
-            this.CStock_Producto,
-            this.CCantidad_producto,
-            this.operacionAgregar,
-            this.operacionQuitar,
-            this.CIdProducto});
-            this.datagrid_carrito.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.datagrid_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datagrid_carrito.Location = new System.Drawing.Point(72, 106);
             this.datagrid_carrito.Name = "datagrid_carrito";
-            this.datagrid_carrito.RowTemplate.Height = 50;
             this.datagrid_carrito.Size = new System.Drawing.Size(971, 371);
             this.datagrid_carrito.TabIndex = 8;
+            this.datagrid_carrito.Columns.Clear();
             // 
             // CNombre_producto
             // 
@@ -265,6 +261,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
         #endregion
 
+        private Label lblTotal;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BBorrar;

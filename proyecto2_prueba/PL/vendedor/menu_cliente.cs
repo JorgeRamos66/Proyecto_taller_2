@@ -13,6 +13,7 @@ namespace proyecto2_prueba.PL.vendedor
         private readonly VentaBLL _ventaBLL;
         private readonly bool _esVentaDirecta;
         public bool VentaRealizada { get; private set; }
+        public Cliente ClienteSeleccionado { get; private set; }
 
         public menu_cliente(CarritoBLL carritoBLL = null)
         {
@@ -26,7 +27,10 @@ namespace proyecto2_prueba.PL.vendedor
 
         private void ConfigurarFormulario()
         {
-            bConfirmarVenta.Visible = _esVentaDirecta;
+            // Asumiendo que tienes estos controles en el designer
+            if (BConfirmar != null)
+                BConfirmar.Visible = _esVentaDirecta;
+
             textBoxIdAuxiliar.Text = "0";
             this.Load += menu_cliente_Load;
             this.txtBuscar.TextChanged += TxtBuscar_TextChanged;
@@ -83,6 +87,15 @@ namespace proyecto2_prueba.PL.vendedor
             {
                 int idCliente = Convert.ToInt32(dgvClientes.Rows[e.RowIndex].Cells["Id"].Value);
                 CargarDatosCliente(idCliente);
+
+                // Actualizar ClienteSeleccionado
+                ClienteSeleccionado = _clienteBLL.ObtenerClientePorId(idCliente);
+
+                if (_esVentaDirecta)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
         }
 
@@ -93,6 +106,7 @@ namespace proyecto2_prueba.PL.vendedor
                 var cliente = _clienteBLL.ObtenerClientePorId(idCliente);
                 if (cliente != null)
                 {
+                    ClienteSeleccionado = cliente; // Actualizar ClienteSeleccionado
                     textBoxIdAuxiliar.Text = cliente.Id.ToString();
                     txtNombre.Text = cliente.Nombre;
                     txtApellido.Text = cliente.Apellido;
@@ -256,13 +270,11 @@ namespace proyecto2_prueba.PL.vendedor
             {
                 var cliente = ObtenerClienteDesdeFormulario();
                 _clienteBLL.GuardarCliente(cliente);
+                ClienteSeleccionado = cliente; // Actualizar ClienteSeleccionado
 
                 if (_esVentaDirecta)
                 {
-                    int idVenta = _ventaBLL.ProcesarVenta(cliente.Id, 1); // 1 = método de pago predeterminado
-                    var formFactura = new ImpresionFactura(cliente, _carritoBLL.ObtenerItems(), idVenta);
-                    formFactura.ShowDialog();
-                    VentaRealizada = true;
+                    this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else

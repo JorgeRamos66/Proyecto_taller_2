@@ -34,14 +34,14 @@ namespace BLL
             var itemExistente = _carrito.Items.FirstOrDefault(i => i.IdProducto == idProducto);
             if (itemExistente != null)
             {
-                if (itemExistente.Cantidad + cantidad > producto.StockDisponible)
+                if (itemExistente.CantidadProducto + cantidad > producto.StockDisponible)
                     throw new Exception("Stock insuficiente");
 
-                itemExistente.Cantidad += cantidad;
+                itemExistente.CantidadProducto += cantidad;
             }
             else
             {
-                producto.Cantidad = cantidad;
+                producto.CantidadProducto = cantidad;
                 _carrito.Items.Add(producto);
             }
         }
@@ -61,7 +61,7 @@ namespace BLL
             if (nuevaCantidad > item.StockDisponible)
                 throw new Exception("Stock insuficiente");
 
-            item.Cantidad = nuevaCantidad;
+            item.CantidadProducto = nuevaCantidad;
         }
 
         public void QuitarProducto(int idProducto)

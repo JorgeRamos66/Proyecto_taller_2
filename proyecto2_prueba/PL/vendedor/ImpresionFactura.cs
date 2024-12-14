@@ -14,14 +14,14 @@ namespace proyecto2_prueba.PL.vendedor
     public partial class ImpresionFactura : Form
     {
         private readonly Cliente _cliente;
-        private readonly List<Producto> _productos;
+        private readonly List<CarritoItem> _items;
         private int _idVenta;
 
-        public ImpresionFactura(Cliente cliente, List<Producto> productos, int idVenta)
+        public ImpresionFactura(Cliente cliente, List<CarritoItem> items, int idVenta)
         {
             InitializeComponent();
             _cliente = cliente;
-            _productos = productos;
+            _items = items;
             _idVenta = idVenta;
             CargarDatosFactura();
         }
@@ -51,18 +51,18 @@ namespace proyecto2_prueba.PL.vendedor
             );
 
             // Cargar productos
-            foreach (var producto in _productos)
+            foreach (var item in _items)
             {
                 dgvProductos.Rows.Add(
-                    producto.Nombre,
-                    producto.Cantidad,
-                    producto.Precio.ToString("C"),
-                    (producto.Precio * producto.Cantidad).ToString("C")
+                    item.NombreProducto,
+                    item.CantidadProducto,
+                    item.PrecioProducto.ToString("C"),
+                    item.Subtotal.ToString("C")
                 );
             }
 
             // Calcular y mostrar total
-            double total = _productos.Sum(p => p.Precio * p.Cantidad);
+            double total = _items.Sum(i => i.Subtotal);
             lblTotal.Text = total.ToString("C");
         }
 
@@ -112,18 +112,18 @@ namespace proyecto2_prueba.PL.vendedor
                     tabla.AddCell(new PdfPCell(new Phrase("Subtotal", fontSubtitulo)) { BackgroundColor = BaseColor.LIGHT_GRAY });
 
                     // Productos
-                    foreach (var producto in _productos)
+                    foreach (var item in _items)
                     {
-                        tabla.AddCell(producto.Nombre);
-                        tabla.AddCell(producto.Cantidad.ToString());
-                        tabla.AddCell(producto.Precio.ToString("C"));
-                        tabla.AddCell((producto.Precio * producto.Cantidad).ToString("C"));
+                        tabla.AddCell(item.NombreProducto);
+                        tabla.AddCell(item.CantidadProducto.ToString());
+                        tabla.AddCell(item.PrecioProducto.ToString("C"));
+                        tabla.AddCell(item.Subtotal.ToString("C"));
                     }
 
                     documento.Add(tabla);
 
                     // Total
-                    double total = _productos.Sum(p => p.Precio * p.Cantidad);
+                    double total = _items.Sum(i => i.Subtotal);
                     documento.Add(new Paragraph($"\nTotal: {total:C}", fontTitulo));
 
                     documento.Close();
@@ -143,6 +143,5 @@ namespace proyecto2_prueba.PL.vendedor
         {
             this.Close();
         }
-
     }
 }

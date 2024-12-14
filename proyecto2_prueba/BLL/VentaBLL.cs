@@ -21,7 +21,7 @@ namespace BLL
             try
             {
                 var itemsCarrito = _carritoBLL.ObtenerItems();
-                
+
                 var venta = new Venta
                 {
                     FechaVenta = DateTime.Now,
@@ -32,8 +32,8 @@ namespace BLL
                     Detalles = itemsCarrito.Select(item => new DetalleVenta
                     {
                         IdProducto = item.IdProducto,
-                        Cantidad = item.Cantidad,
-                        Precio = item.Precio
+                        Cantidad = item.CantidadProducto,
+                        Precio = item.PrecioProducto
                     }).ToList()
                 };
 

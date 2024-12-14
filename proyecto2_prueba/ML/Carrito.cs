@@ -7,11 +7,11 @@ namespace ML
     {
         public int IdProducto { get; set; }
         public string NombreProducto { get; set; }
-        public string Categoria { get; set; }
-        public double Precio { get; set; }
-        public int Cantidad { get; set; }
+        public string CategoriaProducto { get; set; }
+        public double PrecioProducto { get; set; }
+        public int CantidadProducto { get; set; }
         public int StockDisponible { get; set; }
-        public double Subtotal => Precio * Cantidad;
+        public double Subtotal => PrecioProducto * CantidadProducto;
     }
 
     public class Carrito

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace proyecto2_prueba.PL.vendedor
@@ -69,6 +70,8 @@ namespace proyecto2_prueba.PL.vendedor
             this.btnTarjeta.Size = new System.Drawing.Size(140, 80);
             this.btnTarjeta.TabIndex = 0;
             this.btnTarjeta.Text = "Tarjeta";
+            this.btnTarjeta.Click += new System.EventHandler(this.btnTarjeta_Click);
+
             // 
             // btnEfectivo
             // 
@@ -78,6 +81,8 @@ namespace proyecto2_prueba.PL.vendedor
             this.btnEfectivo.Size = new System.Drawing.Size(140, 80);
             this.btnEfectivo.TabIndex = 1;
             this.btnEfectivo.Text = "Efectivo";
+            this.btnEfectivo.Click += new System.EventHandler(this.btnEfectivo_Click);
+
             // 
             // btnMercadoPago
             // 
@@ -87,6 +92,7 @@ namespace proyecto2_prueba.PL.vendedor
             this.btnMercadoPago.Size = new System.Drawing.Size(140, 80);
             this.btnMercadoPago.TabIndex = 2;
             this.btnMercadoPago.Text = "MercadoPago";
+            this.btnMercadoPago.Click += new System.EventHandler(this.btnMercadoPago_Click);
             // 
             // panelTarjeta
             // 
@@ -202,26 +208,45 @@ namespace proyecto2_prueba.PL.vendedor
 
         }
 
-        private void ConfigurarPanelTarjeta()
-        {
-            panelTarjeta.Location = new Point(20, 190);
-            panelTarjeta.Size = new Size(460, 300);
-            panelTarjeta.BorderStyle = BorderStyle.FixedSingle;
-
-            // Configurar controles del panel tarjeta
-            // ... (configuración detallada de los controles)
-
-            this.Controls.Add(panelTarjeta);
-        }
-
         private void ConfigurarPanelEfectivo()
         {
             panelEfectivo.Location = new Point(20, 190);
             panelEfectivo.Size = new Size(460, 300);
             panelEfectivo.BorderStyle = BorderStyle.FixedSingle;
+            panelEfectivo.BackColor = Color.Tan;
 
-            // Configurar controles del panel efectivo
-            // ... (configuración detallada de los controles)
+            // Configurar label para monto a pagar
+            Label lblMontoAPagar = new Label();
+            lblMontoAPagar.Location = new Point(20, 20);
+            lblMontoAPagar.Size = new Size(200, 25);
+            lblMontoAPagar.Text = "Monto recibido:";
+            lblMontoAPagar.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
+
+            // Configurar txtMontoEfectivo
+            txtMontoEfectivo.Location = new Point(20, 50);
+            txtMontoEfectivo.Size = new Size(200, 30);
+            txtMontoEfectivo.Text = "Ingrese el monto";
+            txtMontoEfectivo.TextChanged += new EventHandler(txtMontoEfectivo_TextChanged);
+
+            // Configurar lblVuelto
+            lblVuelto.Location = new Point(20, 90);
+            lblVuelto.Size = new Size(200, 25);
+            lblVuelto.Text = "Vuelto: $0.00";
+            lblVuelto.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+
+            // Configurar btnConfirmarEfectivo
+            btnConfirmarEfectivo.Location = new Point(20, 130);
+            btnConfirmarEfectivo.Size = new Size(200, 40);
+            btnConfirmarEfectivo.Text = "Confirmar Pago";
+            btnConfirmarEfectivo.BackColor = Color.FromArgb(94, 153, 83);
+            btnConfirmarEfectivo.ForeColor = Color.White;
+            btnConfirmarEfectivo.Click += new EventHandler(btnConfirmarEfectivo_Click);
+
+            // Agregar controles al panel
+            panelEfectivo.Controls.Add(lblMontoAPagar);
+            panelEfectivo.Controls.Add(txtMontoEfectivo);
+            panelEfectivo.Controls.Add(lblVuelto);
+            panelEfectivo.Controls.Add(btnConfirmarEfectivo);
 
             this.Controls.Add(panelEfectivo);
         }
@@ -231,11 +256,104 @@ namespace proyecto2_prueba.PL.vendedor
             panelMercadoPago.Location = new Point(20, 190);
             panelMercadoPago.Size = new Size(460, 300);
             panelMercadoPago.BorderStyle = BorderStyle.FixedSingle;
+            panelMercadoPago.BackColor = Color.Tan;
 
-            // Configurar controles del panel MercadoPago
-            // ... (configuración detallada de los controles)
+            // Configurar label de instrucciones
+            Label lblInstrucciones = new Label();
+            lblInstrucciones.Location = new Point(20, 20);
+            lblInstrucciones.Size = new Size(420, 50);
+            lblInstrucciones.Text = "Escanee el código QR con la aplicación de MercadoPago";
+            lblInstrucciones.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
+
+            // Configurar PictureBox para el código QR
+            picQR.Location = new Point(130, 80);
+            picQR.Size = new Size(200, 200);
+            picQR.SizeMode = PictureBoxSizeMode.StretchImage;
+            picQR.BorderStyle = BorderStyle.FixedSingle;
+            // Aquí deberías cargar la imagen del QR
+            // picQR.Image = Image.FromFile("ruta_a_tu_qr.png");
+
+            // Configurar btnConfirmarMP
+            btnConfirmarMP.Location = new Point(130, 290);
+            btnConfirmarMP.Size = new Size(200, 40);
+            btnConfirmarMP.Text = "Confirmar Pago";
+            btnConfirmarMP.BackColor = Color.FromArgb(94, 153, 83);
+            btnConfirmarMP.ForeColor = Color.White;
+            btnConfirmarMP.Click += new EventHandler(btnConfirmarMP_Click);
+
+            // Agregar controles al panel
+            panelMercadoPago.Controls.Add(lblInstrucciones);
+            panelMercadoPago.Controls.Add(picQR);
+            panelMercadoPago.Controls.Add(btnConfirmarMP);
 
             this.Controls.Add(panelMercadoPago);
+        }
+
+        private void ConfigurarPanelTarjeta()
+        {
+            panelTarjeta.Location = new Point(20, 190);
+            panelTarjeta.Size = new Size(460, 300);
+            panelTarjeta.BorderStyle = BorderStyle.FixedSingle;
+            panelTarjeta.BackColor = Color.Tan;
+
+            // Label para número de tarjeta
+            Label lblNumeroTarjeta = new Label();
+            lblNumeroTarjeta.Location = new Point(20, 20);
+            lblNumeroTarjeta.Size = new Size(200, 25);
+            lblNumeroTarjeta.Text = "Número de Tarjeta:";
+            lblNumeroTarjeta.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
+
+            // Configurar txtNumeroTarjeta
+            txtNumeroTarjeta.Location = new Point(20, 50);
+            txtNumeroTarjeta.Size = new Size(300, 30);
+            txtNumeroTarjeta.Text = "1234 5678 9012 3456";
+            txtNumeroTarjeta.MaxLength = 16;
+
+            // Label para fecha de vencimiento
+            Label lblVencimiento = new Label();
+            lblVencimiento.Location = new Point(20, 90);
+            lblVencimiento.Size = new Size(200, 25);
+            lblVencimiento.Text = "Fecha de Vencimiento:";
+            lblVencimiento.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
+
+            // Configurar txtVencimiento
+            txtVencimiento.Location = new Point(20, 120);
+            txtVencimiento.Size = new Size(100, 30);
+            txtVencimiento.Text = "MM/YY";
+            txtVencimiento.MaxLength = 5;
+
+            // Label para CVV
+            Label lblCVV = new Label();
+            lblCVV.Location = new Point(140, 90);
+            lblCVV.Size = new Size(100, 25);
+            lblCVV.Text = "CVV:";
+            lblCVV.Font = new Font("Segoe UI", 12F, FontStyle.Regular);
+
+            // Configurar txtCVV
+            txtCVV.Location = new Point(140, 120);
+            txtCVV.Size = new Size(80, 30);
+            txtCVV.Text = "123";
+            txtCVV.MaxLength = 3;
+            txtCVV.UseSystemPasswordChar = true;
+
+            // Configurar btnConfirmarTarjeta
+            btnConfirmarTarjeta.Location = new Point(20, 170);
+            btnConfirmarTarjeta.Size = new Size(200, 40);
+            btnConfirmarTarjeta.Text = "Confirmar Pago";
+            btnConfirmarTarjeta.BackColor = Color.FromArgb(94, 153, 83);
+            btnConfirmarTarjeta.ForeColor = Color.White;
+            btnConfirmarTarjeta.Click += new EventHandler(btnConfirmarTarjeta_Click);
+
+            // Agregar controles al panel
+            panelTarjeta.Controls.Add(lblNumeroTarjeta);
+            panelTarjeta.Controls.Add(txtNumeroTarjeta);
+            panelTarjeta.Controls.Add(lblVencimiento);
+            panelTarjeta.Controls.Add(txtVencimiento);
+            panelTarjeta.Controls.Add(lblCVV);
+            panelTarjeta.Controls.Add(txtCVV);
+            panelTarjeta.Controls.Add(btnConfirmarTarjeta);
+
+            this.Controls.Add(panelTarjeta);
         }
 
         private Label lblTotal;

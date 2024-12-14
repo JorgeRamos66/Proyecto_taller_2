@@ -60,7 +60,6 @@ C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyect
 C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_vendedor.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_vendedor.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.vendedor.carrito.resources
-C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.vendedor.menu_cliente.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\bin\Debug\BouncyCastle.Cryptography.dll
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\bin\Debug\itext.commons.dll
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\bin\Debug\itextsharp.dll
@@ -99,3 +98,7 @@ C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\bin\Debug\System.
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\bin\Debug\System.ValueTuple.xml
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto.3D921F5A.Up2Date
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.vendedor.ventas.resources
+C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.PL.vendedor.ImpresionFactura.resources
+C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\IngresarCantidad.resources
+C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.PL.vendedor.menu_cliente.resources
+C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.PL.vendedor.Pasarela.resources

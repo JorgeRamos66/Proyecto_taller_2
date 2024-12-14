@@ -86,7 +86,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                     IdProducto = this.IdProducto,
                     NombreProducto = textBoxNombre.Text,
                     StockProducto = Convert.ToInt32(textBoxStock.Text),
-                    PrecioProducto = Convert.ToDecimal(textBoxPrecio.Text),
+                    PrecioProducto = Convert.ToDouble(textBoxPrecio.Text),
                     IdCategoria = Convert.ToInt32(((DataRowView)comboBoxCategoria.SelectedItem)["id_categoria"]),
                     DescripcionProducto = textBoxDescripcion.Text,
                     RutaImagen = textBoxRutaFoto.Text

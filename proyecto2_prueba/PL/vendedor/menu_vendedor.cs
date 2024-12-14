@@ -2,8 +2,8 @@
 using System.Windows.Forms;
 using BLL;
 using ML;
+using proyecto2_prueba.PL.vendedor;
 using proyecto2_prueba.Presentaciones.vendedor;
-using static proyecto2_prueba.Presentaciones.vendedor.menu_cliente;
 
 namespace proyecto2_prueba
 {

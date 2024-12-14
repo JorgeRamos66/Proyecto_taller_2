@@ -15,6 +15,16 @@ namespace proyecto2_prueba.PL.vendedor
         public bool VentaRealizada { get; private set; }
         public Cliente ClienteSeleccionado { get; private set; }
 
+        public menu_cliente()
+        {
+            InitializeComponent();
+            _clienteBLL = new ClienteBLL();
+            _carritoBLL = null;
+            _ventaBLL = new VentaBLL();
+            _esVentaDirecta = false;
+            ConfigurarFormulario();
+        }
+
         public menu_cliente(CarritoBLL carritoBLL = null)
         {
             InitializeComponent();

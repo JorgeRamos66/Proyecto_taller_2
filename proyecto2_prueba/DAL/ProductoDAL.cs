@@ -77,7 +77,7 @@ namespace DAL
                                 IdProducto = id,
                                 NombreProducto = reader["nombre_producto"].ToString(),
                                 StockProducto = Convert.ToInt32(reader["stock_producto"]),
-                                PrecioProducto = Convert.ToDecimal(reader["precio_producto"]),
+                                PrecioProducto = Convert.ToDouble(reader["precio_producto"]),
                                 IdCategoria = Convert.ToInt32(reader["id_categoria"]),
                                 DescripcionProducto = reader["descripcion_producto"].ToString(),
                                 RutaImagen = reader["ruta_imagen"].ToString(),

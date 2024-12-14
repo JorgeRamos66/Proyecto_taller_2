@@ -47,8 +47,8 @@ namespace DAL
                             {
                                 IdProducto = Convert.ToInt32(reader["id_producto"]),
                                 NombreProducto = reader["nombre_producto"].ToString(),
-                                Categoria = reader["nombre_categoria"].ToString(),
-                                Precio = Convert.ToDouble(reader["precio_producto"]),
+                                CategoriaProducto = reader["nombre_categoria"].ToString(),
+                                PrecioProducto = Convert.ToDouble(reader["precio_producto"]),
                                 StockDisponible = Convert.ToInt32(reader["stock_producto"])
                             });
                         }
@@ -86,8 +86,8 @@ namespace DAL
                             {
                                 IdProducto = Convert.ToInt32(reader["id_producto"]),
                                 NombreProducto = reader["nombre_producto"].ToString(),
-                                Categoria = reader["nombre_categoria"].ToString(),
-                                Precio = Convert.ToDouble(reader["precio_producto"]),
+                                CategoriaProducto = reader["nombre_categoria"].ToString(),
+                                PrecioProducto = Convert.ToDouble(reader["precio_producto"]),
                                 StockDisponible = Convert.ToInt32(reader["stock_producto"])
                             };
                         }

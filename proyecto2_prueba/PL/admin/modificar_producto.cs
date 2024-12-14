@@ -16,7 +16,7 @@ namespace proyecto2_prueba.Presentaciones.admin
         private string rutaImagen;
         private int idProducto;
 
-        public modificar_producto(int idProducto, string nombre, int stock, decimal precio, 
+        public modificar_producto(int idProducto, string nombre, int stock, double precio, 
                                 int idCategoria, string descripcion, string rutaImagen, 
                                 listado_productos_admin formularioListado)
         {
@@ -29,7 +29,7 @@ namespace proyecto2_prueba.Presentaciones.admin
             InicializarCampos(nombre, stock, precio, idCategoria, descripcion, rutaImagen);
         }
 
-        private void InicializarCampos(string nombre, int stock, decimal precio, int idCategoria, string descripcion, string rutaImagen)
+        private void InicializarCampos(string nombre, int stock, double precio, int idCategoria, string descripcion, string rutaImagen)
         {
             textBoxNombre.Text = nombre;
             textBoxStock.Text = stock.ToString();
@@ -121,7 +121,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                     IdProducto = this.idProducto,
                     NombreProducto = textBoxNombre.Text,
                     StockProducto = Convert.ToInt32(textBoxStock.Text),
-                    PrecioProducto = Convert.ToDecimal(textBoxPrecio.Text),
+                    PrecioProducto = Convert.ToDouble(textBoxPrecio.Text),
                     DescripcionProducto = textBoxDescripcion.Text,
                     IdCategoria = Convert.ToInt32(comboBoxCategoria.SelectedValue),
                     RutaImagen = textBoxRutaFoto.Text

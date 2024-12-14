@@ -184,7 +184,7 @@ namespace proyecto2_prueba.Presentaciones.admin
                         }
                         else
                         {
-                            e.Value = "Eliminar";
+                            e.Value = "Desactivar";
                             e.CellStyle.BackColor = Color.Red;
                             e.CellStyle.ForeColor = Color.White;
                         }

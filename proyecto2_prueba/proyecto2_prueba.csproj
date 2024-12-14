@@ -105,15 +105,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\BackupService.cs" />
+    <Compile Include="BLL\CategoriaBLL.cs" />
+    <Compile Include="BLL\NivelBLL.cs" />
     <Compile Include="BLL\PersonalBLL.cs" />
     <Compile Include="BLL\ProductoBLL.cs" />
     <Compile Include="BLL\RegistroPersonalBLL.cs" />
+    <Compile Include="DAL\CategoriaDAL.cs" />
+    <Compile Include="DAL\NivelDAL.cs" />
     <Compile Include="DAL\PersonalDAL.cs" />
     <Compile Include="DAL\ProductoDAL.cs" />
     <Compile Include="DAL\DatabaseService.cs" />
     <Compile Include="DAL\RegistroPersonalDAL.cs" />
     <Compile Include="DAL\UsuarioDAL.cs" />
     <Compile Include="Encriptador\PasswordHasher.cs" />
+    <Compile Include="ML\Categoria.cs" />
+    <Compile Include="ML\Nivel.cs" />
     <Compile Include="ML\Personal.cs" />
     <Compile Include="ML\Producto.cs" />
     <Compile Include="ML\UsuarioSesion.cs" />
@@ -160,12 +166,6 @@
     </Compile>
     <Compile Include="PL\admin\modificar_producto.Designer.cs">
       <DependentUpon>modificar_producto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PL\admin\nueva_categoria.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PL\admin\nueva_categoria.Designer.cs">
-      <DependentUpon>nueva_categoria.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\admin\registrar_personal.cs">
       <SubType>Form</SubType>
@@ -236,9 +236,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\admin\niveles_clientes.resx">
       <DependentUpon>niveles_clientes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PL\admin\nueva_categoria.resx">
-      <DependentUpon>nueva_categoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\admin\personal.resx">
       <DependentUpon>personal.cs</DependentUpon>

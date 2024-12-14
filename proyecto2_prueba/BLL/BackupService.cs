@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using DAL;
+using System.IO;
 
 namespace BLL
 {
@@ -15,25 +16,41 @@ namespace BLL
 
         public bool EjecutarBackup()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            try
             {
-                Filter = "Archivo de Backup (*.bak)|*.bak",
-                FileName = $"backup_{DateTime.Now:yyyyMMdd_HHmmss}.bak"
-            };
+                //  
+                string backupFolder = Path.Combine(@"C:\", "ProyectoTaller2Backups");
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                bool resultado = _databaseService.RealizarBackup(saveFileDialog.FileName);
+                // Crear el directorio si no existe
+                if (!Directory.Exists(backupFolder))
+                {
+                    Directory.CreateDirectory(backupFolder);
+                }
+
+                // Generar nombre del archivo con fecha y hora
+                string fileName = $"backup_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+                string rutaCompleta = Path.Combine(backupFolder, fileName);
+
+                bool resultado = _databaseService.RealizarBackup(rutaCompleta);
 
                 if (resultado)
                 {
-                    MessageBox.Show($"Backup realizado con éxito. El archivo se guardó en: {saveFileDialog.FileName}");
+                    MessageBox.Show($"Backup realizado con éxito.\nArchivo guardado en: {rutaCompleta}",
+                                "Éxito",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
                 }
 
                 return resultado;
             }
-
-            return false;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al realizar el backup: {ex.Message}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         public bool EjecutarRestauracion()

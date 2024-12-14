@@ -24,7 +24,6 @@ C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyect
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.admin.categorias_productos.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.admin.listado_productos_admin.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.admin.modificar_producto.resources
-C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Presentaciones.admin.nueva_categoria.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.inicio_sesion.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.menu_admin.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.Properties.Resources.resources

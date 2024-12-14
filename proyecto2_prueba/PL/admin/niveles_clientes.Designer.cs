@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel2 = new System.Windows.Forms.Panel();
             this.numericUpDownDescuento = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
@@ -102,13 +102,13 @@
             // 
             // BNuevoNivel
             // 
-            this.BNuevoNivel.BackColor = System.Drawing.Color.SteelBlue;
+            this.BNuevoNivel.BackColor = System.Drawing.Color.LightSkyBlue;
             this.BNuevoNivel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BNuevoNivel.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BNuevoNivel.Image = global::proyecto2_prueba.Properties.Resources.niveles_32px;
-            this.BNuevoNivel.Location = new System.Drawing.Point(392, 20);
+            this.BNuevoNivel.Location = new System.Drawing.Point(374, 20);
             this.BNuevoNivel.Name = "BNuevoNivel";
-            this.BNuevoNivel.Size = new System.Drawing.Size(121, 40);
+            this.BNuevoNivel.Size = new System.Drawing.Size(139, 40);
             this.BNuevoNivel.TabIndex = 5;
             this.BNuevoNivel.Text = "AGREGAR";
             this.BNuevoNivel.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -190,13 +190,14 @@
             this.datagrid_niveles.ReadOnly = true;
             this.datagrid_niveles.Size = new System.Drawing.Size(491, 291);
             this.datagrid_niveles.TabIndex = 9;
-            this.datagrid_niveles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_niveles_CellContentClick_1);
+            this.datagrid_niveles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_niveles_CellClick);
             // 
             // Cid
             // 
             this.Cid.HeaderText = "id";
             this.Cid.Name = "Cid";
             this.Cid.ReadOnly = true;
+            this.Cid.Visible = false;
             this.Cid.Width = 50;
             // 
             // CNombreNivel
@@ -215,12 +216,12 @@
             // 
             // CBaja
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Red;
-            this.CBaja.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Red;
+            this.CBaja.DefaultCellStyle = dataGridViewCellStyle3;
             this.CBaja.FillWeight = 50F;
             this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CBaja.HeaderText = "Baja";
+            this.CBaja.HeaderText = "Estado";
             this.CBaja.Name = "CBaja";
             this.CBaja.ReadOnly = true;
             this.CBaja.Text = "BAJA";

@@ -32,10 +32,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.datagrid_categorias = new System.Windows.Forms.DataGridView();
-            this.Cid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CNombreCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CBaja = new System.Windows.Forms.DataGridViewButtonColumn();
             this.BNuevaCategoria = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBoxDescripcionCategoria = new System.Windows.Forms.TextBox();
@@ -44,6 +40,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.bSalir = new System.Windows.Forms.Button();
             this.textBoxIDcategoria = new System.Windows.Forms.TextBox();
+            this.Cid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CNombreCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CBaja = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_categorias)).BeginInit();
             this.panel2.SuspendLayout();
@@ -90,40 +90,7 @@
             this.datagrid_categorias.ReadOnly = true;
             this.datagrid_categorias.Size = new System.Drawing.Size(604, 298);
             this.datagrid_categorias.TabIndex = 4;
-            this.datagrid_categorias.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_categorias_CellContentClick);
-            // 
-            // Cid
-            // 
-            this.Cid.HeaderText = "id";
-            this.Cid.Name = "Cid";
-            this.Cid.ReadOnly = true;
-            this.Cid.Width = 50;
-            // 
-            // CNombreCategoria
-            // 
-            this.CNombreCategoria.HeaderText = "Nombre";
-            this.CNombreCategoria.Name = "CNombreCategoria";
-            this.CNombreCategoria.ReadOnly = true;
-            this.CNombreCategoria.Width = 200;
-            // 
-            // CDescripcion
-            // 
-            this.CDescripcion.HeaderText = "Descripcion";
-            this.CDescripcion.Name = "CDescripcion";
-            this.CDescripcion.ReadOnly = true;
-            this.CDescripcion.Width = 300;
-            // 
-            // CBaja
-            // 
-            this.CBaja.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Red;
-            this.CBaja.DefaultCellStyle = dataGridViewCellStyle1;
-            this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CBaja.HeaderText = "Baja";
-            this.CBaja.Name = "CBaja";
-            this.CBaja.ReadOnly = true;
-            this.CBaja.Text = "BAJA";
+            this.datagrid_categorias.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_categorias_CellClick);
             // 
             // BNuevaCategoria
             // 
@@ -192,7 +159,6 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Nombre de Categoria";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // bSalir
             // 
@@ -217,6 +183,38 @@
             this.textBoxIDcategoria.Size = new System.Drawing.Size(314, 20);
             this.textBoxIDcategoria.TabIndex = 10;
             this.textBoxIDcategoria.Visible = false;
+            // 
+            // Cid
+            // 
+            this.Cid.HeaderText = "id";
+            this.Cid.Name = "Cid";
+            this.Cid.ReadOnly = true;
+            this.Cid.Visible = false;
+            this.Cid.Width = 50;
+            // 
+            // CNombreCategoria
+            // 
+            this.CNombreCategoria.HeaderText = "Nombre";
+            this.CNombreCategoria.Name = "CNombreCategoria";
+            this.CNombreCategoria.ReadOnly = true;
+            // 
+            // CDescripcion
+            // 
+            this.CDescripcion.HeaderText = "Descripcion";
+            this.CDescripcion.Name = "CDescripcion";
+            this.CDescripcion.ReadOnly = true;
+            // 
+            // CBaja
+            // 
+            this.CBaja.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Red;
+            this.CBaja.DefaultCellStyle = dataGridViewCellStyle1;
+            this.CBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CBaja.HeaderText = "Baja";
+            this.CBaja.Name = "CBaja";
+            this.CBaja.ReadOnly = true;
+            this.CBaja.Text = "BAJA";
             // 
             // categorias_productos
             // 
@@ -257,10 +255,10 @@
         private System.Windows.Forms.TextBox textBoxDescripcionCategoria;
         private System.Windows.Forms.Button bSalir;
         public System.Windows.Forms.DataGridView datagrid_categorias;
+        private System.Windows.Forms.TextBox textBoxIDcategoria;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cid;
         private System.Windows.Forms.DataGridViewTextBoxColumn CNombreCategoria;
         private System.Windows.Forms.DataGridViewTextBoxColumn CDescripcion;
         private System.Windows.Forms.DataGridViewButtonColumn CBaja;
-        private System.Windows.Forms.TextBox textBoxIDcategoria;
     }
 }

@@ -28,6 +28,17 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             ConfigurarFormulario();
         }
 
+        public void EstablecerCliente(Cliente cliente)
+        {
+            _clienteSeleccionado = cliente;
+            if (_clienteSeleccionado != null)
+            {
+                _carritoBLL.AplicarDescuento(_clienteSeleccionado.NivelDescuento);
+                ActualizarInformacionCliente();
+                ActualizarCarrito();
+            }
+        }
+
         private bool ConfirmarAccion(string mensaje)
         {
             return MessageBox.Show(mensaje, "Confirmar",
@@ -356,20 +367,20 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
             if (_clienteSeleccionado == null)
             {
-                if (MessageBox.Show("No hay cliente seleccionado. ¿Desea seleccionar un cliente ahora?",
-                    "Cliente requerido", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                var result = MessageBox.Show("No hay cliente seleccionado. ¿Desea seleccionar un cliente ahora?",
+                    "Cliente requerido", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    using (var menuClienteForm = new menu_cliente(_carritoBLL))
-                    {
-                        if (menuClienteForm.ShowDialog() == DialogResult.OK)
-                        {
-                            _clienteSeleccionado = menuClienteForm.ClienteSeleccionado;
-                            ActualizarInformacionCliente();
-                        }
-                    }
+                    btnSeleccionarCliente_Click(sender, e); // Reutilizar el método existente
+                    if (_clienteSeleccionado == null) return; // Si no se seleccionó cliente, salir
                 }
-                return;
+                else
+                {
+                    return;
+                }
             }
+
 
             using (var pasarela = new Pasarela(_carritoBLL.ObtenerTotal()))
             {
@@ -409,6 +420,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 {
                     _clienteSeleccionado = menuClienteForm.ClienteSeleccionado;
                     ActualizarInformacionCliente();
+                    ActualizarCarrito();
                 }
             }
         }
@@ -437,5 +449,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             ConfigurarColumnas(false);
             ActualizarCarrito();
         }
+
     }
 }

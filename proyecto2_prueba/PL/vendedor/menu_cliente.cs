@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using BLL;
 using ML;
+using proyecto2_prueba.Presentaciones.vendedor;
 
 namespace proyecto2_prueba.PL.vendedor
 {
@@ -12,6 +13,9 @@ namespace proyecto2_prueba.PL.vendedor
         private readonly CarritoBLL _carritoBLL;
         private readonly VentaBLL _ventaBLL;
         private readonly bool _esVentaDirecta;
+        private const string TEXTO_BUSQUEDA_DEFAULT = "Ingrese Nombre, Apellido o DNI";
+        private bool _ignorarEventoTextChanged = false;
+
         public bool VentaRealizada { get; private set; }
         public Cliente ClienteSeleccionado { get; private set; }
 
@@ -37,17 +41,57 @@ namespace proyecto2_prueba.PL.vendedor
 
         private void ConfigurarFormulario()
         {
-            // Asumiendo que tienes estos controles en el designer
-            if (BConfirmar != null)
-                BConfirmar.Visible = _esVentaDirecta;
+            ConfigurarDataGridView();
 
             textBoxIdAuxiliar.Text = "0";
+
+            // Configuración inicial del TextBox de búsqueda
+            txtBuscar.Text = TEXTO_BUSQUEDA_DEFAULT;
+            txtBuscar.ForeColor = Color.Gray;
+
             this.Load += menu_cliente_Load;
             this.txtBuscar.TextChanged += TxtBuscar_TextChanged;
             this.txtBuscar.Enter += TxtBuscar_Enter;
             this.txtBuscar.Leave += TxtBuscar_Leave;
             this.BCancelar.Click += BSalir_Click;
-            this.BConfirmar.Click += BConfirmar_Click;
+            this.dgvClientes.CellFormatting += DgvClientes_CellFormatting;
+
+            txtNombre.KeyPress += SoloLetras_KeyPress;
+            txtApellido.KeyPress += SoloLetras_KeyPress;
+            txtProvincia.KeyPress += SoloLetras_KeyPress;
+            txtLocalidad.KeyPress += SoloLetras_KeyPress;
+            txtDni.KeyPress += SoloNumeros_KeyPress;
+
+            // Validar fecha de nacimiento
+            dtpFechaNacimiento.ValueChanged += DtpFechaNacimiento_ValueChanged;
+            dtpFechaNacimiento.MaxDate = DateTime.Today;
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            dgvClientes.Columns.Clear();
+            dgvClientes.Columns.AddRange(
+                new DataGridViewTextBoxColumn { Name = "Id", HeaderText = "ID", Visible = false },
+                new DataGridViewTextBoxColumn { Name = "Nombre", HeaderText = "Nombre", Width = 100 },
+                new DataGridViewTextBoxColumn { Name = "Apellido", HeaderText = "Apellido", Width = 100 },
+                new DataGridViewTextBoxColumn { Name = "Dni", HeaderText = "DNI", Width = 100 },
+                new DataGridViewTextBoxColumn { Name = "Nivel", HeaderText = "Nivel", Width = 50 },
+                new DataGridViewTextBoxColumn { Name = "Descuento", HeaderText = "Descuento", Width = 80 },
+                new DataGridViewTextBoxColumn { Name = "Seleccionar", HeaderText = "Acción", Width = 80 }
+            );
+        }
+
+        private void DgvClientes_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == dgvClientes.Columns["Seleccionar"].Index)
+            {
+                e.Value = "Seleccionar";
+                e.CellStyle.ForeColor = Color.White;
+                e.CellStyle.BackColor = Color.FromArgb(0, 122, 204);
+                e.CellStyle.SelectionForeColor = Color.White;
+                e.CellStyle.SelectionBackColor = Color.FromArgb(0, 102, 204);
+                e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
         }
 
         private void menu_cliente_Load(object sender, EventArgs e)
@@ -64,7 +108,14 @@ namespace proyecto2_prueba.PL.vendedor
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            MostrarClientes(txtBuscar.Text);
+            if (_ignorarEventoTextChanged) return;
+
+            string filtro = txtBuscar.Text;
+            if (filtro == TEXTO_BUSQUEDA_DEFAULT)
+            {
+                filtro = string.Empty;
+            }
+            MostrarClientes(filtro);
         }
 
         private void MostrarClientes(string filtro)
@@ -81,6 +132,8 @@ namespace proyecto2_prueba.PL.vendedor
                         cliente.Nombre,
                         cliente.Apellido,
                         cliente.Dni,
+                        cliente.NombreNivel,
+                        $"{cliente.NivelDescuento}%",
                         "Seleccionar"
                     );
                 }
@@ -98,17 +151,26 @@ namespace proyecto2_prueba.PL.vendedor
                 int idCliente = Convert.ToInt32(dgvClientes.Rows[e.RowIndex].Cells["Id"].Value);
                 CargarDatosCliente(idCliente);
 
-                // Actualizar ClienteSeleccionado
                 ClienteSeleccionado = _clienteBLL.ObtenerClientePorId(idCliente);
 
-                if (_esVentaDirecta)
+                if (_carritoBLL != null)
                 {
+                    // Si venimos del carrito, aplicamos el descuento y volvemos
+                    _carritoBLL.AplicarDescuento(ClienteSeleccionado.NivelDescuento);
                     this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    // Si no hay carrito, creamos uno nuevo y abrimos la vista del carrito
+                    var nuevoCarrito = new carrito();
+                    nuevoCarrito.EstablecerCliente(ClienteSeleccionado);
+                    this.Hide();
+                    nuevoCarrito.ShowDialog();
                     this.Close();
                 }
             }
         }
-
         private void CargarDatosCliente(int idCliente)
         {
             try
@@ -131,36 +193,6 @@ namespace proyecto2_prueba.PL.vendedor
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar datos del cliente: {ex.Message}");
-            }
-        }
-
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
-            if (!ValidarCampos()) return;
-
-            try
-            {
-                var cliente = ObtenerClienteDesdeFormulario();
-                _clienteBLL.GuardarCliente(cliente);
-
-                if (_esVentaDirecta)
-                {
-                    int idVenta = _ventaBLL.ProcesarVenta(cliente.Id, 1); // 1 = método de pago predeterminado
-                    var formFactura = new ImpresionFactura(cliente, _carritoBLL.ObtenerItems(), idVenta);
-                    formFactura.ShowDialog();
-                    VentaRealizada = true;
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Cliente guardado exitosamente.");
-                    LimpiarCampos();
-                    MostrarClientes(string.Empty);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
@@ -218,11 +250,21 @@ namespace proyecto2_prueba.PL.vendedor
                 Direccion = txtDomicilio.Text,
                 Localidad = txtLocalidad.Text,
                 Provincia = txtProvincia.Text,
-                FechaNacimiento = dtpFechaNacimiento.Value
+                FechaNacimiento = dtpFechaNacimiento.Value,
+                IdNivel = 1  // Nivel por defecto para nuevos clientes
             };
         }
 
         private void LimpiarCampos()
+        {
+            _ignorarEventoTextChanged = true;
+            txtBuscar.Text = TEXTO_BUSQUEDA_DEFAULT;
+            txtBuscar.ForeColor = Color.Gray;
+            _ignorarEventoTextChanged = false;
+            MostrarClientes(string.Empty); // Mostrar todos los clientes
+        }
+
+        private void LimpiarFormularioRegistro()
         {
             textBoxIdAuxiliar.Text = "0";
             txtNombre.Text = string.Empty;
@@ -232,7 +274,7 @@ namespace proyecto2_prueba.PL.vendedor
             txtDomicilio.Text = string.Empty;
             txtLocalidad.Text = string.Empty;
             txtProvincia.Text = string.Empty;
-            dtpFechaNacimiento.Value = DateTime.Now;
+            dtpFechaNacimiento.Value = DateTime.Today;
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -247,10 +289,12 @@ namespace proyecto2_prueba.PL.vendedor
 
         private void TxtBuscar_Enter(object sender, EventArgs e)
         {
-            if (txtBuscar.Text == "Buscar...")
+            if (txtBuscar.Text == TEXTO_BUSQUEDA_DEFAULT)
             {
+                _ignorarEventoTextChanged = true;
                 txtBuscar.Text = "";
                 txtBuscar.ForeColor = Color.Black;
+                _ignorarEventoTextChanged = false;
             }
         }
 
@@ -258,8 +302,11 @@ namespace proyecto2_prueba.PL.vendedor
         {
             if (string.IsNullOrWhiteSpace(txtBuscar.Text))
             {
-                txtBuscar.Text = "Buscar...";
+                _ignorarEventoTextChanged = true;
+                txtBuscar.Text = TEXTO_BUSQUEDA_DEFAULT;
                 txtBuscar.ForeColor = Color.Gray;
+                _ignorarEventoTextChanged = false;
+                MostrarClientes(string.Empty); // Mostrar todos los clientes
             }
         }
 
@@ -272,7 +319,7 @@ namespace proyecto2_prueba.PL.vendedor
             }
         }
 
-        private void BConfirmar_Click(object sender, EventArgs e)
+        private void BRegistrarCliente_Click(object sender, EventArgs e)
         {
             if (!ValidarCampos()) return;
 
@@ -280,23 +327,29 @@ namespace proyecto2_prueba.PL.vendedor
             {
                 var cliente = ObtenerClienteDesdeFormulario();
                 _clienteBLL.GuardarCliente(cliente);
-                ClienteSeleccionado = cliente; // Actualizar ClienteSeleccionado
 
-                if (_esVentaDirecta)
+                // Obtener el cliente recién guardado con todos sus datos
+                ClienteSeleccionado = _clienteBLL.ObtenerClientePorDni(cliente.Dni);
+
+                if (_carritoBLL != null)
                 {
+                    // Si venimos del carrito, aplicamos el descuento y volvemos
+                    _carritoBLL.AplicarDescuento(ClienteSeleccionado.NivelDescuento);
+                    MessageBox.Show("Cliente registrado exitosamente.");
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Cliente guardado exitosamente.");
-                    LimpiarCampos();
-                    MostrarClientes(string.Empty);
+                    // Si estamos en la vista de clientes, actualizamos el formulario
+                    MessageBox.Show("Cliente registrado exitosamente.");
+                    LimpiarFormularioRegistro();
+                    MostrarClientes(string.Empty); // Actualizar el grid
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error al registrar cliente: {ex.Message}");
             }
         }
 
@@ -308,6 +361,48 @@ namespace proyecto2_prueba.PL.vendedor
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir letras, espacios y teclas de control (como backspace)
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true; // Cancelar el carácter
+                                  // Opcional: Mostrar un tooltip o mensaje
+                ToolTip toolTip = new ToolTip();
+                toolTip.Show("Solo se permiten letras y espacios", (TextBox)sender, 0, -20, 1000);
+            }
+        }
+
+        private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                ToolTip toolTip = new ToolTip();
+                toolTip.Show("Solo se permiten números", (TextBox)sender, 0, -20, 1000);
+            }
+            else if (sender is TextBox txtDni && char.IsDigit(e.KeyChar))
+            {
+                // Verificar longitud máxima del DNI
+                if (txtDni.Text.Length >= 8 && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Show("El DNI no puede tener más de 8 dígitos", txtDni, 0, -20, 1000);
+                }
+            }
+        }
+
+        private void DtpFechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtpFechaNacimiento.Value > DateTime.Today)
+            {
+                MessageBox.Show("No se puede seleccionar una fecha futura.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                dtpFechaNacimiento.Value = DateTime.Today;
+            }
         }
     }
 }

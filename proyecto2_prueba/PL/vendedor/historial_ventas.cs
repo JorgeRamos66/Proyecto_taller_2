@@ -57,6 +57,17 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 }
             }
         }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void DateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             // Aquí debes obtener el ID del usuario logueado

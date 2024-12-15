@@ -23,11 +23,17 @@ namespace proyecto2_prueba.PL.vendedor
             this.panelSuperior = new System.Windows.Forms.Panel();
             this.lblBuscador = new System.Windows.Forms.Label();
             this.dgvClientes = new System.Windows.Forms.DataGridView();
+            this.cIdCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cSeleccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.panelInferior = new System.Windows.Forms.Panel();
+            this.textBoxIdAuxiliar = new System.Windows.Forms.TextBox();
             this.BCancelar = new System.Windows.Forms.Button();
-            this.BConfirmar = new System.Windows.Forms.Button();
+            this.BRegistrarCliente = new System.Windows.Forms.Button();
             this.LProvincia = new System.Windows.Forms.Label();
             this.LFechaNacimiento = new System.Windows.Forms.Label();
             this.LDNI = new System.Windows.Forms.Label();
@@ -45,12 +51,6 @@ namespace proyecto2_prueba.PL.vendedor
             this.txtLocalidad = new System.Windows.Forms.TextBox();
             this.txtDomicilio = new System.Windows.Forms.TextBox();
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
-            this.cIdCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cSeleccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.textBoxIdAuxiliar = new System.Windows.Forms.TextBox();
             this.panelSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).BeginInit();
             this.panelInferior.SuspendLayout();
@@ -98,12 +98,43 @@ namespace proyecto2_prueba.PL.vendedor
             this.cApellido,
             this.cDNI,
             this.cSeleccion});
-            this.dgvClientes.Location = new System.Drawing.Point(132, 78);
+            this.dgvClientes.Location = new System.Drawing.Point(84, 78);
             this.dgvClientes.Name = "dgvClientes";
             this.dgvClientes.ReadOnly = true;
-            this.dgvClientes.Size = new System.Drawing.Size(522, 121);
+            this.dgvClientes.Size = new System.Drawing.Size(618, 121);
             this.dgvClientes.TabIndex = 2;
             this.dgvClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvClientes_CellClick);
+            // 
+            // cIdCliente
+            // 
+            this.cIdCliente.HeaderText = "IdCliente";
+            this.cIdCliente.Name = "cIdCliente";
+            this.cIdCliente.ReadOnly = true;
+            this.cIdCliente.Visible = false;
+            // 
+            // cNombre
+            // 
+            this.cNombre.HeaderText = "Nombre";
+            this.cNombre.Name = "cNombre";
+            this.cNombre.ReadOnly = true;
+            // 
+            // cApellido
+            // 
+            this.cApellido.HeaderText = "Apellido";
+            this.cApellido.Name = "cApellido";
+            this.cApellido.ReadOnly = true;
+            // 
+            // cDNI
+            // 
+            this.cDNI.HeaderText = "DNI";
+            this.cDNI.Name = "cDNI";
+            this.cDNI.ReadOnly = true;
+            // 
+            // cSeleccion
+            // 
+            this.cSeleccion.HeaderText = "Seleccion";
+            this.cSeleccion.Name = "cSeleccion";
+            this.cSeleccion.ReadOnly = true;
             // 
             // btnLimpiar
             // 
@@ -121,7 +152,7 @@ namespace proyecto2_prueba.PL.vendedor
             // txtBuscar
             // 
             this.txtBuscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
+            this.txtBuscar.ForeColor = System.Drawing.Color.Black;
             this.txtBuscar.Location = new System.Drawing.Point(220, 52);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(300, 20);
@@ -135,7 +166,7 @@ namespace proyecto2_prueba.PL.vendedor
             this.panelInferior.BackColor = System.Drawing.Color.Tan;
             this.panelInferior.Controls.Add(this.textBoxIdAuxiliar);
             this.panelInferior.Controls.Add(this.BCancelar);
-            this.panelInferior.Controls.Add(this.BConfirmar);
+            this.panelInferior.Controls.Add(this.BRegistrarCliente);
             this.panelInferior.Controls.Add(this.LProvincia);
             this.panelInferior.Controls.Add(this.LFechaNacimiento);
             this.panelInferior.Controls.Add(this.LDNI);
@@ -158,6 +189,14 @@ namespace proyecto2_prueba.PL.vendedor
             this.panelInferior.Size = new System.Drawing.Size(776, 275);
             this.panelInferior.TabIndex = 1;
             // 
+            // textBoxIdAuxiliar
+            // 
+            this.textBoxIdAuxiliar.Location = new System.Drawing.Point(593, 17);
+            this.textBoxIdAuxiliar.Name = "textBoxIdAuxiliar";
+            this.textBoxIdAuxiliar.Size = new System.Drawing.Size(166, 20);
+            this.textBoxIdAuxiliar.TabIndex = 37;
+            this.textBoxIdAuxiliar.Visible = false;
+            // 
             // BCancelar
             // 
             this.BCancelar.BackColor = System.Drawing.Color.Tomato;
@@ -175,26 +214,26 @@ namespace proyecto2_prueba.PL.vendedor
             this.BCancelar.UseVisualStyleBackColor = false;
             this.BCancelar.Click += new System.EventHandler(this.BSalir_Click);
             // 
-            // BConfirmar
+            // BRegistrarCliente
             // 
-            this.BConfirmar.BackColor = System.Drawing.Color.SteelBlue;
-            this.BConfirmar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BConfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BConfirmar.Image = global::proyecto2_prueba.Properties.Resources.shopping_cart__1_;
-            this.BConfirmar.Location = new System.Drawing.Point(215, 207);
-            this.BConfirmar.Name = "BConfirmar";
-            this.BConfirmar.Size = new System.Drawing.Size(140, 48);
-            this.BConfirmar.TabIndex = 35;
-            this.BConfirmar.Text = "CONFIRMAR CLIENTE";
-            this.BConfirmar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BConfirmar.UseVisualStyleBackColor = false;
-            this.BConfirmar.Click += new System.EventHandler(this.BConfirmar_Click);
+            this.BRegistrarCliente.BackColor = System.Drawing.Color.SteelBlue;
+            this.BRegistrarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BRegistrarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BRegistrarCliente.Image = global::proyecto2_prueba.Properties.Resources.people_11869303;
+            this.BRegistrarCliente.Location = new System.Drawing.Point(215, 207);
+            this.BRegistrarCliente.Name = "BRegistrarCliente";
+            this.BRegistrarCliente.Size = new System.Drawing.Size(140, 48);
+            this.BRegistrarCliente.TabIndex = 35;
+            this.BRegistrarCliente.Text = "REGISTRAR";
+            this.BRegistrarCliente.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BRegistrarCliente.UseVisualStyleBackColor = false;
+            this.BRegistrarCliente.Click += new System.EventHandler(this.BRegistrarCliente_Click);
             // 
             // LProvincia
             // 
             this.LProvincia.AutoSize = true;
             this.LProvincia.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LProvincia.Location = new System.Drawing.Point(377, 134);
+            this.LProvincia.Location = new System.Drawing.Point(377, 96);
             this.LProvincia.Name = "LProvincia";
             this.LProvincia.Size = new System.Drawing.Size(64, 16);
             this.LProvincia.TabIndex = 34;
@@ -214,7 +253,7 @@ namespace proyecto2_prueba.PL.vendedor
             // 
             this.LDNI.AutoSize = true;
             this.LDNI.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDNI.Location = new System.Drawing.Point(152, 169);
+            this.LDNI.Location = new System.Drawing.Point(152, 134);
             this.LDNI.Name = "LDNI";
             this.LDNI.Size = new System.Drawing.Size(31, 16);
             this.LDNI.TabIndex = 32;
@@ -234,7 +273,7 @@ namespace proyecto2_prueba.PL.vendedor
             // 
             this.LLocalidad.AutoSize = true;
             this.LLocalidad.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LLocalidad.Location = new System.Drawing.Point(388, 98);
+            this.LLocalidad.Location = new System.Drawing.Point(388, 134);
             this.LLocalidad.Name = "LLocalidad";
             this.LLocalidad.Size = new System.Drawing.Size(50, 16);
             this.LLocalidad.TabIndex = 30;
@@ -244,7 +283,7 @@ namespace proyecto2_prueba.PL.vendedor
             // 
             this.LEmail.AutoSize = true;
             this.LEmail.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LEmail.Location = new System.Drawing.Point(144, 132);
+            this.LEmail.Location = new System.Drawing.Point(144, 172);
             this.LEmail.Name = "LEmail";
             this.LEmail.Size = new System.Drawing.Size(41, 16);
             this.LEmail.TabIndex = 29;
@@ -296,28 +335,28 @@ namespace proyecto2_prueba.PL.vendedor
             // 
             // txtDni
             // 
-            this.txtDni.Location = new System.Drawing.Point(189, 167);
+            this.txtDni.Location = new System.Drawing.Point(189, 132);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(166, 20);
             this.txtDni.TabIndex = 2;
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(189, 128);
+            this.txtEmail.Location = new System.Drawing.Point(189, 168);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(166, 20);
             this.txtEmail.TabIndex = 3;
             // 
             // txtProvincia
             // 
-            this.txtProvincia.Location = new System.Drawing.Point(444, 132);
+            this.txtProvincia.Location = new System.Drawing.Point(444, 94);
             this.txtProvincia.Name = "txtProvincia";
             this.txtProvincia.Size = new System.Drawing.Size(166, 20);
             this.txtProvincia.TabIndex = 4;
             // 
             // txtLocalidad
             // 
-            this.txtLocalidad.Location = new System.Drawing.Point(444, 96);
+            this.txtLocalidad.Location = new System.Drawing.Point(444, 132);
             this.txtLocalidad.Name = "txtLocalidad";
             this.txtLocalidad.Size = new System.Drawing.Size(166, 20);
             this.txtLocalidad.TabIndex = 5;
@@ -336,45 +375,6 @@ namespace proyecto2_prueba.PL.vendedor
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(98, 20);
             this.dtpFechaNacimiento.TabIndex = 7;
-            // 
-            // cIdCliente
-            // 
-            this.cIdCliente.HeaderText = "IdCliente";
-            this.cIdCliente.Name = "cIdCliente";
-            this.cIdCliente.ReadOnly = true;
-            this.cIdCliente.Visible = false;
-            // 
-            // cNombre
-            // 
-            this.cNombre.HeaderText = "Nombre";
-            this.cNombre.Name = "cNombre";
-            this.cNombre.ReadOnly = true;
-            // 
-            // cApellido
-            // 
-            this.cApellido.HeaderText = "Apellido";
-            this.cApellido.Name = "cApellido";
-            this.cApellido.ReadOnly = true;
-            // 
-            // cDNI
-            // 
-            this.cDNI.HeaderText = "DNI";
-            this.cDNI.Name = "cDNI";
-            this.cDNI.ReadOnly = true;
-            // 
-            // cSeleccion
-            // 
-            this.cSeleccion.HeaderText = "Seleccion";
-            this.cSeleccion.Name = "cSeleccion";
-            this.cSeleccion.ReadOnly = true;
-            // 
-            // textBoxIdAuxiliar
-            // 
-            this.textBoxIdAuxiliar.Location = new System.Drawing.Point(593, 17);
-            this.textBoxIdAuxiliar.Name = "textBoxIdAuxiliar";
-            this.textBoxIdAuxiliar.Size = new System.Drawing.Size(166, 20);
-            this.textBoxIdAuxiliar.TabIndex = 37;
-            this.textBoxIdAuxiliar.Visible = false;
             // 
             // menu_cliente
             // 
@@ -421,7 +421,7 @@ namespace proyecto2_prueba.PL.vendedor
         private System.Windows.Forms.Label LApellido;
         private System.Windows.Forms.Label LNombre;
         private System.Windows.Forms.Button BCancelar;
-        private System.Windows.Forms.Button BConfirmar;
+        private System.Windows.Forms.Button BRegistrarCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn cIdCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn cNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn cApellido;

@@ -121,7 +121,10 @@ namespace DAL
                                 Direccion = reader["direccion_persona"].ToString(),
                                 Localidad = reader["nombre_localidad"].ToString(),
                                 Provincia = reader["nombre_provincia"].ToString(),
-                                FechaNacimiento = (DateTime)reader["fecha_nacimiento"]
+                                FechaNacimiento = (DateTime)reader["fecha_nacimiento"],
+                                IdNivel = (int)reader["id_nivel"],
+                                NivelDescuento = (int)reader["descuento"],
+                                NombreNivel = reader["nombre_nivel"].ToString()
                             });
                         }
                     }

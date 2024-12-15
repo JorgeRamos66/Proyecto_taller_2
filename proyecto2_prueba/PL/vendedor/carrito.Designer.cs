@@ -32,8 +32,8 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.BBorrar = new System.Windows.Forms.Button();
@@ -55,6 +55,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.bConfirmarVenta = new System.Windows.Forms.Button();
             this.BLimpiarCarrito = new System.Windows.Forms.Button();
             this.lblTotal = new System.Windows.Forms.Label();
+            this.btnSeleccionarCliente = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_carrito)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.proyecto_Taller_2DataSet)).BeginInit();
@@ -148,10 +149,10 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // 
             // operacionAgregar
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            this.operacionAgregar.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.operacionAgregar.DefaultCellStyle = dataGridViewCellStyle1;
             this.operacionAgregar.HeaderText = "Operacion";
             this.operacionAgregar.Name = "operacionAgregar";
             this.operacionAgregar.ToolTipText = "Agregar";
@@ -159,10 +160,10 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // 
             // operacionQuitar
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Red;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            this.operacionQuitar.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            this.operacionQuitar.DefaultCellStyle = dataGridViewCellStyle2;
             this.operacionQuitar.HeaderText = "Operacion";
             this.operacionQuitar.Name = "operacionQuitar";
             this.operacionQuitar.ToolTipText = "Quitar";
@@ -233,12 +234,26 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.lblTotal.Size = new System.Drawing.Size(0, 20);
             this.lblTotal.TabIndex = 0;
             // 
+            // btnSeleccionarCliente
+            // 
+            this.btnSeleccionarCliente.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnSeleccionarCliente.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSeleccionarCliente.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnSeleccionarCliente.Location = new System.Drawing.Point(72, 55);
+            this.btnSeleccionarCliente.Name = "btnSeleccionarCliente";
+            this.btnSeleccionarCliente.Size = new System.Drawing.Size(113, 45);
+            this.btnSeleccionarCliente.TabIndex = 15;
+            this.btnSeleccionarCliente.Text = "Seleccionar Cliente";
+            this.btnSeleccionarCliente.UseVisualStyleBackColor = false;
+            this.btnSeleccionarCliente.Click += new System.EventHandler(this.btnSeleccionarCliente_Click);
+            // 
             // carrito
             // 
             this.AcceptButton = this.bConfirmarVenta;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1125, 546);
+            this.Controls.Add(this.btnSeleccionarCliente);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.BLimpiarCarrito);
             this.Controls.Add(this.bConfirmarVenta);
@@ -286,5 +301,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         private DataGridViewTextBoxColumn operacionAgregar;
         private DataGridViewTextBoxColumn operacionQuitar;
         private DataGridViewTextBoxColumn CIdProducto;
+        private Button btnSeleccionarCliente;
     }
 }

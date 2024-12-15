@@ -134,6 +134,7 @@
     <Compile Include="ML\UsuarioSesion.cs" />
     <Compile Include="ML\UsuarioEntidad.cs" />
     <Compile Include="BLL\UsuarioBLL.cs" />
+    <Compile Include="ML\ValidationException.cs" />
     <Compile Include="ML\Venta.cs" />
     <Compile Include="PL\admin\alta_producto.cs">
       <SubType>Form</SubType>

@@ -53,7 +53,6 @@ namespace proyecto2_prueba.PL.vendedor
             this.txtBuscar.TextChanged += TxtBuscar_TextChanged;
             this.txtBuscar.Enter += TxtBuscar_Enter;
             this.txtBuscar.Leave += TxtBuscar_Leave;
-            this.BCancelar.Click += BSalir_Click;
             this.dgvClientes.CellFormatting += DgvClientes_CellFormatting;
 
             txtNombre.KeyPress += SoloLetras_KeyPress;

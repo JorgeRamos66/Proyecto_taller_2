@@ -382,7 +382,10 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             }
 
 
-            using (var pasarela = new Pasarela(_carritoBLL.ObtenerTotal()))
+            using (var pasarela = new Pasarela(
+                _carritoBLL.ObtenerTotal(),
+                _clienteSeleccionado,  // Pasar el cliente seleccionado
+                _carritoBLL))          // Pasar el carrito
             {
                 if (pasarela.ShowDialog() != DialogResult.OK || !pasarela.PagoConfirmado)
                     return;
@@ -390,9 +393,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 try
                 {
                     var ventaBLL = new VentaBLL();
-                    int idVenta = ventaBLL.ProcesarVenta(
-                        _clienteSeleccionado.Id,
-                        pasarela.MetodoPagoSeleccionado
+                    // Usar ProcesarVentaCompleta en lugar de ProcesarVenta
+                    int idVenta = ventaBLL.ProcesarVentaCompleta(
+                        _clienteSeleccionado,
+                        pasarela.MetodoPagoSeleccionado,
+                        "Venta procesada" // Detalles del pago
                     );
 
                     using (var formFactura = new ImpresionFactura(

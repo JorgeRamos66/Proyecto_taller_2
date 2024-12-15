@@ -12,6 +12,8 @@ namespace ML
         public int IdMetodoPago { get; set; }
         public int IdUsuario { get; set; }
         public List<DetalleVenta> Detalles { get; set; }
+        public string DetallesPago { get; set; }  // Para guardar detalles del pago
+        public Cliente Cliente { get; set; }  // Referencia al cliente completo
     }
 
     public class DetalleVenta

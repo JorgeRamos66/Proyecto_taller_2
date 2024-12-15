@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Configuration;
 using ML;
+using System.Collections.Generic;
 
 namespace DAL
 {
@@ -54,25 +55,23 @@ namespace DAL
                     precio_total, 
                     id_cliente, 
                     id_metodo_pago, 
-                    id_usuario
+                    id_usuario,
+                    detalles_pago  // Agregar este campo
                 ) 
                 VALUES (
                     @fechaVenta, 
                     @precioTotal, 
                     @idCliente, 
                     @idMetodoPago, 
-                    @idUsuario
+                    @idUsuario,
+                    @detallesPago  // Agregar este parámetro
                 );
                 SELECT SCOPE_IDENTITY();";
 
             using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
             {
-                cmd.Parameters.AddWithValue("@fechaVenta", venta.FechaVenta);
-                cmd.Parameters.AddWithValue("@precioTotal", venta.PrecioTotal);
-                cmd.Parameters.AddWithValue("@idCliente", venta.IdCliente);
-                cmd.Parameters.AddWithValue("@idMetodoPago", venta.IdMetodoPago);
-                cmd.Parameters.AddWithValue("@idUsuario", venta.IdUsuario);
-
+                // Parámetros existentes...
+                cmd.Parameters.AddWithValue("@detallesPago", venta.DetallesPago);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
@@ -116,6 +115,142 @@ namespace DAL
                 cmd.Parameters.AddWithValue("@idProducto", idProducto);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public Venta ObtenerVentaPorId(int idVenta)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = @"
+                    SELECT 
+                        v.*,
+                        p.id_persona,
+                        p.nombre_persona,
+                        p.apellido_persona,
+                        p.dni,
+                        p.email_persona,
+                        p.direccion_persona,
+                        l.nombre_localidad,
+                        pr.nombre_provincia,
+                        c.id_cliente
+                    FROM VENTA_CABECERA v
+                    INNER JOIN CLIENTE c ON v.id_cliente = c.id_cliente
+                    INNER JOIN PERSONA p ON c.id_persona = p.id_persona
+                    INNER JOIN LOCALIDAD l ON p.id_localidad = l.id_localidad
+                    INNER JOIN PROVINCIA pr ON l.id_provincia = pr.id_provincia
+                    WHERE v.id_venta = @idVenta";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return MapearVenta(reader);
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        private Venta MapearVenta(SqlDataReader reader)
+        {
+            return new Venta
+            {
+                Id = Convert.ToInt32(reader["id_venta"]),
+                FechaVenta = Convert.ToDateTime(reader["fecha"]),
+                PrecioTotal = Convert.ToDouble(reader["precio_total"]),
+                IdMetodoPago = Convert.ToInt32(reader["id_metodo"]),
+                IdUsuario = Convert.ToInt32(reader["id_usuario"]),
+                Cliente = new Cliente
+                {
+                    Id = Convert.ToInt32(reader["id_cliente"]),
+                    IdPersona = Convert.ToInt32(reader["id_persona"]),
+                    Nombre = reader["nombre_persona"].ToString(),
+                    Apellido = reader["apellido_persona"].ToString(),
+                    Dni = Convert.ToInt32(reader["dni"]),
+                    Email = reader["email_persona"].ToString(),
+                    Direccion = reader["direccion_persona"].ToString(),
+                    Localidad = reader["nombre_localidad"].ToString(),
+                    Provincia = reader["nombre_provincia"].ToString()
+                },
+                Detalles = ObtenerDetallesVenta(Convert.ToInt32(reader["id_venta"]))
+            };
+        }
+
+        private List<DetalleVenta> ObtenerDetallesVenta(int idVenta)
+        {
+            var detalles = new List<DetalleVenta>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = @"
+                    SELECT 
+                        d.id_venta,
+                        d.cantidad,
+                        d.precio_subtotal,
+                        d.id_producto
+                    FROM VENTA_DETALLE d
+                    WHERE d.id_venta = @idVenta";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@idVenta", idVenta);
+                    connection.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            detalles.Add(new DetalleVenta
+                            {
+                                IdVenta = idVenta,
+                                IdProducto = Convert.ToInt32(reader["id_producto"]),
+                                Cantidad = Convert.ToInt32(reader["cantidad"]),
+                                Precio = Convert.ToDouble(reader["precio_subtotal"])
+                            });
+                        }
+                    }
+                }
+            }
+
+            return detalles;
+        }
+
+        public Producto ObtenerProducto(int idProducto)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = @"
+            SELECT * 
+            FROM PRODUCTO 
+            WHERE id_producto = @idProducto";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                    connection.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Producto
+                            {
+                                IdProducto = Convert.ToInt32(reader["id_producto"]),
+                                NombreProducto = reader["nombre_producto"].ToString(),
+                                PrecioProducto = Convert.ToDouble(reader["precio_producto"]),
+                                StockProducto = Convert.ToInt32(reader["stock_producto"]),
+                                IdCategoria = Convert.ToInt32(reader["id_categoria"])
+                            };
+                        }
+                    }
+                }
+            }
+            throw new Exception($"Producto con ID {idProducto} no encontrado");
         }
     }
 }

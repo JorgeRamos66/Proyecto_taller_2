@@ -30,18 +30,18 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.LHistorialVentas = new System.Windows.Forms.Label();
-            this.datagrid_carrito = new System.Windows.Forms.DataGridView();
+            this.datagrid_historialVentas = new System.Windows.Forms.DataGridView();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.LFechaInicio = new System.Windows.Forms.Label();
+            this.LFechaFin = new System.Windows.Forms.Label();
             this.CIdVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CFechaVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CMontoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.LFechaInicio = new System.Windows.Forms.Label();
-            this.LFechaFin = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.datagrid_carrito)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.datagrid_historialVentas)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -64,57 +64,27 @@
             this.LHistorialVentas.TabIndex = 1;
             this.LHistorialVentas.Text = "HISTORIAL DE VENTAS";
             // 
-            // datagrid_carrito
+            // datagrid_historialVentas
             // 
-            this.datagrid_carrito.AllowUserToAddRows = false;
-            this.datagrid_carrito.AllowUserToOrderColumns = true;
-            this.datagrid_carrito.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.datagrid_carrito.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.datagrid_carrito.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
-            this.datagrid_carrito.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            this.datagrid_carrito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.datagrid_carrito.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.datagrid_historialVentas.AllowUserToAddRows = false;
+            this.datagrid_historialVentas.AllowUserToDeleteRows = false;
+            this.datagrid_historialVentas.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.datagrid_historialVentas.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.datagrid_historialVentas.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.datagrid_historialVentas.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            this.datagrid_historialVentas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CIdVenta,
             this.CFechaVenta,
             this.CMontoTotal,
             this.CCliente,
             this.CFactura});
-            this.datagrid_carrito.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.datagrid_carrito.Location = new System.Drawing.Point(12, 114);
-            this.datagrid_carrito.Name = "datagrid_carrito";
-            this.datagrid_carrito.RowTemplate.Height = 50;
-            this.datagrid_carrito.Size = new System.Drawing.Size(971, 371);
-            this.datagrid_carrito.TabIndex = 15;
-            // 
-            // CIdVenta
-            // 
-            this.CIdVenta.HeaderText = "ID Venta";
-            this.CIdVenta.Name = "CIdVenta";
-            this.CIdVenta.ReadOnly = true;
-            // 
-            // CFechaVenta
-            // 
-            this.CFechaVenta.HeaderText = "Fecha de la venta";
-            this.CFechaVenta.Name = "CFechaVenta";
-            this.CFechaVenta.ReadOnly = true;
-            // 
-            // CMontoTotal
-            // 
-            this.CMontoTotal.HeaderText = "Monto Total";
-            this.CMontoTotal.Name = "CMontoTotal";
-            this.CMontoTotal.ReadOnly = true;
-            // 
-            // CCliente
-            // 
-            this.CCliente.HeaderText = "Nombre Cliente";
-            this.CCliente.Name = "CCliente";
-            this.CCliente.ReadOnly = true;
-            // 
-            // CFactura
-            // 
-            this.CFactura.HeaderText = "Factura";
-            this.CFactura.Name = "CFactura";
-            this.CFactura.ReadOnly = true;
+            this.datagrid_historialVentas.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.datagrid_historialVentas.Location = new System.Drawing.Point(12, 114);
+            this.datagrid_historialVentas.Name = "datagrid_historialVentas";
+            this.datagrid_historialVentas.ReadOnly = true;
+            this.datagrid_historialVentas.RowTemplate.Height = 50;
+            this.datagrid_historialVentas.Size = new System.Drawing.Size(971, 371);
+            this.datagrid_historialVentas.TabIndex = 15;
             // 
             // dateTimePicker1
             // 
@@ -150,6 +120,37 @@
             this.LFechaFin.TabIndex = 29;
             this.LFechaFin.Text = "Fecha Fin:";
             // 
+            // CIdVenta
+            // 
+            this.CIdVenta.HeaderText = "IDVenta";
+            this.CIdVenta.Name = "CIdVenta";
+            this.CIdVenta.ReadOnly = true;
+            // 
+            // CFechaVenta
+            // 
+            this.CFechaVenta.HeaderText = "Fecha de la venta";
+            this.CFechaVenta.Name = "CFechaVenta";
+            this.CFechaVenta.ReadOnly = true;
+            // 
+            // CMontoTotal
+            // 
+            this.CMontoTotal.HeaderText = "Monto Total";
+            this.CMontoTotal.Name = "CMontoTotal";
+            this.CMontoTotal.ReadOnly = true;
+            // 
+            // CCliente
+            // 
+            this.CCliente.HeaderText = "Nombre Cliente";
+            this.CCliente.Name = "CCliente";
+            this.CCliente.ReadOnly = true;
+            this.CCliente.Width = 200;
+            // 
+            // CFactura
+            // 
+            this.CFactura.HeaderText = "Factura";
+            this.CFactura.Name = "CFactura";
+            this.CFactura.ReadOnly = true;
+            // 
             // ventas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,7 +161,7 @@
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.datagrid_carrito);
+            this.Controls.Add(this.datagrid_historialVentas);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ventas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -168,7 +169,7 @@
             this.Load += new System.EventHandler(this.ventas_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.datagrid_carrito)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.datagrid_historialVentas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,15 +178,15 @@
         #endregion
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label LHistorialVentas;
-        public System.Windows.Forms.DataGridView datagrid_carrito;
+        public System.Windows.Forms.DataGridView datagrid_historialVentas;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label LFechaInicio;
+        private System.Windows.Forms.Label LFechaFin;
         private System.Windows.Forms.DataGridViewTextBoxColumn CIdVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn CFechaVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn CMontoTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn CCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn CFactura;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Label LFechaInicio;
-        private System.Windows.Forms.Label LFechaFin;
     }
 }

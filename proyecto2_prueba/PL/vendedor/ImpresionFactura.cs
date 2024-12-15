@@ -8,18 +8,21 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
 using System.Diagnostics;
+using BLL;
 
 namespace proyecto2_prueba.PL.vendedor
 {
     public partial class ImpresionFactura : Form
     {
+        private readonly VentaBLL _ventaBLL;
         private readonly Cliente _cliente;
         private readonly List<CarritoItem> _items;
-        private int _idVenta;
+        private readonly int _idVenta;
 
         public ImpresionFactura(Cliente cliente, List<CarritoItem> items, int idVenta)
         {
             InitializeComponent();
+            _ventaBLL = new VentaBLL();
             _cliente = cliente;
             _items = items;
             _idVenta = idVenta;

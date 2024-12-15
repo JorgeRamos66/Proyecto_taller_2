@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL;
+using ML;
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -10,16 +12,18 @@ namespace proyecto2_prueba.PL.vendedor
         public int MetodoPagoSeleccionado { get; private set; }
         public bool PagoConfirmado { get; private set; }
         private readonly double _totalVenta;
+        private readonly VentaBLL _ventaBLL;
+        private readonly Cliente _cliente;
+        private readonly CarritoBLL _carritoBLL;
 
-        public Pasarela(double totalVenta)
+        public Pasarela(double totalVenta, Cliente cliente, CarritoBLL carritoBLL)
         {
             InitializeComponent();
             _totalVenta = totalVenta;
+            _cliente = cliente;
+            _carritoBLL = carritoBLL;
+            _ventaBLL = new VentaBLL();
             ConfigurarFormulario();
-            // Configurar paneles de pago
-            ConfigurarPanelTarjeta();
-            ConfigurarPanelEfectivo();
-            ConfigurarPanelMercadoPago();
         }
 
         private void ConfigurarFormulario()
@@ -58,8 +62,18 @@ namespace proyecto2_prueba.PL.vendedor
         {
             if (ValidarDatosTarjeta())
             {
-                PagoConfirmado = true;
-                this.Close();
+                try
+                {
+                    string detallesPago = $"Tarjeta: {txtNumeroTarjeta.Text}";
+                    int idVenta = _ventaBLL.ProcesarVentaCompleta(_cliente, 1, detallesPago);
+                    PagoConfirmado = true;
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al procesar el pago: {ex.Message}");
+                }
             }
         }
 
@@ -67,18 +81,36 @@ namespace proyecto2_prueba.PL.vendedor
         {
             if (ValidarMontoEfectivo())
             {
-                PagoConfirmado = true;
-                this.Close();
+                try
+                {
+                    double montoRecibido = double.Parse(txtMontoEfectivo.Text);
+                    string detallesPago = $"Efectivo - Monto recibido: {montoRecibido:C} - Vuelto: {(montoRecibido - _totalVenta):C}";
+                    int idVenta = _ventaBLL.ProcesarVentaCompleta(_cliente, 2, detallesPago);
+                    PagoConfirmado = true;
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al procesar el pago: {ex.Message}");
+                }
             }
         }
 
         private void btnConfirmarMP_Click(object sender, EventArgs e)
         {
-            // Aquí iría la lógica de verificación del pago con MercadoPago
-            MessageBox.Show("Pago confirmado con MercadoPago", "Éxito",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            PagoConfirmado = true;
-            this.Close();
+            try
+            {
+                string detallesPago = "Pago procesado por MercadoPago";
+                int idVenta = _ventaBLL.ProcesarVentaCompleta(_cliente, 3, detallesPago);
+                PagoConfirmado = true;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al procesar el pago: {ex.Message}");
+            }
         }
 
         private bool ValidarDatosTarjeta()

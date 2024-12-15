@@ -108,6 +108,7 @@
     <Compile Include="BLL\CarritoBLL.cs" />
     <Compile Include="BLL\CategoriaBLL.cs" />
     <Compile Include="BLL\ClienteBLL.cs" />
+    <Compile Include="BLL\HistorialVentaBLL.cs" />
     <Compile Include="BLL\MenuVendedorBLL.cs" />
     <Compile Include="BLL\NivelBLL.cs" />
     <Compile Include="BLL\PersonalBLL.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="DAL\CarritoDAL.cs" />
     <Compile Include="DAL\CategoriaDAL.cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
+    <Compile Include="DAL\HistorialVentaDAL.cs" />
     <Compile Include="DAL\NivelDAL.cs" />
     <Compile Include="DAL\PersonalDAL.cs" />
     <Compile Include="DAL\ProductoDAL.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="ML\Carrito.cs" />
     <Compile Include="ML\Categoria.cs" />
     <Compile Include="ML\Cliente.cs" />
+    <Compile Include="ML\HistorialVenta.cs" />
     <Compile Include="ML\Nivel.cs" />
     <Compile Include="ML\Personal.cs" />
     <Compile Include="ML\Producto.cs" />

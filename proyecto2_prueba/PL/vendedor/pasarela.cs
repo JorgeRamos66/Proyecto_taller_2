@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace proyecto2_prueba.PL.vendedor
@@ -112,7 +113,7 @@ namespace proyecto2_prueba.PL.vendedor
             }
 
             double vuelto = monto - _totalVenta;
-            lblVuelto.Text = $"Vuelto: {vuelto:C}";
+            lblVuelto.Text = $"Vuelto: {vuelto.ToString("C", CultureInfo.CreateSpecificCulture("es-AR"))}";
             return true;
         }
 
@@ -121,7 +122,7 @@ namespace proyecto2_prueba.PL.vendedor
             if (double.TryParse(txtMontoEfectivo.Text, out double monto))
             {
                 double vuelto = monto - _totalVenta;
-                lblVuelto.Text = $"Vuelto: {vuelto:C}";
+                lblVuelto.Text = $"Vuelto: {vuelto.ToString("C", CultureInfo.CreateSpecificCulture("es-AR"))}";
             }
             else
             {

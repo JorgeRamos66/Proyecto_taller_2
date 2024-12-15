@@ -19,5 +19,7 @@ namespace ML
         public List<CarritoItem> Items { get; set; } = new List<CarritoItem>();
         public double Total => Items.Sum(item => item.Subtotal);
         public int CantidadItems => Items.Count;
+        public decimal DescuentoPorcentaje { get; set; }
+        public double TotalConDescuento => Total - (Total * (double)DescuentoPorcentaje);
     }
 }

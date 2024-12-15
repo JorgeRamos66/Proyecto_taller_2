@@ -253,6 +253,16 @@ namespace proyecto2_prueba.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap scan_afx {
+            get {
+                object obj = ResourceManager.GetObject("scan-afx", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap server_32px {
             get {
                 object obj = ResourceManager.GetObject("server_32px", resourceCulture);

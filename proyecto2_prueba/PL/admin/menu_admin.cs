@@ -83,22 +83,22 @@ namespace proyecto2_prueba
 
         private void aBMEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<personal>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
+            AbrirFormulario<personal>("Hay un formulario activo en pantalla, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
         private void aBMProductosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<listado_productos_admin>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
+            AbrirFormulario<listado_productos_admin>("Hay un formulario activo en pantalla, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
         private void aBMCategoriasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<categorias_productos>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
+            AbrirFormulario<categorias_productos>("Hay un formulario activo en pantalla, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
         private void aBMNivelesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<niveles_clientes>("Este formulario ya se encuentra abierto, ¿desea cerrar el anterior y abrir uno nuevo?");
+            AbrirFormulario<niveles_clientes>("Hay un formulario activo en pantalla, ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
         private void realizarBackupToolStripMenuItem_Click(object sender, EventArgs e)

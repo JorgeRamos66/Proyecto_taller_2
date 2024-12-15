@@ -32,8 +32,8 @@ namespace proyecto2_prueba.Presentaciones.vendedor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.BBorrar = new System.Windows.Forms.Button();
@@ -54,6 +54,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.proyectoTaller2DataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bConfirmarVenta = new System.Windows.Forms.Button();
             this.BLimpiarCarrito = new System.Windows.Forms.Button();
+            this.lblTotal = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_carrito)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.proyecto_Taller_2DataSet)).BeginInit();
@@ -82,14 +83,6 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.label1.TabIndex = 1;
             this.label1.Text = "CARRITO DE COMPRAS";
             // 
-            // lblTotal
-            // 
-            this.lblTotal = new Label();
-            this.lblTotal.AutoSize = true;
-            this.lblTotal.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
-            this.lblTotal.Location = new Point(800, 500);
-            this.Controls.Add(this.lblTotal);
-            // 
             // BBorrar
             // 
             this.BBorrar.BackColor = System.Drawing.Color.Beige;
@@ -115,12 +108,12 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.datagrid_carrito.AllowUserToAddRows = false;
             this.datagrid_carrito.AllowUserToDeleteRows = false;
             this.datagrid_carrito.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.datagrid_carrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.datagrid_carrito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datagrid_carrito.Location = new System.Drawing.Point(72, 106);
             this.datagrid_carrito.Name = "datagrid_carrito";
+            this.datagrid_carrito.ReadOnly = true;
             this.datagrid_carrito.Size = new System.Drawing.Size(971, 371);
             this.datagrid_carrito.TabIndex = 8;
-            this.datagrid_carrito.Columns.Clear();
             // 
             // CNombre_producto
             // 
@@ -155,10 +148,10 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // 
             // operacionAgregar
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            this.operacionAgregar.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            this.operacionAgregar.DefaultCellStyle = dataGridViewCellStyle3;
             this.operacionAgregar.HeaderText = "Operacion";
             this.operacionAgregar.Name = "operacionAgregar";
             this.operacionAgregar.ToolTipText = "Agregar";
@@ -166,10 +159,10 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // 
             // operacionQuitar
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Red;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.operacionQuitar.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            this.operacionQuitar.DefaultCellStyle = dataGridViewCellStyle4;
             this.operacionQuitar.HeaderText = "Operacion";
             this.operacionQuitar.Name = "operacionQuitar";
             this.operacionQuitar.ToolTipText = "Quitar";
@@ -222,7 +215,7 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             // 
             this.BLimpiarCarrito.BackColor = System.Drawing.Color.Red;
             this.BLimpiarCarrito.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BLimpiarCarrito.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BLimpiarCarrito.ForeColor = System.Drawing.SystemColors.Control;
             this.BLimpiarCarrito.Location = new System.Drawing.Point(930, 67);
             this.BLimpiarCarrito.Name = "BLimpiarCarrito";
             this.BLimpiarCarrito.Size = new System.Drawing.Size(113, 34);
@@ -231,11 +224,22 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             this.BLimpiarCarrito.UseVisualStyleBackColor = false;
             this.BLimpiarCarrito.Click += new System.EventHandler(this.BLimpiarCarrito_Click);
             // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTotal.Location = new System.Drawing.Point(800, 500);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(0, 20);
+            this.lblTotal.TabIndex = 0;
+            // 
             // carrito
             // 
+            this.AcceptButton = this.bConfirmarVenta;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1125, 546);
+            this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.BLimpiarCarrito);
             this.Controls.Add(this.bConfirmarVenta);
             this.Controls.Add(this.panel1);

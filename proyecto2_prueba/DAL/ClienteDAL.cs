@@ -16,6 +16,62 @@ namespace DAL
             connectionString = ConfigurationManager.ConnectionStrings["MiCadenaDeConexion"].ConnectionString;
         }
 
+        public Cliente ObtenerClientePorDni(int dni)
+        {
+            string query = @"
+                SELECT 
+                    C.id_cliente,
+                    P.id_persona,
+                    P.nombre_persona,
+                    P.apellido_persona,
+                    P.dni,
+                    P.email_persona,
+                    P.direccion_persona,
+                    L.nombre_localidad,
+                    Pr.nombre_provincia,
+                    P.fecha_nacimiento,
+                    C.id_nivel,
+                    N.descuento,
+                    N.nombre_nivel
+                FROM CLIENTE C
+                INNER JOIN PERSONA P ON C.id_persona = P.id_persona
+                INNER JOIN LOCALIDAD L ON P.id_localidad = L.id_localidad
+                INNER JOIN PROVINCIA Pr ON L.id_provincia = Pr.id_provincia
+                INNER JOIN NIVEL N ON C.id_nivel = N.id_nivel
+                WHERE P.dni = @dni";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@dni", dni);
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Cliente
+                            {
+                                Id = (int)reader["id_cliente"],
+                                IdPersona = (int)reader["id_persona"],
+                                Nombre = reader["nombre_persona"].ToString(),
+                                Apellido = reader["apellido_persona"].ToString(),
+                                Dni = (int)reader["dni"],
+                                Email = reader["email_persona"].ToString(),
+                                Direccion = reader["direccion_persona"].ToString(),
+                                Localidad = reader["nombre_localidad"].ToString(),
+                                Provincia = reader["nombre_provincia"].ToString(),
+                                FechaNacimiento = (DateTime)reader["fecha_nacimiento"],
+                                IdNivel = (int)reader["id_nivel"],
+                                NivelDescuento = (int)reader["descuento"],
+                                NombreNivel = reader["nombre_nivel"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         public List<Cliente> ObtenerClientesFiltrados(string filtro)
         {
             List<Cliente> clientes = new List<Cliente>();
@@ -30,11 +86,15 @@ namespace DAL
                     P.direccion_persona,
                     L.nombre_localidad,
                     Pr.nombre_provincia,
-                    P.fecha_nacimiento
+                    P.fecha_nacimiento,
+                    N.id_nivel,
+                    N.descuento,
+                    N.nombre_nivel
                 FROM CLIENTE C
                 INNER JOIN PERSONA P ON C.id_persona = P.id_persona
                 INNER JOIN LOCALIDAD L ON P.id_localidad = L.id_localidad
                 INNER JOIN PROVINCIA Pr ON L.id_provincia = Pr.id_provincia
+                INNER JOIN NIVEL N ON C.id_nivel = N.id_nivel
                 WHERE 
                     P.nombre_persona LIKE @filtro OR
                     P.apellido_persona LIKE @filtro OR
@@ -70,6 +130,7 @@ namespace DAL
             return clientes;
         }
 
+
         public Cliente ObtenerClientePorId(int idCliente)
         {
             string query = @"
@@ -83,11 +144,15 @@ namespace DAL
                     P.direccion_persona,
                     L.nombre_localidad,
                     Pr.nombre_provincia,
-                    P.fecha_nacimiento
+                    P.fecha_nacimiento,
+                    C.id_nivel,
+                    N.descuento,
+                    N.nombre_nivel
                 FROM CLIENTE C
                 INNER JOIN PERSONA P ON C.id_persona = P.id_persona
                 INNER JOIN LOCALIDAD L ON P.id_localidad = L.id_localidad
                 INNER JOIN PROVINCIA Pr ON L.id_provincia = Pr.id_provincia
+                INNER JOIN NIVEL N ON C.id_nivel = N.id_nivel
                 WHERE C.id_cliente = @idCliente";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -111,7 +176,10 @@ namespace DAL
                                 Direccion = reader["direccion_persona"].ToString(),
                                 Localidad = reader["nombre_localidad"].ToString(),
                                 Provincia = reader["nombre_provincia"].ToString(),
-                                FechaNacimiento = (DateTime)reader["fecha_nacimiento"]
+                                FechaNacimiento = (DateTime)reader["fecha_nacimiento"],
+                                IdNivel = (int)reader["id_nivel"],
+                                NivelDescuento = (int)reader["descuento"],
+                                NombreNivel = reader["nombre_nivel"].ToString()
                             };
                         }
                     }

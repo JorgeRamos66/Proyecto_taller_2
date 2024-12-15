@@ -5,6 +5,8 @@ using BLL;
 using ML;
 using proyecto2_prueba.PL.vendedor;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Drawing;
 
 namespace proyecto2_prueba.Presentaciones.vendedor
 {
@@ -12,6 +14,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
     {
         private readonly CarritoBLL _carritoBLL;
         private bool _mostrandoResultadosBusqueda;
+        private bool _debeActualizarCarrito = false;
+        private Cliente _clienteSeleccionado;
+        private Label lblCliente;
+        private Label lblDescuento;
+        private Label lblClienteNombre;
 
         public carrito()
         {
@@ -32,8 +39,56 @@ namespace proyecto2_prueba.Presentaciones.vendedor
             textBoxBusqueda.TextChanged += textBoxBusqueda_TextChanged;
             datagrid_carrito.CellClick += datagrid_CellClick;
             datagrid_carrito.CellValidating += datagrid_carrito_CellValidating;
+            datagrid_carrito.CellEndEdit += datagrid_carrito_CellEndEdit;
             ConfigurarColumnas(false);
             ActualizarCarrito();
+
+            // Agregar nuevos labels
+            lblCliente = new Label
+            {
+                Location = new Point(70, 500),
+                AutoSize = true,
+                Text = "Cliente: ",
+                Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold)
+            };
+
+            lblClienteNombre = new Label
+            {
+                Location = new Point(lblCliente.Right, 500),
+                AutoSize = true,
+                Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular)
+            };
+
+            lblDescuento = new Label
+            {
+                Location = new Point(lblClienteNombre.Right + 30, 500),
+                AutoSize = true,
+                Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold)
+            };
+
+            this.Controls.Add(lblCliente);
+            this.Controls.Add(lblClienteNombre);
+            this.Controls.Add(lblDescuento);
+
+            ActualizarInformacionCliente();
+        }
+        private void ActualizarInformacionCliente()
+        {
+            if (_clienteSeleccionado == null)
+            {
+                lblCliente.Text = "Cliente: ";
+                lblCliente.ForeColor = Color.Black;
+                lblClienteNombre.Text = "sin seleccionar";
+                lblClienteNombre.ForeColor = Color.Red;
+                lblDescuento.Text = "Descuento: 0%";
+            }
+            else
+            {
+                lblCliente.Text = "Cliente: ";
+                lblClienteNombre.Text = $"{_clienteSeleccionado.Nombre} {_clienteSeleccionado.Apellido}";
+                lblClienteNombre.ForeColor = Color.Black;
+                lblDescuento.Text = $"Descuento: {_clienteSeleccionado.NivelDescuento}%";
+            }
         }
 
         private void ConfigurarColumnas(bool paraBusqueda)
@@ -48,13 +103,11 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                     new DataGridViewTextBoxColumn { Name = "Categoria", HeaderText = "Categoría", Width = 150 },
                     new DataGridViewTextBoxColumn { Name = "Precio", HeaderText = "Precio", Width = 100 },
                     new DataGridViewTextBoxColumn { Name = "Stock", HeaderText = "Stock", Width = 80 },
-                    new DataGridViewButtonColumn
+                    new DataGridViewTextBoxColumn  // Cambiado a TextBoxColumn
                     {
                         Name = "Agregar",
                         HeaderText = "Operacion",
-                        Width = 80,
-                        Text = "Agregar",
-                        UseColumnTextForButtonValue = true
+                        Width = 80
                     }
                 );
             }
@@ -67,18 +120,49 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                     new DataGridViewTextBoxColumn { Name = "Precio", HeaderText = "Precio Unit.", Width = 100 },
                     new DataGridViewTextBoxColumn { Name = "Cantidad", HeaderText = "Cantidad", Width = 80 },
                     new DataGridViewTextBoxColumn { Name = "Subtotal", HeaderText = "Subtotal", Width = 100 },
-                    new DataGridViewButtonColumn
+                    new DataGridViewTextBoxColumn  // Cambiado a TextBoxColumn
                     {
                         Name = "Quitar",
                         HeaderText = "Operacion",
-                        Width = 80,
-                        Text = "Quitar",
-                        UseColumnTextForButtonValue = true
+                        Width = 80
                     }
                 );
             }
-        }
 
+            // Agregar el evento CellFormatting
+            datagrid_carrito.CellFormatting += Datagrid_carrito_CellFormatting;
+        }
+        private void Datagrid_carrito_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            // Obtener el nombre de la columna de operación según el estado
+            string nombreColumnaOperacion = _mostrandoResultadosBusqueda ? "Agregar" : "Quitar";
+
+            // Verificar si la columna existe
+            if (datagrid_carrito.Columns[nombreColumnaOperacion] != null &&
+                e.ColumnIndex == datagrid_carrito.Columns[nombreColumnaOperacion].Index)
+            {
+                if (_mostrandoResultadosBusqueda)
+                {
+                    e.Value = "Agregar";
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.BackColor = Color.FromArgb(0, 122, 204);
+                    e.CellStyle.SelectionForeColor = Color.White;
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(0, 102, 204);
+                    e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+                else
+                {
+                    e.Value = "Quitar";
+                    e.CellStyle.ForeColor = Color.White;
+                    e.CellStyle.BackColor = Color.Red;
+                    e.CellStyle.SelectionForeColor = Color.White;
+                    e.CellStyle.SelectionBackColor = Color.DarkRed;
+                    e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+            }
+        }
         private void textBoxBusqueda_TextChanged(object sender, EventArgs e)
         {
             try
@@ -122,6 +206,12 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                                 if (cantidadForm.Cantidad > stockDisponible)
                                 {
                                     MessageBox.Show("No hay suficiente stock disponible", "Error",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                if (cantidadForm.Cantidad <= 0)
+                                {
+                                    MessageBox.Show("Ingrese una cantidad válida", "Error",
                                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return;
                                 }
@@ -174,9 +264,9 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                     producto.IdProducto,
                     producto.NombreProducto,
                     producto.CategoriaProducto,
-                    producto.PrecioProducto.ToString("C"),
+                    producto.PrecioProducto.ToString("C", CultureInfo.CreateSpecificCulture("es-AR")),
                     producto.StockDisponible,
-                    "Agregar"
+                    "Agregar"  // El texto se sobreescribirá en el CellFormatting
                 );
             }
         }
@@ -211,7 +301,8 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
                     int idProducto = Convert.ToInt32(datagrid_carrito.Rows[e.RowIndex].Cells["Id"].Value);
                     _carritoBLL.ActualizarCantidad(idProducto, nuevaCantidad);
-                    ActualizarCarrito();
+
+                    _debeActualizarCarrito = true;
                 }
                 catch (Exception ex)
                 {
@@ -220,26 +311,39 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 }
             }
         }
+        private void datagrid_carrito_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_debeActualizarCarrito)
+            {
+                ActualizarCarrito();
+                _debeActualizarCarrito = false; // Resetear la bandera
+            }
+        }
 
         private void ActualizarCarrito()
         {
             datagrid_carrito.Rows.Clear();
             var items = _carritoBLL.ObtenerItems();
-            
+
             foreach (var item in items)
             {
                 datagrid_carrito.Rows.Add(
                     item.IdProducto,
                     item.NombreProducto,
                     item.CategoriaProducto,
-                    item.PrecioProducto.ToString("C"),
+                    item.PrecioProducto.ToString("C", CultureInfo.CreateSpecificCulture("es-AR")),
                     item.CantidadProducto,
-                    item.Subtotal.ToString("C"),
-                    "Quitar"
+                    item.Subtotal.ToString("C", CultureInfo.CreateSpecificCulture("es-AR")),
+                    "Quitar"  // El texto se sobreescribirá en el CellFormatting
                 );
             }
-
-            lblTotal.Text = _carritoBLL.ObtenerTotal().ToString("C");
+            double total = _carritoBLL.ObtenerTotal();
+            if (_clienteSeleccionado != null)
+            {
+                double descuento = total * (_clienteSeleccionado.NivelDescuento / 100.0);
+                total -= descuento;
+            }
+            lblTotal.Text = $"Total del carro: {_carritoBLL.ObtenerTotal().ToString("C", CultureInfo.CreateSpecificCulture("es-AR"))}";
         }
 
         private void bConfirmarVenta_Click(object sender, EventArgs e)
@@ -250,38 +354,61 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 return;
             }
 
+            if (_clienteSeleccionado == null)
+            {
+                if (MessageBox.Show("No hay cliente seleccionado. ¿Desea seleccionar un cliente ahora?",
+                    "Cliente requerido", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    using (var menuClienteForm = new menu_cliente(_carritoBLL))
+                    {
+                        if (menuClienteForm.ShowDialog() == DialogResult.OK)
+                        {
+                            _clienteSeleccionado = menuClienteForm.ClienteSeleccionado;
+                            ActualizarInformacionCliente();
+                        }
+                    }
+                }
+                return;
+            }
+
             using (var pasarela = new Pasarela(_carritoBLL.ObtenerTotal()))
             {
                 if (pasarela.ShowDialog() != DialogResult.OK || !pasarela.PagoConfirmado)
                     return;
 
-                using (var menuClienteForm = new menu_cliente(_carritoBLL))
+                try
                 {
-                    if (menuClienteForm.ShowDialog() == DialogResult.OK)
-                    {
-                        try
-                        {
-                            var ventaBLL = new VentaBLL();
-                            int idVenta = ventaBLL.ProcesarVenta(
-                                menuClienteForm.ClienteSeleccionado.Id,
-                                pasarela.MetodoPagoSeleccionado
-                            );
+                    var ventaBLL = new VentaBLL();
+                    int idVenta = ventaBLL.ProcesarVenta(
+                        _clienteSeleccionado.Id,
+                        pasarela.MetodoPagoSeleccionado
+                    );
 
-                            using (var formFactura = new ImpresionFactura(
-                                menuClienteForm.ClienteSeleccionado,
-                                _carritoBLL.ObtenerItems(),
-                                idVenta))
-                            {
-                                formFactura.ShowDialog();
-                            }
-                            this.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Error al procesar la venta: {ex.Message}",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                    using (var formFactura = new ImpresionFactura(
+                        _clienteSeleccionado,
+                        _carritoBLL.ObtenerItems(),
+                        idVenta))
+                    {
+                        formFactura.ShowDialog();
                     }
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al procesar la venta: {ex.Message}",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnSeleccionarCliente_Click(object sender, EventArgs e)
+        {
+            using (var menuClienteForm = new menu_cliente(_carritoBLL))
+            {
+                if (menuClienteForm.ShowDialog() == DialogResult.OK)
+                {
+                    _clienteSeleccionado = menuClienteForm.ClienteSeleccionado;
+                    ActualizarInformacionCliente();
                 }
             }
         }

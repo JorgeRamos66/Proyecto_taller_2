@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 public class IngresarCantidad : Form
@@ -13,8 +14,33 @@ public class IngresarCantidad : Form
     public IngresarCantidad()
     {
         InitializeComponent();
+        ConfigurarEventos();
+    }
+    private void ConfigurarEventos()
+    {
+        // Agregar el manejador del evento KeyPress
+        numCantidad.KeyPress += NumCantidad_KeyPress;
+
+        // Agregar el manejador del evento ValueChanged
+        numCantidad.ValueChanged += NumCantidad_ValueChanged;
+    }
+    private void NumCantidad_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Solo permitir números y teclas de control
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+        {
+            e.Handled = true;
+        }
     }
 
+    private void NumCantidad_ValueChanged(object sender, EventArgs e)
+    {
+        // Asegurarse que el valor no sea menor a 1
+        if (numCantidad.Value < 1)
+        {
+            numCantidad.Value = 1;
+        }
+    }
     private void InitializeComponent()
     {
             this.numCantidad = new System.Windows.Forms.NumericUpDown();

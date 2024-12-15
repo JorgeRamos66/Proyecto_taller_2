@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.Pkcs;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -40,6 +41,7 @@ namespace proyecto2_prueba.PL.vendedor
             this.panelMetodos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picQR)).BeginInit();
             this.SuspendLayout();
+            this.Load += new System.EventHandler(this.Pasarela_Load);
             // 
             // lblTotal
             // 
@@ -71,7 +73,6 @@ namespace proyecto2_prueba.PL.vendedor
             this.btnTarjeta.TabIndex = 0;
             this.btnTarjeta.Text = "Tarjeta";
             this.btnTarjeta.Click += new System.EventHandler(this.btnTarjeta_Click);
-
             // 
             // btnEfectivo
             // 
@@ -82,7 +83,6 @@ namespace proyecto2_prueba.PL.vendedor
             this.btnEfectivo.TabIndex = 1;
             this.btnEfectivo.Text = "Efectivo";
             this.btnEfectivo.Click += new System.EventHandler(this.btnEfectivo_Click);
-
             // 
             // btnMercadoPago
             // 
@@ -192,14 +192,15 @@ namespace proyecto2_prueba.PL.vendedor
             // 
             // Pasarela
             // 
-            this.ClientSize = new System.Drawing.Size(503, 561);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(503, 202);
             this.Controls.Add(this.LPasarela);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.panelMetodos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "Pasarela";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Método de Pago";
             this.panelMetodos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picQR)).EndInit();
@@ -207,7 +208,22 @@ namespace proyecto2_prueba.PL.vendedor
             this.PerformLayout();
 
         }
+        private void Pasarela_Load(object sender, EventArgs e)
+        {
+            // Establecer StartPosition en Manual
+            this.StartPosition = FormStartPosition.Manual;
 
+            // Obtener el tamaño de la pantalla
+            int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
+            int screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
+
+            // Calcular el centro de la pantalla y ajustarlo hacia arriba
+            int posX = (screenWidth - this.Width) / 2;
+            int posY = ((screenHeight - this.Height) / 2) - 200; // Subir 50 píxeles hacia arriba
+
+            // Asignar la nueva posición
+            this.Location = new Point(posX, posY);
+        }
         private void ConfigurarPanelEfectivo()
         {
             panelEfectivo.Location = new Point(20, 190);
@@ -254,7 +270,7 @@ namespace proyecto2_prueba.PL.vendedor
         private void ConfigurarPanelMercadoPago()
         {
             panelMercadoPago.Location = new Point(20, 190);
-            panelMercadoPago.Size = new Size(460, 300);
+            panelMercadoPago.Size = new Size(460, 400);
             panelMercadoPago.BorderStyle = BorderStyle.FixedSingle;
             panelMercadoPago.BackColor = Color.Tan;
 
@@ -272,6 +288,8 @@ namespace proyecto2_prueba.PL.vendedor
             picQR.BorderStyle = BorderStyle.FixedSingle;
             // Aquí deberías cargar la imagen del QR
             // picQR.Image = Image.FromFile("ruta_a_tu_qr.png");
+            // Cargar la imagen del recurso al PictureBox
+            picQR.Image = Properties.Resources.scan_afx;
 
             // Configurar btnConfirmarMP
             btnConfirmarMP.Location = new Point(130, 290);

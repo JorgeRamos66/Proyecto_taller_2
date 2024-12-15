@@ -15,5 +15,8 @@ namespace ML
         public string Provincia { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public int IdPersona { get; set; }
+        public int IdNivel { get; set; }
+        public int NivelDescuento { get; set; }
+        public string NombreNivel { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace BLL
     {
         private readonly CarritoDAL _carritoDAL;
         private readonly Carrito _carrito;
+        private decimal _descuentoPorcentaje = 0;
 
         public CarritoBLL()
         {
@@ -81,9 +82,20 @@ namespace BLL
             return _carrito.Items;
         }
 
+        public void AplicarDescuento(int porcentajeDescuento)
+        {
+            _descuentoPorcentaje = porcentajeDescuento / 100m;
+        }
+
         public double ObtenerTotal()
         {
-            return _carrito.Total;
+            double subtotal = _carrito.Total;
+            return subtotal - (subtotal * (double)_descuentoPorcentaje);
+        }
+
+        public double ObtenerDescuento()
+        {
+            return _carrito.Total * (double)_descuentoPorcentaje;
         }
     }
 }

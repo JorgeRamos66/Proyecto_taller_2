@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using BLL;
 using ML;
 using proyecto2_prueba.PL.vendedor;
+using proyecto2_prueba.Presentaciones.admin;
 using proyecto2_prueba.Presentaciones.vendedor;
 
 namespace proyecto2_prueba
@@ -34,22 +36,48 @@ namespace proyecto2_prueba
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        private void AbrirFormulario<T>(string mensaje) where T : Form, new()
+        {
+            Form formularioAbierto = this.MdiChildren.FirstOrDefault();
+
+            if (formularioAbierto != null)
+            {
+                DialogResult resultado = MessageBox.Show(mensaje,
+                                                         "Formulario en Uso",
+                                                         MessageBoxButtons.YesNo,
+                                                         MessageBoxIcon.Question);
+
+                if (resultado == DialogResult.Yes)
+                {
+                    formularioAbierto.Close();
+
+                    T nuevoFormulario = new T();
+                    nuevoFormulario.MdiParent = this;
+                    nuevoFormulario.Show();
+                }
+            }
+            else
+            {
+                T nuevoFormulario = new T();
+                nuevoFormulario.MdiParent = this;
+                nuevoFormulario.Show();
+            }
+        }
+
         private void StripMenuItemClientes_Click(object sender, EventArgs e)
         {
-            _menuVendedorBLL.AbrirFormulario<menu_cliente>(this,
-                "El formulario de clientes ya está abierto. ¿Deseas cerrar el anterior y abrir uno nuevo?");
+            AbrirFormulario<menu_cliente>("Hay un formulario activo en pantalla. ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
         private void StripMenuItemCarrito_Click(object sender, EventArgs e)
         {
-            _menuVendedorBLL.AbrirFormulario<carrito>(this,
-                "El carrito ya está abierto. ¿Deseas cerrar el anterior y abrir uno nuevo?");
+            AbrirFormulario<carrito>("Hay un formulario activo en pantalla. ¿desea cerrar el anterior y abrir uno nuevo?");
         }
 
         private void StripMenuItemMiHistorial_Click(object sender, EventArgs e)
         {
-            _menuVendedorBLL.AbrirFormulario<ventas>(this,
-                "El historial ya está abierto. ¿Deseas cerrar el anterior y abrir uno nuevo?");
+            AbrirFormulario<ventas>("Hay un formulario activo en pantalla. ¿Deseas cerrar el anterior y abrir uno nuevo?");
+                
         }
 
 

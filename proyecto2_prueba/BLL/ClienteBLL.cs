@@ -26,6 +26,17 @@ namespace BLL
                 throw new Exception($"Error al obtener cliente: {ex.Message}");
             }
         }
+        public Cliente ObtenerClientePorDni(int dni)
+        {
+            try
+            {
+                return _clienteDAL.ObtenerClientePorDni(dni);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener cliente por DNI: {ex.Message}");
+            }
+        }
 
         public List<Cliente> ObtenerClientesFiltrados(string filtro)
         {

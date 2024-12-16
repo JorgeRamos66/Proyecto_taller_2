@@ -372,8 +372,8 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
                 if (result == DialogResult.Yes)
                 {
-                    btnSeleccionarCliente_Click(sender, e); // Reutilizar el método existente
-                    if (_clienteSeleccionado == null) return; // Si no se seleccionó cliente, salir
+                    btnSeleccionarCliente_Click(sender, e);
+                    if (_clienteSeleccionado == null) return;
                 }
                 else
                 {
@@ -381,38 +381,29 @@ namespace proyecto2_prueba.Presentaciones.vendedor
                 }
             }
 
-
             using (var pasarela = new Pasarela(
                 _carritoBLL.ObtenerTotal(),
-                _clienteSeleccionado,  // Pasar el cliente seleccionado
-                _carritoBLL))          // Pasar el carrito
+                _clienteSeleccionado,
+                _carritoBLL))
             {
-                if (pasarela.ShowDialog() != DialogResult.OK || !pasarela.PagoConfirmado)
-                    return;
-
-                try
+                if (pasarela.ShowDialog() == DialogResult.OK && pasarela.PagoConfirmado)
                 {
-                    var ventaBLL = new VentaBLL();
-                    // Usar ProcesarVentaCompleta en lugar de ProcesarVenta
-                    int idVenta = ventaBLL.ProcesarVentaCompleta(
-                        _clienteSeleccionado,
-                        pasarela.MetodoPagoSeleccionado,
-                        "Venta procesada" // Detalles del pago
-                    );
-
-                    using (var formFactura = new ImpresionFactura(
-                        _clienteSeleccionado,
-                        _carritoBLL.ObtenerItems(),
-                        idVenta))
+                    // Si el pago fue confirmado en la pasarela, solo mostrar la factura
+                    try
                     {
-                        formFactura.ShowDialog();
+                        using (var formFactura = new ImpresionFactura(
+                            _clienteSeleccionado,
+                            pasarela.IdVentaGenerado))  // Solo pasamos el cliente y el ID de venta
+                        {
+                            formFactura.ShowDialog();
+                        }
+                        this.Close();
                     }
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al procesar la venta: {ex.Message}",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al mostrar la factura: {ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -432,7 +423,13 @@ namespace proyecto2_prueba.Presentaciones.vendedor
 
         private void BLimpiarCarrito_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Está seguro de que desea limpiar el carrito?", "Confirmar",
+            if (!_carritoBLL.ObtenerItems().Any())
+            {
+                MessageBox.Show("El carrito está vacío", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            else if (MessageBox.Show("¿Está seguro de que desea limpiar el carrito?", "Confirmar",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 _carritoBLL.LimpiarCarrito();

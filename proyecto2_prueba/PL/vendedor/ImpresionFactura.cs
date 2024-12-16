@@ -9,6 +9,7 @@ using iTextSharp.text.pdf;
 using System.IO;
 using System.Diagnostics;
 using BLL;
+using System.Globalization;
 
 namespace proyecto2_prueba.PL.vendedor
 {
@@ -19,13 +20,14 @@ namespace proyecto2_prueba.PL.vendedor
         private readonly List<CarritoItem> _items;
         private readonly int _idVenta;
 
-        public ImpresionFactura(Cliente cliente, List<CarritoItem> items, int idVenta)
+        public ImpresionFactura(Cliente cliente, int idVenta)
         {
             InitializeComponent();
             _ventaBLL = new VentaBLL();
             _cliente = cliente;
-            _items = items;
             _idVenta = idVenta;
+            // Obtener los items de la venta desde la base de datos
+            _items = _ventaBLL.ObtenerDetallesVenta(idVenta);
             CargarDatosFactura();
         }
 
@@ -46,27 +48,74 @@ namespace proyecto2_prueba.PL.vendedor
             // Configurar DataGridView
             dgvProductos.AutoGenerateColumns = false;
             dgvProductos.Columns.Clear();
-            dgvProductos.Columns.AddRange(
-                new DataGridViewTextBoxColumn { Name = "Nombre", HeaderText = "Producto", Width = 200 },
-                new DataGridViewTextBoxColumn { Name = "Cantidad", HeaderText = "Cantidad", Width = 80 },
-                new DataGridViewTextBoxColumn { Name = "Precio", HeaderText = "Precio Unit.", Width = 100 },
-                new DataGridViewTextBoxColumn { Name = "Subtotal", HeaderText = "Subtotal", Width = 100 }
-            );
 
-            // Cargar productos
-            foreach (var item in _items)
+            // Definir las columnas
+            var colProducto = new DataGridViewTextBoxColumn
             {
-                dgvProductos.Rows.Add(
-                    item.NombreProducto,
-                    item.CantidadProducto,
-                    item.PrecioProducto.ToString("C"),
-                    item.Subtotal.ToString("C")
-                );
+                Name = "Producto",
+                HeaderText = "Producto",
+                DataPropertyName = "NombreProducto",
+                Width = 200
+            };
+
+            var colCantidad = new DataGridViewTextBoxColumn
+            {
+                Name = "Cantidad",
+                HeaderText = "Cantidad",
+                DataPropertyName = "CantidadProducto",
+                Width = 80
+            };
+
+            var colPrecio = new DataGridViewTextBoxColumn
+            {
+                Name = "Precio",
+                HeaderText = "Precio Unit.",
+                DataPropertyName = "PrecioProducto",
+                Width = 100,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "C" }
+            };
+
+            var colSubtotal = new DataGridViewTextBoxColumn
+            {
+                Name = "Subtotal",
+                HeaderText = "Subtotal",
+                DataPropertyName = "Subtotal",
+                Width = 100,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "C" }
+            };
+
+            // Agregar las columnas al DataGridView
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[]
+            {
+                colProducto,
+                colCantidad,
+                colPrecio,
+                colSubtotal
+            });
+
+            // Limpiar filas existentes
+            dgvProductos.Rows.Clear();
+
+            // Agregar los items al DataGridView
+            if (_items != null && _items.Any())
+            {
+                foreach (var item in _items)
+                {
+                    dgvProductos.Rows.Add(
+                        item.NombreProducto,
+                        item.CantidadProducto,
+                        item.PrecioProducto,
+                        item.CantidadProducto * item.PrecioProducto
+                    );
+                }
             }
 
             // Calcular y mostrar total
-            double total = _items.Sum(i => i.Subtotal);
-            lblTotal.Text = total.ToString("C");
+            double total = _items?.Sum(i => i.CantidadProducto * i.PrecioProducto) ?? 0;
+            lblTotal.Text = total.ToString("C", CultureInfo.CreateSpecificCulture("es-AR"));
+
+            // Refrescar el DataGridView
+            dgvProductos.Refresh();
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
@@ -76,10 +125,24 @@ namespace proyecto2_prueba.PL.vendedor
 
         private void GenerarPDF()
         {
-            string rutaArchivo = $"Factura_{_idVenta}.pdf";
 
             try
             {
+                // Obtener la ruta base del proyecto
+                string rutaProyecto = Directory.GetParent(Application.StartupPath).Parent.Parent.FullName;
+
+                // Combinar con la ruta de Facturas
+                string directorioFacturas = Path.Combine(rutaProyecto, "proyecto2_prueba", "Resources", "Facturas");
+
+                // Crear el directorio si no existe
+                if (!Directory.Exists(directorioFacturas))
+                {
+                    Directory.CreateDirectory(directorioFacturas);
+                }
+
+                // Crear la ruta completa del archivo
+                string rutaArchivo = Path.Combine(directorioFacturas, $"Factura_{_idVenta}.pdf");
+
                 using (FileStream fs = new FileStream(rutaArchivo, FileMode.Create))
                 using (Document documento = new Document(PageSize.A4, 25, 25, 30, 30))
                 using (PdfWriter writer = PdfWriter.GetInstance(documento, fs))
@@ -119,8 +182,8 @@ namespace proyecto2_prueba.PL.vendedor
                     {
                         tabla.AddCell(item.NombreProducto);
                         tabla.AddCell(item.CantidadProducto.ToString());
-                        tabla.AddCell(item.PrecioProducto.ToString("C"));
-                        tabla.AddCell(item.Subtotal.ToString("C"));
+                        tabla.AddCell(item.PrecioProducto.ToString("C", CultureInfo.CreateSpecificCulture("es-AR")));
+                        tabla.AddCell(item.Subtotal.ToString("C", CultureInfo.CreateSpecificCulture("es-AR")));
                     }
 
                     documento.Add(tabla);

@@ -50,28 +50,34 @@ namespace DAL
         private int InsertarVentaCabecera(Venta venta, SqlConnection connection, SqlTransaction transaction)
         {
             string query = @"
-                INSERT INTO VENTA (
-                    fecha_venta, 
+                INSERT INTO VENTA_CABECERA (
+                    fecha, 
                     precio_total, 
-                    id_cliente, 
-                    id_metodo_pago, 
+                    id_metodo, 
                     id_usuario,
-                    detalles_pago  // Agregar este campo
+                    id_cliente,
+                    id_persona,
+                    venta_estado
                 ) 
                 VALUES (
-                    @fechaVenta, 
+                    @fecha, 
                     @precioTotal, 
-                    @idCliente, 
-                    @idMetodoPago, 
+                    @idMetodo, 
                     @idUsuario,
-                    @detallesPago  // Agregar este parámetro
+                    @idCliente,
+                    @idPersona,
+                    1
                 );
                 SELECT SCOPE_IDENTITY();";
 
             using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
             {
-                // Parámetros existentes...
-                cmd.Parameters.AddWithValue("@detallesPago", venta.DetallesPago);
+                cmd.Parameters.AddWithValue("@fecha", venta.FechaVenta);
+                cmd.Parameters.AddWithValue("@precioTotal", venta.PrecioTotal);
+                cmd.Parameters.AddWithValue("@idMetodo", venta.IdMetodo);
+                cmd.Parameters.AddWithValue("@idUsuario", venta.IdUsuario);
+                cmd.Parameters.AddWithValue("@idCliente", venta.Cliente.Id);
+                cmd.Parameters.AddWithValue("@idPersona", venta.Cliente.IdPersona);
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
@@ -79,31 +85,41 @@ namespace DAL
         private void InsertarDetalleVenta(DetalleVenta detalle, SqlConnection connection, SqlTransaction transaction)
         {
             string query = @"
-                INSERT INTO DETALLE_VENTA (
-                    id_venta, 
-                    id_producto, 
-                    cantidad_producto, 
-                    precio_producto
+                INSERT INTO VENTA_DETALLE (
+                    cantidad, 
+                    precio_subtotal, 
+                    id_producto,
+                    id_venta
                 ) 
                 VALUES (
-                    @idVenta, 
-                    @idProducto, 
                     @cantidad, 
-                    @precio
+                    @precioSubtotal,
+                    @idProducto,
+                    @idVenta
                 )";
 
             using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
             {
-                cmd.Parameters.AddWithValue("@idVenta", detalle.IdVenta);
-                cmd.Parameters.AddWithValue("@idProducto", detalle.IdProducto);
                 cmd.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
-                cmd.Parameters.AddWithValue("@precio", detalle.Precio);
+                cmd.Parameters.AddWithValue("@precioSubtotal", detalle.PrecioSubtotal);
+                cmd.Parameters.AddWithValue("@idProducto", detalle.IdProducto);
+                cmd.Parameters.AddWithValue("@idVenta", detalle.IdVenta);
                 cmd.ExecuteNonQuery();
             }
         }
 
         private void ActualizarStock(int idProducto, int cantidad, SqlConnection connection, SqlTransaction transaction)
         {
+            // Primero validar los parámetros básicos
+            if (idProducto <= 0)
+                throw new ArgumentException("ID de producto no válido", nameof(idProducto));
+            if (cantidad <= 0)
+                throw new ArgumentException("Cantidad debe ser mayor a cero", nameof(cantidad));
+
+            // Luego validar el stock
+            ValidarStock(idProducto, cantidad, connection, transaction);
+
+            // Finalmente realizar la actualización
             string query = @"
                 UPDATE PRODUCTO 
                 SET stock_producto = stock_producto - @cantidad 
@@ -113,7 +129,23 @@ namespace DAL
             {
                 cmd.Parameters.AddWithValue("@cantidad", cantidad);
                 cmd.Parameters.AddWithValue("@idProducto", idProducto);
-                cmd.ExecuteNonQuery();
+                var rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                    throw new Exception($"No se encontró el producto con ID {idProducto}");
+            }
+        }
+
+        private void ValidarStock(int idProducto, int cantidad, SqlConnection connection, SqlTransaction transaction)
+        {
+            string query = "SELECT stock_producto FROM PRODUCTO WHERE id_producto = @idProducto";
+            using (SqlCommand cmd = new SqlCommand(query, connection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@idProducto", idProducto);
+                var stockActual = Convert.ToInt32(cmd.ExecuteScalar());
+
+                if (stockActual < cantidad)
+                    throw new Exception($"Stock insuficiente para el producto {idProducto}. Stock actual: {stockActual}");
             }
         }
 
@@ -163,7 +195,7 @@ namespace DAL
                 Id = Convert.ToInt32(reader["id_venta"]),
                 FechaVenta = Convert.ToDateTime(reader["fecha"]),
                 PrecioTotal = Convert.ToDouble(reader["precio_total"]),
-                IdMetodoPago = Convert.ToInt32(reader["id_metodo"]),
+                IdMetodo = Convert.ToInt32(reader["id_metodo"]),
                 IdUsuario = Convert.ToInt32(reader["id_usuario"]),
                 Cliente = new Cliente
                 {
@@ -210,7 +242,7 @@ namespace DAL
                                 IdVenta = idVenta,
                                 IdProducto = Convert.ToInt32(reader["id_producto"]),
                                 Cantidad = Convert.ToInt32(reader["cantidad"]),
-                                Precio = Convert.ToDouble(reader["precio_subtotal"])
+                                PrecioSubtotal = Convert.ToDouble(reader["precio_subtotal"])
                             });
                         }
                     }

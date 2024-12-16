@@ -43,7 +43,6 @@ namespace proyecto2_prueba.PL.vendedor
         {
             ConfigurarDataGridView();
 
-            textBoxIdAuxiliar.Text = "0";
 
             // Configuración inicial del TextBox de búsqueda
             txtBuscar.Text = TEXTO_BUSQUEDA_DEFAULT;
@@ -76,7 +75,8 @@ namespace proyecto2_prueba.PL.vendedor
                 new DataGridViewTextBoxColumn { Name = "Dni", HeaderText = "DNI", Width = 100 },
                 new DataGridViewTextBoxColumn { Name = "Nivel", HeaderText = "Nivel", Width = 50 },
                 new DataGridViewTextBoxColumn { Name = "Descuento", HeaderText = "Descuento", Width = 80 },
-                new DataGridViewTextBoxColumn { Name = "Seleccionar", HeaderText = "Acción", Width = 80 }
+                new DataGridViewTextBoxColumn { Name = "Seleccionar", HeaderText = "Operacion", Width = 80 },
+                new DataGridViewTextBoxColumn { Name = "Editar", HeaderText = "Operacion", Width = 80 }
             );
         }
 
@@ -89,6 +89,15 @@ namespace proyecto2_prueba.PL.vendedor
                 e.CellStyle.BackColor = Color.FromArgb(0, 122, 204);
                 e.CellStyle.SelectionForeColor = Color.White;
                 e.CellStyle.SelectionBackColor = Color.FromArgb(0, 102, 204);
+                e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+            else if (e.ColumnIndex == dgvClientes.Columns["Editar"].Index)
+            {
+                e.Value = "Editar";
+                e.CellStyle.ForeColor = Color.Black;
+                e.CellStyle.BackColor = Color.Yellow;
+                e.CellStyle.SelectionForeColor = Color.Black;
+                e.CellStyle.SelectionBackColor = Color.Gold;
                 e.CellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
         }
@@ -117,6 +126,7 @@ namespace proyecto2_prueba.PL.vendedor
             MostrarClientes(filtro);
         }
 
+
         private void MostrarClientes(string filtro)
         {
             try
@@ -133,9 +143,11 @@ namespace proyecto2_prueba.PL.vendedor
                         cliente.Dni,
                         cliente.NombreNivel,
                         $"{cliente.NivelDescuento}%",
-                        "Seleccionar"
+                        "Seleccionar",
+                        "Editar" 
                     );
                 }
+                textBoxIdAuxiliar.Text = "0";
             }
             catch (Exception ex)
             {
@@ -145,7 +157,9 @@ namespace proyecto2_prueba.PL.vendedor
 
         private void dgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dgvClientes.Columns["Seleccionar"].Index && e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            if (e.ColumnIndex == dgvClientes.Columns["Seleccionar"].Index)
             {
                 int idCliente = Convert.ToInt32(dgvClientes.Rows[e.RowIndex].Cells["Id"].Value);
                 CargarDatosCliente(idCliente);
@@ -154,20 +168,25 @@ namespace proyecto2_prueba.PL.vendedor
 
                 if (_carritoBLL != null)
                 {
-                    // Si venimos del carrito, aplicamos el descuento y volvemos
                     _carritoBLL.AplicarDescuento(ClienteSeleccionado.NivelDescuento);
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
                 {
-                    // Si no hay carrito, creamos uno nuevo y abrimos la vista del carrito
                     var nuevoCarrito = new carrito();
                     nuevoCarrito.EstablecerCliente(ClienteSeleccionado);
                     this.Hide();
                     nuevoCarrito.ShowDialog();
                     this.Close();
                 }
+            }
+            else if (e.ColumnIndex == dgvClientes.Columns["Editar"].Index)
+            {
+                int idCliente = Convert.ToInt32(dgvClientes.Rows[e.RowIndex].Cells["Id"].Value);
+                CargarDatosCliente(idCliente);
+                // Opcional: Cambiar el texto del botón de registro a "Actualizar"
+                BRegistrarCliente.Text = "Actualizar Cliente";
             }
         }
         private void CargarDatosCliente(int idCliente)
@@ -324,31 +343,63 @@ namespace proyecto2_prueba.PL.vendedor
 
             try
             {
-                var cliente = ObtenerClienteDesdeFormulario();
+                Cliente cliente;
+                bool esActualizacion = Convert.ToInt32(textBoxIdAuxiliar.Text) != 0;
+
+                if (esActualizacion)
+                {
+                    // Si es actualización, obtener el cliente existente y actualizar sus datos
+                    cliente = _clienteBLL.ObtenerClientePorId(Convert.ToInt32(textBoxIdAuxiliar.Text));
+                    // Actualizar solo los campos editables
+                    cliente.Nombre = txtNombre.Text;
+                    cliente.Apellido = txtApellido.Text;
+                    cliente.Dni = int.Parse(txtDni.Text);
+                    cliente.Email = txtEmail.Text;
+                    cliente.Direccion = txtDomicilio.Text;
+                    cliente.Localidad = txtLocalidad.Text;
+                    cliente.Provincia = txtProvincia.Text;
+                    cliente.FechaNacimiento = dtpFechaNacimiento.Value;
+                }
+                else
+                {
+                    // Si es nuevo cliente, obtener datos del formulario
+                    cliente = ObtenerClienteDesdeFormulario();
+                }
+
                 _clienteBLL.GuardarCliente(cliente);
 
-                // Obtener el cliente recién guardado con todos sus datos
+                // Obtener el cliente recién guardado/actualizado con todos sus datos
                 ClienteSeleccionado = _clienteBLL.ObtenerClientePorDni(cliente.Dni);
 
                 if (_carritoBLL != null)
                 {
                     // Si venimos del carrito, aplicamos el descuento y volvemos
                     _carritoBLL.AplicarDescuento(ClienteSeleccionado.NivelDescuento);
-                    MessageBox.Show("Cliente registrado exitosamente.");
+                    MessageBox.Show(esActualizacion ?
+                        "Cliente actualizado exitosamente." :
+                        "Cliente registrado exitosamente.");
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
                 {
                     // Si estamos en la vista de clientes, actualizamos el formulario
-                    MessageBox.Show("Cliente registrado exitosamente.");
+                    MessageBox.Show(esActualizacion ?
+                        "Cliente actualizado exitosamente." :
+                        "Cliente registrado exitosamente.");
                     LimpiarFormularioRegistro();
                     MostrarClientes(string.Empty); // Actualizar el grid
+
+                    // Restaurar el texto del botón si estaba en modo actualización
+                    if (esActualizacion)
+                    {
+                        BRegistrarCliente.Text = "Registrar Cliente";
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al registrar cliente: {ex.Message}");
+                MessageBox.Show($"Error al {(Convert.ToInt32(textBoxIdAuxiliar.Text) != 0 ? "actualizar" : "registrar")} cliente: {ex.Message}");
             }
         }
 

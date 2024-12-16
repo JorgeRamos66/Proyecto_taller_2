@@ -11,6 +11,7 @@ namespace proyecto2_prueba.PL.vendedor
     {
         public int MetodoPagoSeleccionado { get; private set; }
         public bool PagoConfirmado { get; private set; }
+        public int IdVentaGenerado { get; private set; }
         private readonly double _totalVenta;
         private readonly VentaBLL _ventaBLL;
         private readonly Cliente _cliente;
@@ -22,16 +23,26 @@ namespace proyecto2_prueba.PL.vendedor
             _totalVenta = totalVenta;
             _cliente = cliente;
             _carritoBLL = carritoBLL;
-            _ventaBLL = new VentaBLL();
+            _ventaBLL = new VentaBLL(_carritoBLL); // Pasar el carrito aquí
             ConfigurarFormulario();
         }
 
         private void ConfigurarFormulario()
         {
             lblTotal.Text = $"Total a pagar: {_totalVenta:C}";
+
+            // Configurar todos los paneles al inicio
+            ConfigurarPanelTarjeta();
+            ConfigurarPanelEfectivo();
+            ConfigurarPanelMercadoPago();
+
+            // Ocultar todos los paneles inicialmente
             panelTarjeta.Visible = false;
             panelMercadoPago.Visible = false;
             panelEfectivo.Visible = false;
+
+            // Ajustar el tamaño del formulario
+            this.Size = new Size(503, 550); // Ajusta estos valores según necesites
         }
 
         private void btnTarjeta_Click(object sender, EventArgs e)
@@ -40,6 +51,7 @@ namespace proyecto2_prueba.PL.vendedor
             panelMercadoPago.Visible = false;
             panelEfectivo.Visible = false;
             MetodoPagoSeleccionado = 1; // ID método pago tarjeta
+            this.Size = new Size(503, 550); // Ajusta el tamaño del formulario
         }
 
         private void btnEfectivo_Click(object sender, EventArgs e)
@@ -48,6 +60,7 @@ namespace proyecto2_prueba.PL.vendedor
             panelMercadoPago.Visible = false;
             panelEfectivo.Visible = true;
             MetodoPagoSeleccionado = 2; // ID método pago efectivo
+            this.Size = new Size(503, 550); // Ajusta el tamaño del formulario
         }
 
         private void btnMercadoPago_Click(object sender, EventArgs e)
@@ -56,16 +69,18 @@ namespace proyecto2_prueba.PL.vendedor
             panelMercadoPago.Visible = true;
             panelEfectivo.Visible = false;
             MetodoPagoSeleccionado = 3; // ID método pago MercadoPago
+            this.Size = new Size(503, 650); // Ajusta el tamaño del formulario para MercadoPago
         }
 
-        private void btnConfirmarTarjeta_Click(object sender, EventArgs e)
+        private void btnConfirmarEfectivo_Click(object sender, EventArgs e)
         {
-            if (ValidarDatosTarjeta())
+            if (ValidarMontoEfectivo())
             {
                 try
                 {
-                    string detallesPago = $"Tarjeta: {txtNumeroTarjeta.Text}";
-                    int idVenta = _ventaBLL.ProcesarVentaCompleta(_cliente, 1, detallesPago);
+                    double montoRecibido = double.Parse(txtMontoEfectivo.Text);
+                    string detallesPago = $"Efectivo - Monto recibido: {montoRecibido:C} - Vuelto: {(montoRecibido - _totalVenta):C}";
+                    IdVentaGenerado = _ventaBLL.ProcesarVentaCompleta(_cliente, 2, detallesPago);
                     PagoConfirmado = true;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
@@ -77,15 +92,14 @@ namespace proyecto2_prueba.PL.vendedor
             }
         }
 
-        private void btnConfirmarEfectivo_Click(object sender, EventArgs e)
+        private void btnConfirmarTarjeta_Click(object sender, EventArgs e)
         {
-            if (ValidarMontoEfectivo())
+            if (ValidarDatosTarjeta())
             {
                 try
                 {
-                    double montoRecibido = double.Parse(txtMontoEfectivo.Text);
-                    string detallesPago = $"Efectivo - Monto recibido: {montoRecibido:C} - Vuelto: {(montoRecibido - _totalVenta):C}";
-                    int idVenta = _ventaBLL.ProcesarVentaCompleta(_cliente, 2, detallesPago);
+                    string detallesPago = $"Tarjeta: {txtNumeroTarjeta.Text}";
+                    IdVentaGenerado = _ventaBLL.ProcesarVentaCompleta(_cliente, 1, detallesPago);
                     PagoConfirmado = true;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
@@ -102,7 +116,7 @@ namespace proyecto2_prueba.PL.vendedor
             try
             {
                 string detallesPago = "Pago procesado por MercadoPago";
-                int idVenta = _ventaBLL.ProcesarVentaCompleta(_cliente, 3, detallesPago);
+                IdVentaGenerado = _ventaBLL.ProcesarVentaCompleta(_cliente, 3, detallesPago);
                 PagoConfirmado = true;
                 this.DialogResult = DialogResult.OK;
                 this.Close();

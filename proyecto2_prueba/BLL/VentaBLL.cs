@@ -5,6 +5,7 @@ using DAL;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using ML;
+using System.Collections.Generic;
 
 namespace BLL
 {
@@ -19,10 +20,19 @@ namespace BLL
             _carritoBLL = new CarritoBLL();
         }
 
+        public VentaBLL(CarritoBLL carritoBLL = null)
+        {
+            _ventaDAL = new VentaDAL();
+            _carritoBLL = carritoBLL;
+        }
+
         public int ProcesarVentaCompleta(Cliente cliente, int idMetodoPago, string detallesPago)
         {
             try
             {
+                if (_carritoBLL == null)
+                    throw new Exception("No se ha inicializado el carrito");
+
                 var itemsCarrito = _carritoBLL.ObtenerItems();
 
                 var venta = new Venta
@@ -30,21 +40,26 @@ namespace BLL
                     FechaVenta = DateTime.Now,
                     PrecioTotal = _carritoBLL.ObtenerTotal(),
                     IdCliente = cliente.Id,
-                    IdMetodoPago = idMetodoPago,
+                    IdMetodo = idMetodoPago,
                     IdUsuario = UsuarioSesion.IdUsuario,
+                    IdPersona = cliente.IdPersona,
+                    VentaEstado = 1,
                     DetallesPago = detallesPago,
                     Cliente = cliente,
                     Detalles = itemsCarrito.Select(item => new DetalleVenta
                     {
                         IdProducto = item.IdProducto,
                         Cantidad = item.CantidadProducto,
-                        Precio = item.PrecioProducto
+                        PrecioSubtotal = item.PrecioProducto * item.CantidadProducto 
                     }).ToList()
                 };
 
                 // Validaciones
                 if (venta.IdCliente <= 0)
                     throw new Exception("Cliente no válido");
+
+                if (venta.IdPersona <= 0)
+                    throw new Exception("ID de persona no válido");
 
                 if (venta.IdUsuario <= 0)
                     throw new Exception("Usuario no válido");
@@ -59,6 +74,34 @@ namespace BLL
             catch
             {
                 throw;
+            }
+        }
+
+        public List<CarritoItem> ObtenerDetallesVenta(int idVenta)
+        {
+            try
+            {
+                var venta = _ventaDAL.ObtenerVentaPorId(idVenta);
+                if (venta == null)
+                    throw new Exception("Venta no encontrada");
+
+                var items = new List<CarritoItem>();
+                foreach (var detalle in venta.Detalles)
+                {
+                    var producto = _ventaDAL.ObtenerProducto(detalle.IdProducto);
+                    items.Add(new CarritoItem
+                    {
+                        IdProducto = detalle.IdProducto,
+                        NombreProducto = producto.NombreProducto,
+                        CantidadProducto = detalle.Cantidad,
+                        PrecioProducto = detalle.PrecioSubtotal / detalle.Cantidad
+                    });
+                }
+                return items;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener detalles de la venta: {ex.Message}");
             }
         }
 
@@ -110,8 +153,8 @@ namespace BLL
                         var producto = _ventaDAL.ObtenerProducto(detalle.IdProducto);
                         tabla.AddCell(producto.NombreProducto);
                         tabla.AddCell(detalle.Cantidad.ToString());
-                        tabla.AddCell(detalle.Precio.ToString("C"));
-                        tabla.AddCell((detalle.Cantidad * detalle.Precio).ToString("C"));
+                        tabla.AddCell(producto.PrecioProducto.ToString("C"));
+                        tabla.AddCell((detalle.PrecioSubtotal.ToString("C")));
                     }
 
                     documento.Add(tabla);

@@ -20,8 +20,10 @@ namespace proyecto2_prueba.PL.gerente
         {
             InitializeComponent();
             _stockBLL = new EstadisticasStockBLL();
-            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             ConfigurarControles();
+            ConfigurarGrafico();
+            ConfigurarFechas();
+            CargarDatosIniciales();
         }
 
         private void ConfigurarDataGridView()
@@ -77,17 +79,8 @@ namespace proyecto2_prueba.PL.gerente
         {
             try
             {
-                // Configurar DataGridView
                 ConfigurarDataGridView();
-
-                // Configurar Chart
-                ConfigurarGrafico();
-
-                // Configurar fechas
-                ConfigurarFechas();
-
-                // Suscribirse al evento Load
-                this.Load += estadisticas_stock_Load;
+                dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             }
             catch (Exception ex)
             {
@@ -96,33 +89,49 @@ namespace proyecto2_prueba.PL.gerente
             }
         }
 
+        private void CargarDatosIniciales()
+        {
+            CargarDataGridView();
+            ActualizarGraficoStock(); // Llamada separada para el gráfico
+        }
+
+        private void CargarDataGridView()
+        {
+            try
+            {
+                var dt = _stockBLL.ObtenerProductosBajoStock();
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron datos de stock.",
+                        "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                dataGridView1.DataSource = dt;
+
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Cells["CStock"].Value != null)
+                    {
+                        int stock = Convert.ToInt32(row.Cells["CStock"].Value);
+                        int redIntensity = Math.Max(255 - (stock * 10), 0);
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255 - redIntensity, 255 - redIntensity);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar el DataGridView: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void ConfigurarGrafico()
         {
             chartStockSinMover.Series.Clear();
 
-            // Configurar área del gráfico
-            var area = chartStockSinMover.ChartAreas[0];
-
-            // Configurar eje X
-            area.AxisX.LabelStyle.Angle = -45;
-            area.AxisX.LabelStyle.Font = new Font("Arial", 8);
-            area.AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-            area.AxisX.Interval = 1;
-            area.AxisX.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
-
-            // Ajustar márgenes
-            area.InnerPlotPosition.Auto = false;
-            area.InnerPlotPosition.Width = 85;
-            area.InnerPlotPosition.Height = 65;
-            area.InnerPlotPosition.X = 5;
-            area.InnerPlotPosition.Y = 5;
-
-            // Configurar eje Y
-            area.AxisY.LabelStyle.Format = "N0";
-            area.AxisY.Title = "Cantidad";
-            area.AxisY.TitleFont = new Font("Arial", 10, FontStyle.Bold);
-
-            // Agregar series
+            // Agregar y configurar series
             var seriesStockTotal = chartStockSinMover.Series.Add("Stock Total");
             var seriesStockMovido = chartStockSinMover.Series.Add("Stock Movido");
 
@@ -132,13 +141,13 @@ namespace proyecto2_prueba.PL.gerente
             seriesStockTotal.Color = Color.SteelBlue;
             seriesStockMovido.Color = Color.Crimson;
 
-            // Configurar leyenda
-            chartStockSinMover.Legends[0].Docking = Docking.Top;
-            chartStockSinMover.Legends[0].Alignment = StringAlignment.Center;
+            // Configurar área del gráfico
+            chartStockSinMover.ChartAreas[0].AxisX.Interval = 1;
+            chartStockSinMover.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
+            chartStockSinMover.ChartAreas[0].AxisY.LabelStyle.Format = "N0";
 
-            // Configurar ancho de columnas
-            seriesStockTotal["PointWidth"] = "0.8";
-            seriesStockMovido["PointWidth"] = "0.8";
+            // Agregar título
+            chartStockSinMover.Titles.Add("Stock de Productos");
         }
 
         private void ConfigurarFechas()
@@ -152,8 +161,19 @@ namespace proyecto2_prueba.PL.gerente
             dateTimePickerInicioS.CloseUp += ValidarFechaInicio;
             dateTimePickerFinS.CloseUp += ValidarFechaFin;
 
-            dateTimePickerInicioS.ValueChanged += (s, e) => ActualizarGraficoStock();
-            dateTimePickerFinS.ValueChanged += (s, e) => ActualizarGraficoStock();
+            // Reemplazar los eventos lambda con manejadores de eventos más explícitos
+            dateTimePickerInicioS.ValueChanged += DateTimePickerInicioS_ValueChanged;
+            dateTimePickerFinS.ValueChanged += DateTimePickerFinS_ValueChanged;
+        }
+
+        private void DateTimePickerInicioS_ValueChanged(object sender, EventArgs e)
+        {
+            ActualizarGraficoStock();
+        }
+
+        private void DateTimePickerFinS_ValueChanged(object sender, EventArgs e)
+        {
+            ActualizarGraficoStock();
         }
 
         private void ValidarFechaInicio(object sender, EventArgs e)
@@ -179,7 +199,6 @@ namespace proyecto2_prueba.PL.gerente
                 dateTimePickerInicioS.Value = dateTimePickerFinS.Value;
             }
         }
-
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["CStock"].Index)
@@ -202,95 +221,43 @@ namespace proyecto2_prueba.PL.gerente
             }
         }
 
-        private void CargarDatos()
+        private void ActualizarGraficoStock()
         {
             try
             {
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
-
-                var dt = _stockBLL.ObtenerProductosBajoStock();
+                var dt = _stockBLL.ObtenerStockSinMover(
+                    dateTimePickerInicioS.Value,
+                    dateTimePickerFinS.Value
+                );
 
                 if (dt == null || dt.Rows.Count == 0)
                 {
-                    MessageBox.Show("No se encontraron datos de stock.",
+                    MessageBox.Show("No se encontraron datos para el período seleccionado.",
                         "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                dataGridView1.DataSource = dt;
+                chartStockSinMover.Series["Stock Total"].Points.Clear();
+                chartStockSinMover.Series["Stock Movido"].Points.Clear();
 
-                // Aplicar colores según el stock
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
-                    if (row.Cells["CStock"].Value != null)
-                    {
-                        int stock = Convert.ToInt32(row.Cells["CStock"].Value);
-                        int redIntensity = Math.Max(255 - (stock * 10), 0);
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255 - redIntensity, 255 - redIntensity);
-                    }
-                }
+                    string producto = row["nombre_producto"].ToString();
+                    double stockTotal = Convert.ToDouble(row["StockTotal"]);
+                    double stockMovido = Convert.ToDouble(row["StockMovido"]);
 
-                ActualizarGraficoStock();
+                    var pointTotal = chartStockSinMover.Series["Stock Total"].Points.Add(stockTotal);
+                    var pointMovido = chartStockSinMover.Series["Stock Movido"].Points.Add(stockMovido);
+
+                    pointTotal.AxisLabel = producto;
+                    pointTotal.Label = stockTotal.ToString();
+                    pointMovido.Label = stockMovido.ToString();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar los datos: {ex.Message}",
+                MessageBox.Show($"Error al actualizar el gráfico: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
-            }
-        }
-
-        private void estadisticas_stock_Load(object sender, EventArgs e)
-        {
-            CargarDatos();
-        }
-
-
-        private void ActualizarGraficoStock()
-        {
-            var dt = _stockBLL.ObtenerStockSinMover(
-                dateTimePickerInicioS.Value,
-                dateTimePickerFinS.Value
-            );
-
-            chartStockSinMover.Series["Stock Total"].Points.Clear();
-            chartStockSinMover.Series["Stock Movido"].Points.Clear();
-
-            // Ajustar el tamaño del área según la cantidad de productos
-            int cantidadProductos = dt.Rows.Count;
-            chartStockSinMover.ChartAreas[0].AxisX.Interval = Math.Max(1, cantidadProductos / 15.0);
-
-            foreach (DataRow row in dt.Rows)
-            {
-                string producto = row["nombre_producto"].ToString();
-                double stockTotal = Convert.ToDouble(row["StockTotal"]);
-                double stockMovido = Convert.ToDouble(row["StockMovido"]);
-
-                var pointTotal = chartStockSinMover.Series["Stock Total"].Points.Add(stockTotal);
-                var pointMovido = chartStockSinMover.Series["Stock Movido"].Points.Add(stockMovido);
-
-                pointTotal.AxisLabel = producto;
-                pointTotal.Label = stockTotal.ToString();
-                pointMovido.Label = stockMovido.ToString();
-
-                // Ajustar el formato de las etiquetas
-                pointTotal.LabelAngle = -45;
-                pointMovido.LabelAngle = -45;
-            }
-
-            // Ajustar el zoom si hay muchos productos
-            if (cantidadProductos > 10)
-            {
-                chartStockSinMover.ChartAreas[0].AxisX.ScaleView.Zoom(0, 10);
-                chartStockSinMover.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-                chartStockSinMover.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            }
-            else
-            {
-                chartStockSinMover.ChartAreas[0].AxisX.ScaleView.Zoom(0, cantidadProductos);
             }
         }
     }

@@ -93,6 +93,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -108,6 +109,8 @@
     <Compile Include="BLL\CarritoBLL.cs" />
     <Compile Include="BLL\CategoriaBLL.cs" />
     <Compile Include="BLL\ClienteBLL.cs" />
+    <Compile Include="BLL\EstadisticasBLL.cs" />
+    <Compile Include="BLL\EstadisticasVentasBLL.cs" />
     <Compile Include="BLL\HistorialVentaBLL.cs" />
     <Compile Include="BLL\MenuVendedorBLL.cs" />
     <Compile Include="BLL\NivelBLL.cs" />
@@ -118,6 +121,8 @@
     <Compile Include="DAL\CarritoDAL.cs" />
     <Compile Include="DAL\CategoriaDAL.cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
+    <Compile Include="DAL\EstadisticasDAL.cs" />
+    <Compile Include="DAL\EstadisticasVentasDAL.cs" />
     <Compile Include="DAL\HistorialVentaDAL.cs" />
     <Compile Include="DAL\NivelDAL.cs" />
     <Compile Include="DAL\PersonalDAL.cs" />
@@ -186,6 +191,24 @@
     </Compile>
     <Compile Include="PL\admin\registrar_personal.Designer.cs">
       <DependentUpon>registrar_personal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\gerente\estadisticas_productos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\gerente\estadisticas_productos.Designer.cs">
+      <DependentUpon>estadisticas_productos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\gerente\estadisticas_stock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\gerente\estadisticas_stock.Designer.cs">
+      <DependentUpon>estadisticas_stock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PL\gerente\estadisticas_ventas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PL\gerente\estadisticas_ventas.Designer.cs">
+      <DependentUpon>estadisticas_ventas.cs</DependentUpon>
     </Compile>
     <Compile Include="PL\inicio_sesion.cs">
       <SubType>Form</SubType>
@@ -275,6 +298,12 @@
     <EmbeddedResource Include="PL\admin\registrar_personal.resx">
       <DependentUpon>registrar_personal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PL\gerente\estadisticas_productos.resx">
+      <DependentUpon>estadisticas_productos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\gerente\estadisticas_ventas.resx">
+      <DependentUpon>estadisticas_ventas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PL\inicio_sesion.resx">
       <DependentUpon>inicio_sesion.cs</DependentUpon>
     </EmbeddedResource>
@@ -329,7 +358,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="System\Windows\Forms\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Proyecto_Taller_2DataSet.xsc">
       <DependentUpon>Proyecto_Taller_2DataSet.xsd</DependentUpon>
@@ -395,6 +426,8 @@
     <None Include="Resources\pie-chart.png" />
     <None Include="Resources\people_11869303.png" />
     <None Include="Resources\people_11869341.png" />
+    <None Include="Resources\analytic_10802930.png" />
+    <None Include="Resources\chart_7461071.png" />
     <Content Include="Resources\restore_24px.png" />
     <None Include="Resources\shopping-cart.png" />
     <None Include="Resources\shopping-cart %281%29.png" />

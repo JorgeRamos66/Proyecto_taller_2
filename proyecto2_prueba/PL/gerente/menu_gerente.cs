@@ -2,8 +2,9 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using static proyecto2_prueba.inicio_sesion;
 using ML;
+using BLL;
+using proyecto2_prueba.PL.gerente;
 
 namespace proyecto2_prueba
 {
@@ -17,10 +18,6 @@ namespace proyecto2_prueba
             LNombreUsuario.Text = $"{UsuarioSesion.Nombre} {UsuarioSesion.Apellido}";
         }
 
-        private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -30,11 +27,6 @@ namespace proyecto2_prueba
                 return true;  // Indicar que la tecla ha sido manejada
             }
             return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        private void cerrarProgramaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
         private void AbrirFormulario<T>(string mensaje) where T : Form, new()
@@ -78,5 +70,30 @@ namespace proyecto2_prueba
             inicio_sesion sesion = new inicio_sesion();
         }
 
+        private void StripMenuItemEstadisticasProductos_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario<estadisticas_productos>("Hay un formulario activo en pantalla, ¿desea cerrar el anterior y abrir uno nuevo?");
+        }
+
+        private void ToolStripMenuEstadisticasVentas_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario<estadisticas_ventas>("Hay un formulario activo en pantalla, ¿desea cerrar el anterior y abrir uno nuevo?");
+        }
+
+        private void StripMenuItemStock_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario<estadisticas_stock>("Hay un formulario activo en pantalla, ¿desea cerrar el anterior y abrir uno nuevo?");
+        }
+
+        private void StripMenuItemCerrarPrograma_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void StripMenuItemCerrarSesion_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            inicio_sesion sesion = new inicio_sesion();
+        }
     }
 }

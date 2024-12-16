@@ -83,6 +83,16 @@ namespace proyecto2_prueba.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap analytic_10802930 {
+            get {
+                object obj = ResourceManager.GetObject("analytic_10802930", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap box_32px {
             get {
                 object obj = ResourceManager.GetObject("box_32px", resourceCulture);
@@ -116,6 +126,16 @@ namespace proyecto2_prueba.Properties {
         internal static System.Drawing.Bitmap categories_32px {
             get {
                 object obj = ResourceManager.GetObject("categories_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap chart_7461071 {
+            get {
+                object obj = ResourceManager.GetObject("chart_7461071", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

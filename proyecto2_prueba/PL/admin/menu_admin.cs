@@ -69,13 +69,6 @@ namespace proyecto2_prueba
             inicio_sesion sesion = new inicio_sesion();
         }
 
-        private void registrarPersonalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            personal nuevo_personal = new personal();
-            nuevo_personal.MdiParent = this;
-            nuevo_personal.Show();
-        }
-
         private void sALIRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();

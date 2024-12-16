@@ -31,15 +31,15 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.LHistorialVentas = new System.Windows.Forms.Label();
             this.datagrid_historialVentas = new System.Windows.Forms.DataGridView();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.LFechaInicio = new System.Windows.Forms.Label();
-            this.LFechaFin = new System.Windows.Forms.Label();
             this.CIdVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CFechaVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CMontoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.LFechaInicio = new System.Windows.Forms.Label();
+            this.LFechaFin = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid_historialVentas)).BeginInit();
             this.SuspendLayout();
@@ -86,40 +86,6 @@
             this.datagrid_historialVentas.Size = new System.Drawing.Size(971, 371);
             this.datagrid_historialVentas.TabIndex = 15;
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(137, 88);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 21;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(478, 89);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 22;
-            // 
-            // LFechaInicio
-            // 
-            this.LFechaInicio.AutoSize = true;
-            this.LFechaInicio.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LFechaInicio.Location = new System.Drawing.Point(51, 89);
-            this.LFechaInicio.Name = "LFechaInicio";
-            this.LFechaInicio.Size = new System.Drawing.Size(84, 16);
-            this.LFechaInicio.TabIndex = 28;
-            this.LFechaInicio.Text = "Fecha Inicio:";
-            // 
-            // LFechaFin
-            // 
-            this.LFechaFin.AutoSize = true;
-            this.LFechaFin.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LFechaFin.Location = new System.Drawing.Point(403, 92);
-            this.LFechaFin.Name = "LFechaFin";
-            this.LFechaFin.Size = new System.Drawing.Size(69, 16);
-            this.LFechaFin.TabIndex = 29;
-            this.LFechaFin.Text = "Fecha Fin:";
-            // 
             // CIdVenta
             // 
             this.CIdVenta.HeaderText = "IDVenta";
@@ -150,6 +116,40 @@
             this.CFactura.HeaderText = "Factura";
             this.CFactura.Name = "CFactura";
             this.CFactura.ReadOnly = true;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(137, 89);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 21;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Location = new System.Drawing.Point(478, 89);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker2.TabIndex = 22;
+            // 
+            // LFechaInicio
+            // 
+            this.LFechaInicio.AutoSize = true;
+            this.LFechaInicio.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LFechaInicio.Location = new System.Drawing.Point(47, 92);
+            this.LFechaInicio.Name = "LFechaInicio";
+            this.LFechaInicio.Size = new System.Drawing.Size(84, 16);
+            this.LFechaInicio.TabIndex = 28;
+            this.LFechaInicio.Text = "Fecha Inicio:";
+            // 
+            // LFechaFin
+            // 
+            this.LFechaFin.AutoSize = true;
+            this.LFechaFin.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LFechaFin.Location = new System.Drawing.Point(403, 92);
+            this.LFechaFin.Name = "LFechaFin";
+            this.LFechaFin.Size = new System.Drawing.Size(69, 16);
+            this.LFechaFin.TabIndex = 29;
+            this.LFechaFin.Text = "Fecha Fin:";
             // 
             // ventas
             // 

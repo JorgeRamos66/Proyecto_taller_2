@@ -110,6 +110,7 @@
     <Compile Include="BLL\CategoriaBLL.cs" />
     <Compile Include="BLL\ClienteBLL.cs" />
     <Compile Include="BLL\EstadisticasBLL.cs" />
+    <Compile Include="BLL\EstadisticasStockBLL.cs" />
     <Compile Include="BLL\EstadisticasVentasBLL.cs" />
     <Compile Include="BLL\HistorialVentaBLL.cs" />
     <Compile Include="BLL\MenuVendedorBLL.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="DAL\CategoriaDAL.cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\EstadisticasDAL.cs" />
+    <Compile Include="DAL\EstadisticasStockDAL.cs" />
     <Compile Include="DAL\EstadisticasVentasDAL.cs" />
     <Compile Include="DAL\HistorialVentaDAL.cs" />
     <Compile Include="DAL\NivelDAL.cs" />
@@ -300,6 +302,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\gerente\estadisticas_productos.resx">
       <DependentUpon>estadisticas_productos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PL\gerente\estadisticas_stock.resx">
+      <DependentUpon>estadisticas_stock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PL\gerente\estadisticas_ventas.resx">
       <DependentUpon>estadisticas_ventas.cs</DependentUpon>

@@ -97,5 +97,46 @@ namespace DAL
             }
             return dt;
         }
+
+        public DataTable ObtenerGananciasMensuales(DateTime fechaInicio, DateTime fechaFin)
+        {
+            var dt = new DataTable();
+            string query = @"
+                WITH MesesEnRango AS (
+                    SELECT DISTINCT 
+                        YEAR(fecha) as Anio,
+                        MONTH(fecha) as Mes
+                    FROM VENTA_CABECERA
+                    WHERE fecha BETWEEN @fechaInicio AND @fechaFin
+                    AND venta_estado = 1
+                )
+                SELECT 
+                    M.Anio,
+                    M.Mes,
+                    DATENAME(MONTH, DATEFROMPARTS(M.Anio, M.Mes, 1)) as NombreMes,
+                    ISNULL(SUM(VC.precio_total), 0) as GananciaTotal
+                FROM MesesEnRango M
+                LEFT JOIN VENTA_CABECERA VC ON 
+                    YEAR(VC.fecha) = M.Anio 
+                    AND MONTH(VC.fecha) = M.Mes
+                    AND VC.venta_estado = 1
+                GROUP BY M.Anio, M.Mes
+                ORDER BY M.Anio, M.Mes";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@fechaInicio", fechaInicio);
+                    command.Parameters.AddWithValue("@fechaFin", fechaFin);
+
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
     }
 }

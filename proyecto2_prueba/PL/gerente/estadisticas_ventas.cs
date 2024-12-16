@@ -36,6 +36,13 @@ namespace proyecto2_prueba.PL.gerente
             chartDiasMasVendidos.Series[0].Name = "Ventas";
             chartDiasMasVendidos.Series[0].ChartType = SeriesChartType.Line;
             chartDiasMasVendidos.Titles.Add("Ventas por Día de la Semana");
+
+            // Configurar gráfico de ganancias mensuales
+            chartGananciaMensual.Series[0].Name = "Ganancias";
+            chartGananciaMensual.Series[0].ChartType = SeriesChartType.Column;
+            chartGananciaMensual.Series[0].Color = Color.FromArgb(0, 192, 0); // Verde
+            chartGananciaMensual.ChartAreas[0].AxisY.LabelStyle.Format = "C0";
+            chartGananciaMensual.ChartAreas[0].AxisX.Interval = 1;
         }
 
         private void ConfigurarFechas()
@@ -87,11 +94,41 @@ namespace proyecto2_prueba.PL.gerente
             {
                 CargarGraficoVendedores();
                 CargarGraficoDias();
+                CargarGraficoGananciasMensuales();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar estadísticas: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CargarGraficoGananciasMensuales()
+        {
+            var dtGanancias = _estadisticasBLL.ObtenerGananciasMensuales(
+                dateTimePickerInicioV.Value,
+                dateTimePickerFinV.Value
+            );
+
+            chartGananciaMensual.Series[0].Points.Clear();
+
+            foreach (DataRow row in dtGanancias.Rows)
+            {
+                string nombreMes = row["NombreMes"].ToString();
+                int anio = Convert.ToInt32(row["Anio"]);
+                double ganancia = Convert.ToDouble(row["GananciaTotal"]);
+
+                var point = chartGananciaMensual.Series[0].Points.Add(ganancia);
+                point.AxisLabel = $"{nombreMes}\n{anio}";
+                point.Label = $"${ganancia:N0}";
+
+                // Agregar un color más claro si la ganancia es mayor al promedio
+                double promedio = dtGanancias.AsEnumerable()
+                    .Average(r => Convert.ToDouble(r["GananciaTotal"]));
+                if (ganancia > promedio)
+                {
+                    point.Color = Color.FromArgb(0, 150, 0); // Verde más oscuro
+                }
             }
         }
 

@@ -40,5 +40,17 @@ namespace BLL
                 throw new Exception("Error al obtener estadísticas por día", ex);
             }
         }
+        public DataTable ObtenerGananciasMensuales(DateTime fechaInicio, DateTime fechaFin)
+        {
+            try
+            {
+                return _estadisticasDAL.ObtenerGananciasMensuales(fechaInicio, fechaFin);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener estadísticas de ganancias mensuales", ex);
+            }
+        }
+
     }
 }

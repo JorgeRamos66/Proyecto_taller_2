@@ -146,3 +146,4 @@ C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyect
 C:\Users\jpd_j\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto.3D921F5A.Up2Date
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.PL.gerente.estadisticas_productos.resources
 C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.PL.gerente.estadisticas_ventas.resources
+C:\Users\Jorge\Source\Repos\Proyecto_taller_2\proyecto2_prueba\obj\Debug\proyecto2_prueba.PL.gerente.estadisticas_stock.resources
